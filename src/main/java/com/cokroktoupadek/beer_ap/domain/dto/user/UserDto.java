@@ -1,4 +1,4 @@
-package com.cokroktoupadek.beer_ap.domain.dto;
+package com.cokroktoupadek.beer_ap.domain.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,6 @@ import lombok.Getter;
 public class UserDto {
    private Long id;
    private String username;
-   private int status;
-   private int userKey;
+   private Integer status;
+   private Integer userKey;
 }

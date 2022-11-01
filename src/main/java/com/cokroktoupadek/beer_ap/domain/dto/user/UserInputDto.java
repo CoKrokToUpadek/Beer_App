@@ -1,4 +1,4 @@
-package com.cokroktoupadek.beer_ap.domain.dto;
+package com.cokroktoupadek.beer_ap.domain.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

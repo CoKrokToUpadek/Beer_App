@@ -1,8 +1,8 @@
 package com.cokroktoupadek.beer_ap.controller;
 
 
-import com.cokroktoupadek.beer_ap.domain.dto.UserDto;
-import com.cokroktoupadek.beer_ap.domain.dto.UserInputDto;
+import com.cokroktoupadek.beer_ap.domain.dto.user.UserDto;
+import com.cokroktoupadek.beer_ap.domain.dto.user.UserInputDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
