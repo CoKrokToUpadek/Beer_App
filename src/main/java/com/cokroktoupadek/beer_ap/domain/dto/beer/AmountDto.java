@@ -15,7 +15,14 @@ public class AmountDto {
     @JsonProperty("id")
     private Long id;
     @JsonProperty("value")
-    private Integer value;
+    private Double value;
     @JsonProperty( "unit")
     private String unit;
+
+    @Override
+    public String toString() {
+        return  "\n\t\t\t\"value\": "+value+
+                "\n\t\t\t\"unit\": "+unit+
+                "\n\t\t\t"+'}';
+    }
 }

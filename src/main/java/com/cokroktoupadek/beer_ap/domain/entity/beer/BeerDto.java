@@ -1,4 +1,4 @@
-package com.cokroktoupadek.beer_ap.domain.dto.beer;
+package com.cokroktoupadek.beer_ap.domain.entity.beer;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -65,8 +65,8 @@ public class BeerDto {
                 "\n\"attenuationLevel\": " + attenuationLevel +
                 "\n" + volumeDto +
                 "\n" + boilVolumeDto +
-                "\n" + methodDto +
-                "\n" + ingredientsDto +
+                "\n\"" + methodDto +
+                "\n\"" + ingredientsDto +
                 "\n\"foodPairing\": " + foodPairing +
                 "\n\"brewers_tips\": " + brewers_tips+
                 "\n\"contributed_by\": " + contributed_by +

@@ -1,4 +1,4 @@
-package com.cokroktoupadek.beer_ap.domain.entity;
+package com.cokroktoupadek.beer_ap.domain.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;

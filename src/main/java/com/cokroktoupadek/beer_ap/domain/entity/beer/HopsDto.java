@@ -1,4 +1,4 @@
-package com.cokroktoupadek.beer_ap.domain.dto.beer;
+package com.cokroktoupadek.beer_ap.domain.entity.beer;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,15 +21,4 @@ public class HopsDto {
     private String add;
     @JsonProperty("attribute")
     private String attribute;
-
-    @Override
-    public String toString() {
-        return  "\n\t\t{"+
-                "\n\t\t\"name\": "+name+
-                "\n\t\t\"amount\": "+amountDto+
-                "\n\t\t\"add\": "+add+
-                "\n\t\t\"attribute\": "+attribute+
-                "\n"+'}';
-    }
-
 }

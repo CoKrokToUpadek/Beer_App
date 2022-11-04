@@ -17,4 +17,12 @@ public class VolumeDto {
     private Integer value;
     @JsonProperty( "unit")
     private String unit;
+
+    @Override
+    public String toString() {
+        return "volume{"+
+                "\n\t\"value\": "+value+
+                "\n\t\"unit\": "+unit+
+                "\n"+'}';
+    }
 }

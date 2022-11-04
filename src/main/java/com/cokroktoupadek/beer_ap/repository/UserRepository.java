@@ -1,6 +1,6 @@
 package com.cokroktoupadek.beer_ap.repository;
 
-import com.cokroktoupadek.beer_ap.domain.entity.UserEntity;
+import com.cokroktoupadek.beer_ap.domain.entity.user.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

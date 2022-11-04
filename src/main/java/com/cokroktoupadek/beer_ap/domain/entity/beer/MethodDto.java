@@ -1,4 +1,4 @@
-package com.cokroktoupadek.beer_ap.domain.dto.beer;
+package com.cokroktoupadek.beer_ap.domain.entity.beer;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -24,9 +24,9 @@ public class MethodDto {
 
     @Override
     public String toString() {
-        return "\"method\":{"+
+        return "method{"+
                 "\n\t\"mash_temp\": "+mashTempDtoList+
-                "\n\t"+fermentationDto+
+                "\n\t\"fermentation\": "+fermentationDto+
                 "\n\t\"twist\": "+twist+
                 "\n"+'}';
     }

@@ -17,14 +17,13 @@ public class BeerAppClientTests {
     @Autowired
     BeerClient beerClient;
 
-
-
     @Test
     void singleBeerFetchTest()  {
         //given
         //when
         List<BeerDto> beerDto= beerClient.getBeerDto(3);
         //then
+        System.out.println(beerDto.get(0).toString());
         Assertions.assertEquals(1, beerDto.size());
     }
 
@@ -34,6 +33,9 @@ public class BeerAppClientTests {
         //when
         List<BeerDto> beerDto= beerClient.getBeerDtoList();
         //then
+        for (BeerDto dto : beerDto) {
+            System.out.println(dto.toString());
+        }
         Assertions.assertTrue(beerDto.size()>10);
     }
 

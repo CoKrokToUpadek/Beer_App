@@ -17,4 +17,12 @@ public class MaltDto {
     private String name;
     @JsonProperty( "amount")
     private AmountDto amountDto;
+
+    @Override
+    public String toString() {
+        return  "\n\t\t{"+
+                "\n\t\t\"name\": "+name+
+                "\n\t\t\"amount\": "+amountDto+
+                "\n\t\t"+'}';
+    }
 }

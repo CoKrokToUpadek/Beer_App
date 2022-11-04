@@ -1,4 +1,4 @@
-package com.cokroktoupadek.beer_ap.domain.dto.beer;
+package com.cokroktoupadek.beer_ap.domain.entity.beer;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,18 +17,8 @@ public class IngredientsDto {
     private Long id;
     @JsonProperty("malt")
     private List<MaltDto> maltDtoList;
-    @JsonProperty( "hops")
+    @JsonProperty( "amount")
     private List<HopsDto> hopsDtoList;
     @JsonProperty("yeast")
     private String yeast;
-
-    @Override
-    public String toString() {
-        return "ingredients{"+
-                "\n\t\"malt\": "+maltDtoList+
-                "\n\t\"hops\": "+hopsDtoList+
-                "\n\t\"yeast\": "+yeast+
-                "\n"+'}';
-    }
-
 }

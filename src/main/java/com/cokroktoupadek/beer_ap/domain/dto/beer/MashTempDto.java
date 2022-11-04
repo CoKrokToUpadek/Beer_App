@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+
 
 @Data
 @AllArgsConstructor
@@ -19,4 +19,14 @@ public class MashTempDto {
     private  TempDto tempDtoList;
     @JsonProperty("duration")
     private Integer duration;
+
+
+    @Override
+    public String toString() {
+        return  "\n\t\t{"+
+                "\n"+tempDtoList+
+                "\n\t\t\"duration\": "+duration+
+                "\n\t\t"+'}';
+    }
+
 }
