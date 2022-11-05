@@ -1,7 +1,5 @@
 package com.cokroktoupadek.beer_ap.domain.entity.beer;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Entity(name = "beers")
-public class BeerDto {
+public class BeerEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="beer_id")
