@@ -6,70 +6,67 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.List;
 
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
+@AllArgsConstructor
+@Data
+@Entity(name = "beers")
 public class BeerDto {
-    @JsonProperty("id")
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="beer_id")
     private Long id;
-    @JsonProperty("description")
-    private String description;
-    @JsonProperty( "image_url")
-    private String imageUrl;
-    @JsonProperty("abv")
-    private Double abv;
-    @JsonProperty("ibu")
-    private Double ibu;
-    @JsonProperty("target_fg")
-    private Integer targetFg;
-    @JsonProperty("target_og")
-    private Integer targetOg;
-    @JsonProperty("ebc")
-    protected Double ebc;
-    @JsonProperty("srm")
-    private Double srm;
-    @JsonProperty("ph")
-    private Double ph;
-    @JsonProperty("attenuation_level")
-    private Double attenuationLevel;
-    @JsonProperty("volume")
-    private VolumeDto volumeDto;
-    @JsonProperty("boil_volume")
-    private BoilVolumeDto boilVolumeDto;
-    @JsonProperty("method")
-    private MethodDto methodDto;
-    @JsonProperty("ingredients")
-    private IngredientsDto ingredientsDto;
-    @JsonProperty("food_pairing")
-    private List<String> foodPairing;
-    @JsonProperty("brewers_tips")
-    private String brewers_tips;
-    @JsonProperty("contributed_by")
-    private String contributed_by;
 
-    @Override
-    public String toString() {
-        return "beer{" +
-                "\"description\": " + description +
-                "\n\"imageUrl\": " + imageUrl +
-                "\n\"abv\": " + abv +
-                "\n\"ibu\": " + ibu +
-                "\n\"targetFg\": " + targetFg +
-                "\n\"targetOg\": " + targetOg +
-                "\n\" ebc\": " + ebc +
-                "\n\"srm\": " + srm +
-                "\n\"ph\": " + ph +
-                "\n\"attenuationLevel\": " + attenuationLevel +
-                "\n" + volumeDto +
-                "\n" + boilVolumeDto +
-                "\n\"" + methodDto +
-                "\n\"" + ingredientsDto +
-                "\n\"foodPairing\": " + foodPairing +
-                "\n\"brewers_tips\": " + brewers_tips+
-                "\n\"contributed_by\": " + contributed_by +
-                "\n"+'}';
-    }
+    @Column(name="beer_description")
+    private String description;
+
+    @Column(name="beer_imageUrl")
+    private String imageUrl;
+
+    @Column(name="beer_abv")
+    private Double abv;
+
+    @Column(name="beer_ibu")
+    private Double ibu;
+
+    @Column(name="beer_targetFg")
+    private Integer targetFg;
+
+    @Column(name="beer_targetOg")
+    private Integer targetOg;
+
+    @Column(name="beer_ebc")
+    protected Double ebc;
+
+    @Column(name="beer_srm")
+    private Double srm;
+
+    @Column(name="beer_ph")
+    private Double ph;
+
+    @Column(name="beer_attenuationLevel")
+    private Double attenuationLevel;
+
+    @Column(name="beer_volumeDto")
+    private VolumeEntity volumeDto;
+
+    @Column(name="beer_boilVolumeDto")
+    private BoilVolumeEntity boilVolumeDto;
+
+    @Column(name="beer_methodDto")
+    private MethodEntity methodDto;
+
+    @Column(name="beer_ingredientsDto")
+    private IngredientsEntity ingredientsDto;
+
+    @Column(name="beer_foodPairing")
+    private List<String> foodPairing;
+
+    @Column(name="beer_brewers_tips")
+    private String brewers_tips;
+
+    @Column(name="beer_contributed_by")
+    private String contributed_by;
 }
