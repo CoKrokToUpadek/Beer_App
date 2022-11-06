@@ -6,20 +6,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Entity(name = "amounts")
+@Entity(name = "amount_values")
 public class AmountEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="amount_id")
+    @Column(name="amount_value_id")
     private Long id;
 
-    @Column(name="amount value")
-    private Double value;
+    @Column(name="amount_value_value")
+    private double value;
 
-    @Column(name="amount_unit")
+    @Column(name="amount_value_unit")
     private String unit;
+
+    @OneToMany(mappedBy = "amount")
+    private List<MaltEntity> maltsList;
+
+    @OneToMany(mappedBy = "amount")
+    private List<HopsEntity> hopsList;
 }

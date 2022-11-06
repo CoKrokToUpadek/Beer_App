@@ -17,12 +17,23 @@ public class IngredientsEntity {
     @Column(name="ingredient_id")
     private Long id;
 
-    @Column(name="ingredient_malts")
-    private List<MaltEntity> maltDtoList;
+    @ManyToMany//bidirectional
+    @JoinTable(
+            name = "ingredient_malts",
+            joinColumns = {@JoinColumn(name = "ingredient_id")},
+            inverseJoinColumns = {@JoinColumn(name = "malt_id")})
+    private List<MaltEntity> maltsList;
 
-    @Column(name="ingredient_hops")
-    private List<HopsEntity> hopsDtoList;
+    @ManyToMany//bidirectional
+    @JoinTable(
+            name = "ingredient_hops",
+            joinColumns = {@JoinColumn(name = "ingredient_id")},
+            inverseJoinColumns = {@JoinColumn(name = "malt_id")})
+    private List<HopsEntity> hopsList;
 
     @Column(name="ingredient_yeast")
     private String yeast;
+
+    @OneToMany(mappedBy = "ingredients")
+    private List<BeerEntity> beers;
 }

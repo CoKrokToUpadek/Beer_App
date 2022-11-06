@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,12 +20,16 @@ public class HopsEntity {
     @Column(name="hop_name")
     private String name;
 
-    @Column(name="hop_amount")
-    private AmountEntity amountDto;
+    @ManyToOne//bidirectional
+    @JoinColumn(name = "hop_amount", referencedColumnName = "amount_value_id")
+    private AmountEntity amount;
 
     @Column(name="hop_add")
     private String add;
 
     @Column(name="hop_attribute")
     private String attribute;
+
+    @ManyToMany(mappedBy = "hopsList")
+    private List<IngredientsEntity> ingredients;
 }

@@ -9,13 +9,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Entity(name = "fermentation's")
+@Entity(name = "fermentations")
 public class FermentationEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="fermentation's_id")
+    @Column(name="fermentation_id")
     private Long id;
 
-    @Column(name="fermentation's_temp")
-    private TempEntity tempDto;
+    @ManyToOne//bidirectional
+    @JoinColumn(name = "fermentation_temp", referencedColumnName = "temp_value_id")
+    private TempEntity temp;
 }

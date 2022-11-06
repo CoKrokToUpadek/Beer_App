@@ -17,13 +17,21 @@ public class MethodEntity {
     @Column(name="method_id")
     private Long id;
 
-    @Column(name="method_mash_temps")
-    private List<MashTempEntity> mashTempDtoList;
+    @ManyToMany(cascade = CascadeType.ALL)//unidirectional
+    @JoinTable(
+            name = "method_mash_temps",
+            joinColumns = {@JoinColumn(name = "mash_temp_id")},
+                    inverseJoinColumns = {@JoinColumn(name = "method_id")})
+    private List<MashTempEntity> mashTempsList;
 
-    @Column(name="method_fermentation")
-    private FermentationEntity fermentationDto;
+    @ManyToOne//unidirectional
+    @JoinColumn(name = "method_fermentation", referencedColumnName = "fermentation_id")
+    private FermentationEntity fermentation;
 
     @Column(name="method_twist")
     private String twist;
+
+    @OneToMany(mappedBy = "method")
+    private List<BeerEntity> methods;
 
 }

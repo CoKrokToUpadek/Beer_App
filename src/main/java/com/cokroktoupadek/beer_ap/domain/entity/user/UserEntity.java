@@ -1,5 +1,6 @@
 package com.cokroktoupadek.beer_ap.domain.entity.user;
 
+import com.cokroktoupadek.beer_ap.domain.entity.beer.BeerEntity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,12 +44,14 @@ public class UserEntity {
     @Column(name="user_current_key")
     private Long key;
 
-    //added based on spec.json
     @Column(name="user_status")
     private int status;
 
-//      @OneToMany(mappedBy = "userId")
-//      @JsonManagedReference
-//      private List<OrderEntity> orders;
+    @ManyToMany//bidirectional
+    @JoinTable(
+            name = "user_favorite_beers",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "beer_id")})
+     private List<BeerEntity> favouredBeers;
 
 }

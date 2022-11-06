@@ -16,8 +16,11 @@ public class MashTempEntity {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="mash_temp_id")
     private Long id;
-    @JsonProperty("mash_temp_temps")
-    private TempEntity tempDtoList;
-    @JsonProperty("mash_temp_duration")
+
+    @ManyToOne//bidirectional
+    @JoinColumn(name = "mash_temp_temp", referencedColumnName = "temp_value_id")
+    private TempEntity temp;
+
+    @Column(name="mash_temp_duration")
     private Integer duration;
 }

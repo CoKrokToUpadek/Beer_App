@@ -1,5 +1,6 @@
 package com.cokroktoupadek.beer_ap.domain.entity.beer;
 
+import com.cokroktoupadek.beer_ap.domain.entity.user.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,7 @@ public class BeerEntity {
     @Column(name="beer_description")
     private String description;
 
-    @Column(name="beer_imageUrl")
+    @Column(name="beer_image_url")
     private String imageUrl;
 
     @Column(name="beer_abv")
@@ -29,10 +30,10 @@ public class BeerEntity {
     @Column(name="beer_ibu")
     private Double ibu;
 
-    @Column(name="beer_targetFg")
+    @Column(name="beer_target_fg")
     private Integer targetFg;
 
-    @Column(name="beer_targetOg")
+    @Column(name="beer_target_og")
     private Integer targetOg;
 
     @Column(name="beer_ebc")
@@ -44,22 +45,28 @@ public class BeerEntity {
     @Column(name="beer_ph")
     private Double ph;
 
-    @Column(name="beer_attenuationLevel")
+    @Column(name="beer_attenuation_level")
     private Double attenuationLevel;
 
-    @Column(name="beer_volumeDto")
-    private VolumeEntity volumeDto;
+    @ManyToOne//unidirectional
+    @JoinColumn(name = "beer_volume", referencedColumnName = "volume_id")
+    private VolumeEntity volume;
 
-    @Column(name="beer_boilVolumeDto")
-    private BoilVolumeEntity boilVolumeDto;
+    @ManyToOne//unidirectional
+    @JoinColumn(name = "beer_boil_Volume", referencedColumnName = "boil_volume_id")
+    private BoilVolumeEntity boilVolume;
 
-    @Column(name="beer_methodDto")
-    private MethodEntity methodDto;
+    @ManyToOne//bidirectional
+    @JoinColumn(name = "beer_method", referencedColumnName = "method_id")
+    private MethodEntity method;
 
-    @Column(name="beer_ingredientsDto")
-    private IngredientsEntity ingredientsDto;
+    @ManyToOne//bidirectional
+    @JoinColumn(name = "beer_ingredients", referencedColumnName = "ingredient_id")
+    private IngredientsEntity ingredients;
 
-    @Column(name="beer_foodPairing")
+
+    @ElementCollection
+    @CollectionTable(name="beer_food_pairing", joinColumns=@JoinColumn(name="beer_id"))
     private List<String> foodPairing;
 
     @Column(name="beer_brewers_tips")
@@ -67,4 +74,11 @@ public class BeerEntity {
 
     @Column(name="beer_contributed_by")
     private String contributed_by;
+
+    @ManyToMany(mappedBy = "favouredBeers")
+    private List<UserEntity> beerFavouredBy;
+
+
+
+
 }
