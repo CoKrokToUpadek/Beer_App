@@ -1,14 +1,15 @@
 package com.cokroktoupadek.beer_ap.domain.entity.beer;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Data
 @Entity(name = "ingredients")
 public class IngredientsEntity {
@@ -17,23 +18,48 @@ public class IngredientsEntity {
     @Column(name="ingredient_id")
     private Long id;
 
-    @ManyToMany//bidirectional
+    @NonNull
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//bidirectional
+    @Fetch(value = FetchMode.SUBSELECT)//added for tests
     @JoinTable(
             name = "ingredient_malts",
             joinColumns = {@JoinColumn(name = "ingredient_id")},
             inverseJoinColumns = {@JoinColumn(name = "malt_id")})
     private List<MaltEntity> maltsList;
 
-    @ManyToMany//bidirectional
+    @NonNull
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//bidirectional
+    @Fetch(value = FetchMode.SUBSELECT)//added for tests
     @JoinTable(
             name = "ingredient_hops",
             joinColumns = {@JoinColumn(name = "ingredient_id")},
             inverseJoinColumns = {@JoinColumn(name = "malt_id")})
     private List<HopsEntity> hopsList;
 
+    @NonNull
     @Column(name="ingredient_yeast")
     private String yeast;
 
     @OneToMany(mappedBy = "ingredients")
     private List<BeerEntity> beers;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        IngredientsEntity that = (IngredientsEntity) o;
+
+        if (!maltsList.equals(that.maltsList)) return false;
+        if (!hopsList.equals(that.hopsList)) return false;
+        return yeast.equals(that.yeast);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = maltsList.hashCode();
+        result = 31 * result + hopsList.hashCode();
+        result = 31 * result + yeast.hashCode();
+        return result;
+    }
 }

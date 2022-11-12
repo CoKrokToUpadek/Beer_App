@@ -1,15 +1,14 @@
 package com.cokroktoupadek.beer_ap.domain.entity.beer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Data
 @Entity(name = "volumes")
 public class VolumeEntity {
@@ -18,11 +17,29 @@ public class VolumeEntity {
     @Column(name="volume_id")
     private Long id;
 
+    @NonNull
     @Column(name="temp_value")
     private Integer value;
 
+    @NonNull
     @Column(name="temp_unit")
     private String unit;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        VolumeEntity that = (VolumeEntity) o;
+
+        if (!value.equals(that.value)) return false;
+        return unit.equals(that.unit);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = value.hashCode();
+        result = 31 * result + unit.hashCode();
+        return result;
+    }
 }

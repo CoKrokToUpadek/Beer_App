@@ -16,14 +16,9 @@ import java.util.List;
 public class BeerController {
 
     @GetMapping("/get_beers")
-    public ResponseEntity<List<BeerDto>> getBeers(){
-        List<BeerDto>beerDtos=new ArrayList<>();
+    public ResponseEntity<List<BeerDto>> UpdateLocalBeersDb() {
+        List<BeerDto> beerDtos = new ArrayList<>();
         return ResponseEntity.ok(beerDtos);
     }
 
-    @GetMapping("/get_beers/{beerId}")
-    public ResponseEntity<List<BeerDto>> getBeers(@PathVariable Long beerId){
-        List<BeerDto>beerDtos=new ArrayList<>();
-        return ResponseEntity.ok(beerDtos);
-    }
 }

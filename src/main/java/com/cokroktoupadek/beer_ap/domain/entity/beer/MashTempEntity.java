@@ -1,14 +1,13 @@
 package com.cokroktoupadek.beer_ap.domain.entity.beer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Data
 @Entity(name = "mash_temps")
 public class MashTempEntity {
@@ -17,10 +16,30 @@ public class MashTempEntity {
     @Column(name="mash_temp_id")
     private Long id;
 
-    @ManyToOne//bidirectional
+    @NonNull
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)//bidirectional
     @JoinColumn(name = "mash_temp_temp", referencedColumnName = "temp_value_id")
     private TempEntity temp;
 
+    @NonNull
     @Column(name="mash_temp_duration")
     private Integer duration;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MashTempEntity that = (MashTempEntity) o;
+
+        if (!temp.equals(that.temp)) return false;
+        return duration.equals(that.duration);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = temp.hashCode();
+        result = 31 * result + duration.hashCode();
+        return result;
+    }
 }
