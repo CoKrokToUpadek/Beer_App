@@ -41,6 +41,7 @@ class IngredientsEntityTest {
             Assertions.fail("fetched value is empty");
         }else {
             Assertions.assertEquals(fetchedIngredientsEntity.get().getId(), ingredientsEntity.getId());
+            Assertions.assertEquals(fetchedIngredientsEntity.get().getMaltsList().get(0).getId(), ingredientsEntity.getMaltsList().get(0).getId());
 
 
         }

@@ -19,7 +19,7 @@ public class IngredientsEntity {
     private Long id;
 
     @NonNull
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//bidirectional
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//bidirectional //removed eager
     @Fetch(value = FetchMode.SUBSELECT)//added for tests
     @JoinTable(
             name = "ingredient_malts",

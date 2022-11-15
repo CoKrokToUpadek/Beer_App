@@ -2,6 +2,7 @@ package com.cokroktoupadek.beer_ap.repository.user;
 
 import com.cokroktoupadek.beer_ap.domain.entity.beer.VolumeEntity;
 import com.cokroktoupadek.beer_ap.domain.entity.user.UserEntity;
+import lombok.NonNull;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,8 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
     @Override
     Optional<UserEntity> findById(Long id);
+
+    Optional<UserEntity> findByLogin(String login);
 
     @Override
     UserEntity save(UserEntity userEntity);

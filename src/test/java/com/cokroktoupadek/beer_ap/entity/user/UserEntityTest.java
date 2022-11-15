@@ -22,7 +22,7 @@ class UserEntityTest {
     @Test
     void testCreateUser() {
         //Given
-        UserEntity user = new UserEntity(null, "test", "test","test","test@test.cm","test","test",LocalDate.now(),1L,1,new ArrayList<>());
+        UserEntity user = new UserEntity("test", "test","test","test@test.cm","test","test","user",LocalDate.now());
 
         //When
         userRepository.save(user);

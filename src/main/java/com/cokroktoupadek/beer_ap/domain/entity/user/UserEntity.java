@@ -38,12 +38,16 @@ public class UserEntity {
     private String email;
 
     @NonNull
-    @Column(name="user_login")
+    @Column(unique=true,name="user_login")
     private String login;
 
     @NonNull
     @Column(name="user_password")
     private String password;
+
+    @NonNull
+    @Column(name="user_role")
+    private String userRole;
 
     @NonNull
     @Column(name="user_account_creation_date")
