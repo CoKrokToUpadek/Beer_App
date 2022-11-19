@@ -7,6 +7,8 @@ import com.cokroktoupadek.beer_ap.domain.dto.user.UserInputDto;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -47,14 +49,14 @@ public class UserController {
 
 
     @GetMapping("/dummy")
-    public ResponseEntity<String> dummy(){
-        return ResponseEntity.ok("i have access");
+    public ResponseEntity<String> dummy(@CurrentSecurityContext SecurityContext context){
+        return ResponseEntity.ok(context.getAuthentication().getName()+ " have access to open method");
     }
 
     @Secured({"ROLE_ADMIN"})
     @GetMapping("/dummy_for_authorised")
-    public ResponseEntity<String> dummy2(Principal principal){
+    public ResponseEntity<String> dummy2(@CurrentSecurityContext SecurityContext context){
 
-        return ResponseEntity.ok(principal.getName()+ " have access");
+        return ResponseEntity.ok(context.getAuthentication().getName()+ " have access to protected method");
     }
 }

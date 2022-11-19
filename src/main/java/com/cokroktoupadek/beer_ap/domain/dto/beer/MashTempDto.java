@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
 
 
 @Data
@@ -16,7 +17,7 @@ public class MashTempDto {
     @JsonProperty("id")
     private Long id;
     @JsonProperty("temp")
-    private  TempDto tempDtoList;
+    private  TempDto tempDto;
     @JsonProperty("duration")
     private Integer duration;
 
@@ -24,9 +25,28 @@ public class MashTempDto {
     @Override
     public String toString() {
         return  "\n\t\t{"+
-                "\n"+tempDtoList+
+                "\n"+tempDto+
                 "\n\t\t\"duration\": "+duration+
                 "\n\t\t"+'}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MashTempDto that = (MashTempDto) o;
+
+        if (!Objects.equals(id, that.id)) return false;
+        if (!Objects.equals(tempDto, that.tempDto)) return false;
+        return Objects.equals(duration, that.duration);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (tempDto != null ? tempDto.hashCode() : 0);
+        result = 31 * result + (duration != null ? duration.hashCode() : 0);
+        return result;
+    }
 }

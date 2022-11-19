@@ -1,19 +1,22 @@
-package com.cokroktoupadek.beer_ap.service;
+package com.cokroktoupadek.beer_ap.service.user;
 
 import com.cokroktoupadek.beer_ap.client.config.BeerUserDetails;
 import com.cokroktoupadek.beer_ap.domain.entity.user.UserEntity;
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.naming.AuthenticationException;
+import javax.transaction.Transactional;
 
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class BeerUserDetailsService implements UserDetailsService {
 
     @Autowired
@@ -22,9 +25,9 @@ public class BeerUserDetailsService implements UserDetailsService {
     @Override
     public BeerUserDetails loadUserByUsername(String username) {
         try {
-          UserEntity  user = userDbService.findCartByLogin(username);
+          UserEntity  user = userDbService.findByLogin(username);
           return new BeerUserDetails(user);
-        } catch (AuthenticationException e) {
+        } catch (Exception e) {
             throw new UsernameNotFoundException("User not found");
         }
     }

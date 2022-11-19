@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -31,4 +32,27 @@ public class MethodDto {
                 "\n"+'}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MethodDto methodDto = (MethodDto) o;
+
+        if (!Objects.equals(id, methodDto.id)) return false;
+        if (!Objects.equals(mashTempDtoList, methodDto.mashTempDtoList))
+            return false;
+        if (!Objects.equals(fermentationDto, methodDto.fermentationDto))
+            return false;
+        return Objects.equals(twist, methodDto.twist);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (mashTempDtoList != null ? mashTempDtoList.hashCode() : 0);
+        result = 31 * result + (fermentationDto != null ? fermentationDto.hashCode() : 0);
+        result = 31 * result + (twist != null ? twist.hashCode() : 0);
+        return result;
+    }
 }

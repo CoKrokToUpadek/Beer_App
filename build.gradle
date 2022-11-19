@@ -29,8 +29,11 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     runtimeOnly('com.h2database:h2')
 
-
     implementation 'org.springframework.boot:spring-boot-starter-security:2.7.5'
+
+    // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+    implementation 'org.modelmapper:modelmapper:3.1.0'
+
 
 
 }
