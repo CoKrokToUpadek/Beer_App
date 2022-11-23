@@ -17,22 +17,23 @@ public class BeerDbService {
     @Autowired
     BeerRepository beerRepository;
 
-    BeerEntity save(BeerEntity beerEntity){
+    public BeerEntity save(BeerEntity beerEntity) {
         return beerRepository.save(beerEntity);
     }
 
-    BeerEntity findById(Long id) throws Exception {
+    public BeerEntity findById(Long id) throws Exception {
         return beerRepository.findById(id).orElseThrow(Exception::new);
     }
 
-    List<BeerEntity> findById() {
+    public List<BeerEntity> findById() {
         return beerRepository.findAll();
     }
-    void DeleteById(Long id){
+
+    public void DeleteById(Long id) {
         beerRepository.deleteById(id);
     }
 
-    void DeleteAll(){
+    public void DeleteAll() {
         beerRepository.deleteAll();
     }
 

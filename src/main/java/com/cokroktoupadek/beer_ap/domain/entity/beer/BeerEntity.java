@@ -20,7 +20,7 @@ public class BeerEntity {
     private Long id;
 
     @NonNull
-    @Column(name="beer_description")
+    @Column(name="beer_description",columnDefinition = "VARCHAR(1000)")
     private String description;
 
     @NonNull
@@ -53,7 +53,7 @@ public class BeerEntity {
 
     @NonNull
     @Column(name="beer_ph")
-    private Double ph;
+    private  Double ph;
 
     @NonNull
     @Column(name="beer_attenuation_level")
@@ -96,5 +96,4 @@ public class BeerEntity {
     @ManyToMany(fetch = FetchType.EAGER,mappedBy = "favouredBeers")
     @Fetch(value = FetchMode.SUBSELECT)//added for tests
     private List<UserEntity> beerFavouredBy;
-
 }

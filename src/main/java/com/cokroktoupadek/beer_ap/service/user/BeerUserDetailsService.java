@@ -24,11 +24,13 @@ public class BeerUserDetailsService implements UserDetailsService {
 
     @Override
     public BeerUserDetails loadUserByUsername(String username) {
+
         try {
-          UserEntity  user = userDbService.findByLogin(username);
-          return new BeerUserDetails(user);
+            UserEntity user = userDbService.findByLogin(username);
+            return new BeerUserDetails(user);
         } catch (Exception e) {
             throw new UsernameNotFoundException("User not found");
         }
+
     }
 }

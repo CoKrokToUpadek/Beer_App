@@ -21,6 +21,8 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByLogin(String login);
 
+    Optional<UserEntity> findByEmail(String email);
+
     @Override
     UserEntity save(UserEntity userEntity);
 

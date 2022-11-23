@@ -21,7 +21,7 @@ public class BeerAppClientTests {
     void singleBeerFetchTest()  {
         //given
         //when
-        List<BeerDto> beerDto= beerClient.getBeerDto(3);
+        List<BeerDto> beerDto= beerClient.getBeerDto(17);
         //then
         System.out.println(beerDto.get(0).toString());
         Assertions.assertEquals(1, beerDto.size());

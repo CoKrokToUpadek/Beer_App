@@ -1,11 +1,13 @@
 package com.cokroktoupadek.beer_ap.mapper;
 import com.cokroktoupadek.beer_ap.domain.dto.beer.*;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.*;
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
+import java.util.Optional;
 
 @Configuration
 public class BeerMapperSingleton {
@@ -14,6 +16,28 @@ public class BeerMapperSingleton {
 
     @PostConstruct
     static void configuration(){
+
+        Converter<Double,Double> converterDouble=ctx->{
+            if (ctx.getSource()==null){
+                return 0d;
+            }else {
+                return ctx.getSource();
+            }
+        };
+
+        Converter<Integer,Integer> converterInt=ctx->{
+            if (ctx.getSource()==null){
+                return 0;
+            }else {
+                return ctx.getSource();
+            }
+        };
+        modelMapper.typeMap(BeerDto.class,BeerEntity.class).addMappings(mapper->mapper.using(converterDouble).map(BeerDto::getPh,BeerEntity::setPh));
+        modelMapper.typeMap(BeerDto.class,BeerEntity.class).addMappings(mapper->mapper.using(converterDouble).map(BeerDto::getEbc,BeerEntity::setEbc));
+        modelMapper.typeMap(BeerDto.class,BeerEntity.class).addMappings(mapper->mapper.using(converterDouble).map(BeerDto::getSrm,BeerEntity::setSrm));
+        modelMapper.typeMap(BeerDto.class,BeerEntity.class).addMappings(mapper->mapper.using(converterDouble).map(BeerDto::getIbu,BeerEntity::setIbu));
+        modelMapper.typeMap(MashTempDto.class,MashTempEntity.class).addMappings(mapper->mapper.using(converterInt).map(MashTempDto::getDuration,MashTempEntity::setDuration));
+
         modelMapper.typeMap(BeerEntity.class, BeerDto.class).addMappings(mapper -> mapper.map(BeerEntity::getVolume,BeerDto::setVolumeDto));
         modelMapper.typeMap(BeerEntity.class, BeerDto.class).addMappings(mapper -> mapper.map(BeerEntity::getBoilVolume,BeerDto::setBoilVolumeDto));
         modelMapper.typeMap(BeerEntity.class, BeerDto.class).addMappings(mapper -> mapper.map(BeerEntity::getMethod,BeerDto::setMethodDto));
@@ -32,10 +56,8 @@ public class BeerMapperSingleton {
         modelMapper.typeMap(HopsEntity.class, HopsDto.class).addMappings(mapper -> mapper.map(HopsEntity::getAmount,HopsDto::setAmountDto));
 
         //reversed mapping
-         modelMapper.typeMap( IngredientsDto.class,IngredientsEntity.class).addMappings(mapper -> mapper.map(IngredientsDto::getMaltDtoList,IngredientsEntity::setMaltsList));//działa
-         modelMapper.typeMap(MethodDto.class,MethodEntity.class).addMappings(mapper -> mapper.map(MethodDto::getMashTempDtoList,MethodEntity::setMashTempsList));//działa
-
-        //modelMapper.typeMap(MashTempDto.class,MashTempEntity.class).addMappings(mapper -> mapper.map(MashTempDto::getTempDto,MashTempEntity::setTemp));
+        modelMapper.typeMap( IngredientsDto.class,IngredientsEntity.class).addMappings(mapper -> mapper.map(IngredientsDto::getMaltDtoList,IngredientsEntity::setMaltsList));
+        modelMapper.typeMap(MethodDto.class,MethodEntity.class).addMappings(mapper -> mapper.map(MethodDto::getMashTempDtoList,MethodEntity::setMashTempsList));
     }
 
     public static BeerMapperSingleton getInstance() {
