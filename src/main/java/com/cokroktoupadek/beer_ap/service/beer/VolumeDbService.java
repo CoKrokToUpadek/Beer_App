@@ -1,38 +1,53 @@
 package com.cokroktoupadek.beer_ap.service.beer;
 
 import com.cokroktoupadek.beer_ap.domain.entity.beer.TempEntity;
-import com.cokroktoupadek.beer_ap.repository.beer.TempRepository;
+import com.cokroktoupadek.beer_ap.domain.entity.beer.VolumeEntity;
+import com.cokroktoupadek.beer_ap.repository.beer.VolumeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class VolumeDbService {
     @Autowired
-    TempRepository tempRepository;
+    VolumeRepository volumeRepository;
 
-    TempEntity save(TempEntity tempEntity){
-        return tempRepository.save(tempEntity);
+    VolumeEntity save(VolumeEntity volumeEntity){
+        return volumeRepository.save(volumeEntity);
     }
 
-    TempEntity findById(Long id) throws Exception {
-        return tempRepository.findById(id).orElseThrow(Exception::new);
+    VolumeEntity findById(Long id) throws Exception {
+        return volumeRepository.findById(id).orElseThrow(Exception::new);
+
     }
 
-    List<TempEntity> findById() {
-        return tempRepository.findAll();
+    Optional<VolumeEntity> findByUnitAndValue(String unit, Integer value){
+        return volumeRepository.findByUnitAndValue(unit,value);
+    }
+
+    public VolumeEntity volumeDuplicateVerifier(VolumeEntity volumeEntity){
+        if (findByUnitAndValue(volumeEntity.getUnit(), volumeEntity.getValue()).isPresent()){
+            return findByUnitAndValue(volumeEntity.getUnit(), volumeEntity.getValue()).get();
+        }else {
+            return volumeEntity;
+        }
+    }
+
+    List<VolumeEntity> findById() {
+        return volumeRepository.findAll();
     }
 
     void DeleteById(Long id){
-        tempRepository.deleteById(id);
+        volumeRepository.deleteById(id);
     }
 
     void DeleteAll(){
-        tempRepository.deleteAll();
+        volumeRepository.deleteAll();
     }
 }

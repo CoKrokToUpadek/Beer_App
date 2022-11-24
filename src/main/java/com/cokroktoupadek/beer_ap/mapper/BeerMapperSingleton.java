@@ -7,7 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
-import java.util.Optional;
+
 
 @Configuration
 public class BeerMapperSingleton {

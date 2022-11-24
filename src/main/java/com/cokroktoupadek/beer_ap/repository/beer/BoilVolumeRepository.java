@@ -18,6 +18,8 @@ public interface BoilVolumeRepository extends CrudRepository<BoilVolumeEntity, L
     @Override
     Optional<BoilVolumeEntity> findById(Long id);
 
+    Optional<BoilVolumeEntity> findByUnitAndValue(String unit, Integer value);
+
     @Override
     BoilVolumeEntity save(BoilVolumeEntity boilVolumeEntity);
 

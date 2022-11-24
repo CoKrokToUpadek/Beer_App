@@ -35,15 +35,13 @@ public class TempDto {
 
         TempDto tempDto = (TempDto) o;
 
-        if (!Objects.equals(id, tempDto.id)) return false;
         if (!Objects.equals(value, tempDto.value)) return false;
         return Objects.equals(unit, tempDto.unit);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (value != null ? value.hashCode() : 0);
+        int result = value != null ? value.hashCode() : 0;
         result = 31 * result + (unit != null ? unit.hashCode() : 0);
         return result;
     }

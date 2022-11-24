@@ -18,11 +18,11 @@ public class VolumeEntity {
     private Long id;
 
     @NonNull
-    @Column(name="temp_value")
+    @Column(name="volume_value")
     private Integer value;
 
     @NonNull
-    @Column(name="temp_unit")
+    @Column(name="volume_unit")
     private String unit;
 
     @Override

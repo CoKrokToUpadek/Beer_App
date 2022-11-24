@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -23,6 +24,18 @@ public class BoilVolumeDbService {
 
     BoilVolumeEntity findById(Long id) throws Exception {
         return boilVolumeRepository.findById(id).orElseThrow(Exception::new);
+    }
+
+   Optional <BoilVolumeEntity> findByUnitAndValue(String unit, Integer value){
+        return boilVolumeRepository.findByUnitAndValue(unit,value);
+    }
+
+   public BoilVolumeEntity boilVolumeDuplicateVerifier(BoilVolumeEntity boilVolumeEntity){
+        if (findByUnitAndValue(boilVolumeEntity.getUnit(),boilVolumeEntity.getValue()).isPresent()){
+            return findByUnitAndValue(boilVolumeEntity.getUnit(),boilVolumeEntity.getValue()).get();
+        }else {
+            return boilVolumeEntity;
+        }
     }
 
     List<BoilVolumeEntity> findById() {

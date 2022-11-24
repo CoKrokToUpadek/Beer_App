@@ -1,5 +1,6 @@
 package com.cokroktoupadek.beer_ap.repository.beer;
 
+import com.cokroktoupadek.beer_ap.domain.entity.beer.BoilVolumeEntity;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.TempEntity;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.VolumeEntity;
 import org.springframework.data.repository.CrudRepository;
@@ -20,6 +21,8 @@ public interface VolumeRepository extends CrudRepository<VolumeEntity, Long> {
 
     @Override
     VolumeEntity save(VolumeEntity volumeEntity);
+
+    Optional<VolumeEntity> findByUnitAndValue(String unit, Integer value);
 
     @Override
     void deleteById(Long id);
