@@ -24,7 +24,7 @@ public class BeerUserDetails implements UserDetails {
         } else if(userEntity.getUserRole().equals("user")) {
             return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"), new SimpleGrantedAuthority("ROLE_ANONYMOUS"));
         }else {
-                throw new RuntimeException("invalid role in db");
+            return Arrays.asList(new SimpleGrantedAuthority("ROLE_ANONYMOUS"));
         }
     }
 

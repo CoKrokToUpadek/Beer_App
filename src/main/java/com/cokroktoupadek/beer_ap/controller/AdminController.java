@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/users")
+@RequestMapping("/admin")
 @AllArgsConstructor
 public class AdminController {
 
