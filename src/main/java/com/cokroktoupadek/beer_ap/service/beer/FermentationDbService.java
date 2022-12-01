@@ -25,6 +25,10 @@ public class FermentationDbService {
         return fermentationRepository.findById(id).orElseThrow(Exception::new);
     }
 
+    List<FermentationEntity> findFermentationByTempValueAndUnit(String unit, Integer value){
+        return fermentationRepository.getFermentationDuplicates(unit,value);
+    }
+
     List<FermentationEntity> findById() {
         return fermentationRepository.findAll();
     }

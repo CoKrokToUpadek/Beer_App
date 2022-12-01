@@ -1,6 +1,5 @@
 package com.cokroktoupadek.beer_ap.service.beer;
 
-import com.cokroktoupadek.beer_ap.domain.entity.beer.MethodEntity;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.TempEntity;
 import com.cokroktoupadek.beer_ap.repository.beer.TempRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -28,6 +28,12 @@ public class TempDbService {
     List<TempEntity> findById() {
         return tempRepository.findAll();
     }
+
+    Optional<TempEntity> findByValueAndUnit(Integer value,String unit){
+        return tempRepository.findByValueAndUnit(value,unit);
+    }
+
+
 
     void DeleteById(Long id){
         tempRepository.deleteById(id);

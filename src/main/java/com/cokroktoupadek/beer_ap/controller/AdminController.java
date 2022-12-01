@@ -25,7 +25,7 @@ public class AdminController {
     }
 
     @Secured("ROLE_ADMIN")
-    @PutMapping("/block_user")
+    @PutMapping("/ban_user")
     public ResponseEntity<String> blockUserById(@RequestParam Long id){
         return ResponseEntity.ok("User with requested ID was blocked");
     }

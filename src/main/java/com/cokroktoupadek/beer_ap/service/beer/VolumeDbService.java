@@ -31,13 +31,7 @@ public class VolumeDbService {
         return volumeRepository.findByUnitAndValue(unit,value);
     }
 
-    public VolumeEntity volumeDuplicateVerifier(VolumeEntity volumeEntity){
-        if (findByUnitAndValue(volumeEntity.getUnit(), volumeEntity.getValue()).isPresent()){
-            return findByUnitAndValue(volumeEntity.getUnit(), volumeEntity.getValue()).get();
-        }else {
-            return volumeEntity;
-        }
-    }
+
 
     List<VolumeEntity> findById() {
         return volumeRepository.findAll();

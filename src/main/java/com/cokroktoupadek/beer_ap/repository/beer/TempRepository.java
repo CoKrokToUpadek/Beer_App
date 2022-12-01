@@ -18,6 +18,8 @@ public interface TempRepository extends CrudRepository<TempEntity, Long> {
     @Override
     Optional<TempEntity> findById(Long id);
 
+    Optional<TempEntity> findByValueAndUnit(Integer value,String unit);
+
     @Override
     TempEntity save(TempEntity tempEntity);
 

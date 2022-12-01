@@ -16,13 +16,12 @@ import java.util.stream.Collectors;
 @Service
 public class BeerMapper {
 
+    //ModelMapper modelMapper=BeerMapperSingleton.INSTANCE.getModelMapper();
     ModelMapper modelMapper=BeerMapperSingleton.getInstance().modelMapper;
 
 
     public BeerDto mapToBeerDto(BeerEntity beerEntity){
-
         BeerDto beerDto=modelMapper.map(beerEntity,BeerDto.class);
-
         return beerDto;
 
     }

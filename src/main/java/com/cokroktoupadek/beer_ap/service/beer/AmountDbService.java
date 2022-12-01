@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -23,6 +24,12 @@ public class AmountDbService {
     AmountEntity findById(Long id) throws Exception {
         return amountRepository.findById(id).orElseThrow(Exception::new);
     }
+
+    Optional<AmountEntity> findByValueAndUnit(Double value, String unit){
+        return amountRepository.findByValueAndUnit(value,unit);
+    }
+
+
 
     List<AmountEntity> findById() {
         return amountRepository.findAll();

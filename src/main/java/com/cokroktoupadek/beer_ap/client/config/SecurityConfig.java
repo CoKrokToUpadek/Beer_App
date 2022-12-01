@@ -47,7 +47,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests().mvcMatchers("/dummy").permitAll()
                 .and().authorizeRequests().mvcMatchers("dummy_for_authorised").hasAuthority("ROLE_ADMIN")
                 .and().authorizeRequests().mvcMatchers("/update_db").hasAuthority("ROLE_ADMIN").
-                anyRequest().authenticated().and().csrf().disable();
+                anyRequest().permitAll().and().csrf().disable();
         System.out.println("#########################################################################");
     }
 

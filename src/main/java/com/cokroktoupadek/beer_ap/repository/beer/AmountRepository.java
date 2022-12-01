@@ -13,16 +13,14 @@ import java.util.Optional;
 public interface AmountRepository extends CrudRepository<AmountEntity, Long> {
     @Override
     List<AmountEntity> findAll();
-
     @Override
     Optional<AmountEntity> findById(Long id);
-
+    Optional<AmountEntity> findByValueAndUnit(Double value, String unit);
     @Override
     AmountEntity save(AmountEntity amountEntity);
-
     @Override
     void deleteById(Long id);
-
     @Override
     void deleteAll();
+
 }

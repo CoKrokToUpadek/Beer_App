@@ -30,13 +30,7 @@ public class BoilVolumeDbService {
         return boilVolumeRepository.findByUnitAndValue(unit,value);
     }
 
-   public BoilVolumeEntity boilVolumeDuplicateVerifier(BoilVolumeEntity boilVolumeEntity){
-        if (findByUnitAndValue(boilVolumeEntity.getUnit(),boilVolumeEntity.getValue()).isPresent()){
-            return findByUnitAndValue(boilVolumeEntity.getUnit(),boilVolumeEntity.getValue()).get();
-        }else {
-            return boilVolumeEntity;
-        }
-    }
+
 
     List<BoilVolumeEntity> findById() {
         return boilVolumeRepository.findAll();

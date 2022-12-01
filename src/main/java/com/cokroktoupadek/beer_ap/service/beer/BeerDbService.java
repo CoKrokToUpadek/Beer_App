@@ -25,7 +25,7 @@ public class BeerDbService {
         return beerRepository.findById(id).orElseThrow(Exception::new);
     }
 
-    public List<BeerEntity> findById() {
+    public List<BeerEntity> findAll() {
         return beerRepository.findAll();
     }
 

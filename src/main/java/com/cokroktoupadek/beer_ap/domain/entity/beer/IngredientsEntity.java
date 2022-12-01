@@ -19,7 +19,7 @@ public class IngredientsEntity {
     private Long id;
 
     @NonNull
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//bidirectional //removed eager
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//bidirectional
     @Fetch(value = FetchMode.SUBSELECT)//added for tests
     @JoinTable(
             name = "ingredient_malts",
@@ -33,7 +33,7 @@ public class IngredientsEntity {
     @JoinTable(
             name = "ingredient_hops",
             joinColumns = {@JoinColumn(name = "ingredient_id")},
-            inverseJoinColumns = {@JoinColumn(name = "malt_id")})
+            inverseJoinColumns = {@JoinColumn(name = "hops_id")})
     private List<HopsEntity> hopsList;
 
     @NonNull

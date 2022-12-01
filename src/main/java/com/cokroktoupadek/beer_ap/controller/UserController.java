@@ -30,7 +30,7 @@ public class UserController {
     @GetMapping("/get_beers")
     public ResponseEntity<List<BeerDto>> getBeerList() {
         List<BeerDto> beerDtoList = new ArrayList<>();
-        return ResponseEntity.ok(beerDtoList);
+        return ResponseEntity.ok(userFacade.getBeerList());
     }
 
     @Secured({"ROLE_ADMIN","ROLE_USER"})
