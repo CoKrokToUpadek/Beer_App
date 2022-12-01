@@ -1,6 +1,5 @@
 package com.cokroktoupadek.beer_ap.service.beer;
 
-import com.cokroktoupadek.beer_ap.domain.entity.beer.AmountEntity;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.BeerEntity;
 import com.cokroktoupadek.beer_ap.repository.beer.*;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -29,12 +29,15 @@ public class BeerDbService {
         return beerRepository.findAll();
     }
 
-    public void DeleteById(Long id) {
+    public void deleteById(Long id) {
         beerRepository.deleteById(id);
     }
 
-    public void DeleteAll() {
+    public void deleteAll() {
         beerRepository.deleteAll();
     }
 
+    public Optional<BeerEntity> findByName(String name) {
+      return beerRepository.findByName(name);
+    }
 }

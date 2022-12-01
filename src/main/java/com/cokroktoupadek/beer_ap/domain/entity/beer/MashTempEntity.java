@@ -1,17 +1,10 @@
 package com.cokroktoupadek.beer_ap.domain.entity.beer;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.*;
 
 import javax.persistence.*;
 
-
-@NamedNativeQuery(
-        name = "MashTempEntity.getMashTempDuplicates",
-        query = "SELECT * FROM beer_app.mash_temps inner join beer_app.temp_values on mash_temp_temp=temp_value_id where (temp_value_unit=:TEMPUNIT" +
-                " and temp_value_value=:TEMPVALUE and mash_temp_duration=:MASHTEMPDURATION)",
-        resultClass = MashTempEntity.class
-)
 
 @NoArgsConstructor
 @AllArgsConstructor

@@ -24,19 +24,15 @@ public class FermentationDbService {
         return fermentationRepository.findById(id).orElseThrow(Exception::new);
     }
 
-    List<FermentationEntity> findTempEntity(String unit, Integer value){
-        return fermentationRepository.getFermentationDuplicates(unit,value);
-    }
-
     List<FermentationEntity> findById() {
         return fermentationRepository.findAll();
     }
 
-    void DeleteById(Long id){
+    void deleteById(Long id){
         fermentationRepository.deleteById(id);
     }
 
-    void DeleteAll(){
+    void deleteAll(){
         fermentationRepository.deleteAll();
     }
 }

@@ -19,9 +19,6 @@ public interface MashTempRepository extends CrudRepository<MashTempEntity, Long>
     @Override
     Optional<MashTempEntity> findById(Long id);
 
-    @Query(nativeQuery = true)
-    List<MashTempEntity> getMashTempDuplicates(@Param("TEMPUNIT") String unit, @Param("TEMPVALUE") Integer value, @Param("MASHTEMPDURATION") Integer duration);
-
     @Override
     MashTempEntity save(MashTempEntity mashTempEntity);
 

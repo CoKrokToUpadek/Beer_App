@@ -24,19 +24,15 @@ public class MashTempDbService {
         return mashTempRepository.findById(id).orElseThrow(Exception::new);
     }
 
-    List<MashTempEntity> findByDurationAndTempEntity(String tempUnit, Integer tempValue, Integer fermentationDuration){
-        return mashTempRepository.getMashTempDuplicates(tempUnit,tempValue,fermentationDuration);
-    }
-
     List<MashTempEntity> findById() {
         return mashTempRepository.findAll();
     }
 
-    void DeleteById(Long id){
+    void deleteById(Long id){
         mashTempRepository.deleteById(id);
     }
 
-    void DeleteAll(){
+    void deleteAll(){
         mashTempRepository.deleteAll();
     }
 }

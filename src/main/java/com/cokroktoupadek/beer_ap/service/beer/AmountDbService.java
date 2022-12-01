@@ -35,11 +35,11 @@ public class AmountDbService {
         return amountRepository.findAll();
     }
 
-    void DeleteById(Long id){
+    void deleteById(Long id){
         amountRepository.deleteById(id);
     }
 
-    void DeleteAll(){
+    void deleteAll(){
         amountRepository.deleteAll();
     }
 

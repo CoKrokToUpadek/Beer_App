@@ -1,6 +1,5 @@
 package com.cokroktoupadek.beer_ap.service.beer;
 
-import com.cokroktoupadek.beer_ap.domain.entity.beer.TempEntity;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.VolumeEntity;
 import com.cokroktoupadek.beer_ap.repository.beer.VolumeRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,11 +36,11 @@ public class VolumeDbService {
         return volumeRepository.findAll();
     }
 
-    void DeleteById(Long id){
+    void deleteById(Long id){
         volumeRepository.deleteById(id);
     }
 
-    void DeleteAll(){
+    void deleteAll(){
         volumeRepository.deleteAll();
     }
 }

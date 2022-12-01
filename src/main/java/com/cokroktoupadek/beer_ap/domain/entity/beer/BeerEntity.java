@@ -19,6 +19,9 @@ public class BeerEntity {
     @Column(name="beer_id")
     private Long id;
 
+    @Column(name="beer_name")
+    private String name;
+
     @NonNull
     @Column(name="beer_description",columnDefinition = "VARCHAR(1000)")
     private String description;

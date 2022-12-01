@@ -1,6 +1,5 @@
 package com.cokroktoupadek.beer_ap.service.beer;
 
-import com.cokroktoupadek.beer_ap.domain.entity.beer.BeerEntity;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.BoilVolumeEntity;
 import com.cokroktoupadek.beer_ap.repository.beer.BoilVolumeRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,11 +35,11 @@ public class BoilVolumeDbService {
         return boilVolumeRepository.findAll();
     }
 
-    void DeleteById(Long id){
+    void deleteById(Long id){
         boilVolumeRepository.deleteById(id);
     }
 
-    void DeleteAll(){
+    void deleteAll(){
         boilVolumeRepository.deleteAll();
     }
 

@@ -17,6 +17,8 @@ public interface BeerRepository extends CrudRepository<BeerEntity, Long>{
     @Override
     Optional<BeerEntity> findById(Long id);
 
+    Optional<BeerEntity> findByName(String name);
+
     @Override
     BeerEntity save(BeerEntity beerEntity);
 
@@ -25,6 +27,8 @@ public interface BeerRepository extends CrudRepository<BeerEntity, Long>{
 
     @Override
     void deleteAll();
+
+
 }
 
 

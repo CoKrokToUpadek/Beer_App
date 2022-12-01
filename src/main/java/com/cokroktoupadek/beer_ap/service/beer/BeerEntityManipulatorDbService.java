@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class DuplicateFilterDbService {
+public class BeerEntityManipulatorDbService {
     @Autowired
     BoilVolumeDbService boilVolumeDbService;
     @Autowired
@@ -21,9 +22,19 @@ public class DuplicateFilterDbService {
     AmountDbService amountDbService;
     @Autowired
     FermentationDbService fermentationDbService;
-
     @Autowired
     MashTempDbService mashTempDbService;
+    @Autowired
+    MaltDbService maltDbService;
+    @Autowired
+    HopsDbService hopsDbService;
+    @Autowired
+    MethodDbService methodDbService;
+    @Autowired
+    IngredientsDbService ingredientsDbService;
+
+    @Autowired
+    BeerDbService beerDbService;
 
 
     public AmountEntity amountDuplicateVerifier(AmountEntity amountEntity){
@@ -62,23 +73,24 @@ public class DuplicateFilterDbService {
         }
     }
 
-    public FermentationEntity fermentationDuplicateVerifier(FermentationEntity fermentationEntity){
-        if (!fermentationDbService.findTempEntity(fermentationEntity.getTemp().getUnit(),fermentationEntity.getTemp().getValue()).isEmpty()){
-            return fermentationDbService.findTempEntity(fermentationEntity.getTemp().getUnit(),fermentationEntity.getTemp().getValue()).get(0);
-        }else {
-            fermentationDbService.save(fermentationEntity);
-            return fermentationEntity;
-        }
+    public boolean beerExistenceInDbVerifier(BeerEntity beerEntity){
+        return beerDbService.findByName(beerEntity.getName()).isPresent();
     }
 
-    public MashTempEntity mashTempDuplicateVerifier(MashTempEntity mashTempEntity){
-        if(!mashTempDbService.findByDurationAndTempEntity(mashTempEntity.getTemp().getUnit(),mashTempEntity.getTemp().getValue(), mashTempEntity.getDuration()).isEmpty()){
-            return mashTempDbService.findByDurationAndTempEntity(mashTempEntity.getTemp().getUnit(),mashTempEntity.getTemp().getValue(), mashTempEntity.getDuration()).get(0);
-        }else
-            mashTempDbService.save(mashTempEntity);
-        return mashTempEntity;
-    }
 
+
+
+    public void beerEntitySaver(BeerEntity beerEntity){
+        fermentationDbService.save(beerEntity.getMethod().getFermentation());
+        beerEntity.getMethod().getMashTempsList().forEach(mashTempDbService::save);
+        methodDbService.save(beerEntity.getMethod());
+        beerEntity.getIngredients().getHopsList().forEach(hopsDbService::save);
+        beerEntity.getIngredients().getMaltsList().forEach(maltDbService::save);
+        ingredientsDbService.save(beerEntity.getIngredients());
+
+        beerDbService.save(beerEntity);
+
+    }
 
 
 }

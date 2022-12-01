@@ -5,7 +5,7 @@ import com.cokroktoupadek.beer_ap.domain.dto.beer.BeerDto;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.BeerEntity;
 import com.cokroktoupadek.beer_ap.mapper.BeerMapper;
 import com.cokroktoupadek.beer_ap.mapper.BeerEntityFilterAndSaver;
-import com.cokroktoupadek.beer_ap.service.beer.BeerDbService;
+import com.cokroktoupadek.beer_ap.service.beer.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,10 +16,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminFacade {
 
+
     public BeerDbService beerDbService;
     public BeerMapper beerMapper;
     public BeerClient beerClient;
     public BeerEntityFilterAndSaver beerEntityFilter;
+    @Autowired
+    BeerEntityManipulatorDbService beerEntityManipulatorDbService;
     @Autowired
     public AdminFacade(BeerDbService beerDbService, BeerMapper beerMapper, BeerClient beerClient, BeerEntityFilterAndSaver beerEntityFilter) {
         this.beerDbService = beerDbService;
@@ -32,8 +35,7 @@ public class AdminFacade {
         List<BeerDto> beerDtoList=beerClient.getBeerDtoList();
         List<BeerEntity> beerEntities=beerMapper.mapToBeerEntityList(beerDtoList);
         for (BeerEntity beerEntity:beerEntities){
-            beerEntityFilter.beerEntityCleanupAndSave(beerEntity);
-            beerDbService.save(beerEntity);
+            beerEntityFilter.beerEntitySave(beerEntity);
         }
         return "beer list updated successfully";
     }

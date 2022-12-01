@@ -28,11 +28,11 @@ public class HopsDbService {
         return hopsRepository.findAll();
     }
 
-    void DeleteById(Long id){
+    void deleteById(Long id){
         hopsRepository.deleteById(id);
     }
 
-    void DeleteAll(){
+    void deleteAll(){
         hopsRepository.deleteAll();
     }
 }

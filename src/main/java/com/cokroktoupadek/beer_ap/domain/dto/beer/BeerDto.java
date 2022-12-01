@@ -16,6 +16,9 @@ import java.util.Objects;
 public class BeerDto {
     @JsonProperty("id")
     private Long id;
+
+    @JsonProperty("name")
+    private String name;
     @JsonProperty("description")
     private String description;
     @JsonProperty( "image_url")

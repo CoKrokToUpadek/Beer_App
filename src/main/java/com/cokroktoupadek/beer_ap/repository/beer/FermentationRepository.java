@@ -19,9 +19,6 @@ public interface FermentationRepository extends CrudRepository<FermentationEntit
     @Override
     Optional<FermentationEntity> findById(Long id);
 
-    @Query(nativeQuery = true)
-    List<FermentationEntity> getFermentationDuplicates(@Param("TEMPUNIT") String unit, @Param("TEMPVALUE") Integer value);
-
     @Override
     FermentationEntity save(FermentationEntity fermentationEntity);
 

@@ -5,12 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 
 
-@NamedNativeQuery(
-      name = "FermentationEntity.getFermentationDuplicates",
-      query = "SELECT * FROM beer_app.fermentations inner join beer_app.temp_values on fermentation_temp=temp_value_id where temp_value_unit=:TEMPUNIT and temp_value_value=:TEMPVALUE",
-      resultClass = FermentationEntity.class
-)
-
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor

@@ -35,11 +35,11 @@ public class TempDbService {
 
 
 
-    void DeleteById(Long id){
+    void deleteById(Long id){
         tempRepository.deleteById(id);
     }
 
-    void DeleteAll(){
+    void deleteAll(){
         tempRepository.deleteAll();
     }
 }

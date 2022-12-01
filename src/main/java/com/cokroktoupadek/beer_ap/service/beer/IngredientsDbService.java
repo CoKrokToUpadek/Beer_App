@@ -1,6 +1,5 @@
 package com.cokroktoupadek.beer_ap.service.beer;
 
-import com.cokroktoupadek.beer_ap.domain.entity.beer.HopsEntity;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.IngredientsEntity;
 import com.cokroktoupadek.beer_ap.repository.beer.IngredientsRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,11 +28,11 @@ public class IngredientsDbService {
         return ingredientsRepository.findAll();
     }
 
-    void DeleteById(Long id){
+    void deleteById(Long id){
         ingredientsRepository.deleteById(id);
     }
 
-    void DeleteAll(){
+    void deleteAll(){
         ingredientsRepository.deleteAll();
     }
 }

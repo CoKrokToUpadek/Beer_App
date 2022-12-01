@@ -1,6 +1,5 @@
 package com.cokroktoupadek.beer_ap.service.beer;
 
-import com.cokroktoupadek.beer_ap.domain.entity.beer.MashTempEntity;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.MethodEntity;
 import com.cokroktoupadek.beer_ap.repository.beer.MethodRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.lang.reflect.Method;
 import java.util.List;
 
 @Service
@@ -31,11 +29,11 @@ public class MethodDbService {
     }
 
 
-    void DeleteById(Long id){
+    void deleteById(Long id){
         methodRepository.deleteById(id);
     }
 
-    void DeleteAll(){
+    void deleteAll(){
         methodRepository.deleteAll();
     }
 }

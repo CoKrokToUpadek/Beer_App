@@ -1,6 +1,5 @@
 package com.cokroktoupadek.beer_ap.service.beer;
 
-import com.cokroktoupadek.beer_ap.domain.entity.beer.IngredientsEntity;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.MaltEntity;
 import com.cokroktoupadek.beer_ap.repository.beer.MaltRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,11 +28,11 @@ public class MaltDbService {
         return maltRepository.findAll();
     }
 
-    void DeleteById(Long id){
+    void deleteById(Long id){
         maltRepository.deleteById(id);
     }
 
-    void DeleteAll(){
+    void deleteAll(){
         maltRepository.deleteAll();
     }
 }
