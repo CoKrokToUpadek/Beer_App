@@ -22,6 +22,9 @@ public class DuplicateFilterDbService {
     @Autowired
     FermentationDbService fermentationDbService;
 
+    @Autowired
+    MashTempDbService mashTempDbService;
+
 
     public AmountEntity amountDuplicateVerifier(AmountEntity amountEntity){
         if(amountDbService.findByValueAndUnit(amountEntity.getValue(),amountEntity.getUnit()).isPresent()){
@@ -60,13 +63,22 @@ public class DuplicateFilterDbService {
     }
 
     public FermentationEntity fermentationDuplicateVerifier(FermentationEntity fermentationEntity){
-        if (!fermentationDbService.findFermentationByTempValueAndUnit(fermentationEntity.getTemp().getUnit(),fermentationEntity.getTemp().getValue()).isEmpty()){
-            return fermentationDbService.findFermentationByTempValueAndUnit(fermentationEntity.getTemp().getUnit(),fermentationEntity.getTemp().getValue()).get(0);
+        if (!fermentationDbService.findTempEntity(fermentationEntity.getTemp().getUnit(),fermentationEntity.getTemp().getValue()).isEmpty()){
+            return fermentationDbService.findTempEntity(fermentationEntity.getTemp().getUnit(),fermentationEntity.getTemp().getValue()).get(0);
         }else {
             fermentationDbService.save(fermentationEntity);
             return fermentationEntity;
         }
-
     }
+
+    public MashTempEntity mashTempDuplicateVerifier(MashTempEntity mashTempEntity){
+        if(!mashTempDbService.findByDurationAndTempEntity(mashTempEntity.getTemp().getUnit(),mashTempEntity.getTemp().getValue(), mashTempEntity.getDuration()).isEmpty()){
+            return mashTempDbService.findByDurationAndTempEntity(mashTempEntity.getTemp().getUnit(),mashTempEntity.getTemp().getValue(), mashTempEntity.getDuration()).get(0);
+        }else
+            mashTempDbService.save(mashTempEntity);
+        return mashTempEntity;
+    }
+
+
 
 }

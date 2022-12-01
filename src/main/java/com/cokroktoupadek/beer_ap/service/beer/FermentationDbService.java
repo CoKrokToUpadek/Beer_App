@@ -1,6 +1,5 @@
 package com.cokroktoupadek.beer_ap.service.beer;
 
-import com.cokroktoupadek.beer_ap.domain.entity.beer.BoilVolumeEntity;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.FermentationEntity;
 import com.cokroktoupadek.beer_ap.repository.beer.FermentationRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,7 @@ public class FermentationDbService {
         return fermentationRepository.findById(id).orElseThrow(Exception::new);
     }
 
-    List<FermentationEntity> findFermentationByTempValueAndUnit(String unit, Integer value){
+    List<FermentationEntity> findTempEntity(String unit, Integer value){
         return fermentationRepository.getFermentationDuplicates(unit,value);
     }
 

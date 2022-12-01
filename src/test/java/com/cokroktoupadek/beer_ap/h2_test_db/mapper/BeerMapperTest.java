@@ -1,11 +1,14 @@
-package com.cokroktoupadek.beer_ap.mapper;
+package com.cokroktoupadek.beer_ap.h2_test_db.mapper;
 
 import com.cokroktoupadek.beer_ap.domain.dto.beer.BeerDto;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.*;
+import com.cokroktoupadek.beer_ap.mapper.BeerMapper;
 import com.cokroktoupadek.beer_ap.repository.beer.BeerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.test.context.TestPropertySource;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -16,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
+@TestPropertySource("classpath:application-H2TestDb.properties")
 class BeerMapperTest {
 
     @Autowired

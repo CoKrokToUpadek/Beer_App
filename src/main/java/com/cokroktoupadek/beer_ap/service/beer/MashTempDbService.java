@@ -1,6 +1,5 @@
 package com.cokroktoupadek.beer_ap.service.beer;
 
-import com.cokroktoupadek.beer_ap.domain.entity.beer.MaltEntity;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.MashTempEntity;
 import com.cokroktoupadek.beer_ap.repository.beer.MashTempRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +22,10 @@ public class MashTempDbService {
 
     MashTempEntity findById(Long id) throws Exception {
         return mashTempRepository.findById(id).orElseThrow(Exception::new);
+    }
+
+    List<MashTempEntity> findByDurationAndTempEntity(String tempUnit, Integer tempValue, Integer fermentationDuration){
+        return mashTempRepository.getMashTempDuplicates(tempUnit,tempValue,fermentationDuration);
     }
 
     List<MashTempEntity> findById() {

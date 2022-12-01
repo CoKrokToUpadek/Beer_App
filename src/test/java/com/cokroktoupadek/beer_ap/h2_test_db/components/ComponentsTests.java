@@ -1,4 +1,4 @@
-package com.cokroktoupadek.beer_ap.components;
+package com.cokroktoupadek.beer_ap.h2_test_db.components;
 
 import com.cokroktoupadek.beer_ap.domain.entity.user.UserEntity;
 import com.cokroktoupadek.beer_ap.repository.user.UserRepository;
@@ -8,14 +8,19 @@ import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @SpringBootTest
+@TestPropertySource("classpath:application-H2TestDb.properties")
 public class ComponentsTests {
 
 
@@ -26,7 +31,11 @@ public class ComponentsTests {
     UserRepository userRepository;
     @Test
     void assertNullUserTest(){
-        service.loadUserByUsername("sdadsa");
+
+         assertThrows(UsernameNotFoundException.class, () -> {
+             service.loadUserByUsername("sdadsa");
+         });
+
     }
 
 

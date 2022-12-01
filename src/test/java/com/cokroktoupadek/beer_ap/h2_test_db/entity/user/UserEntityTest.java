@@ -1,4 +1,4 @@
-package com.cokroktoupadek.beer_ap.entity.user;
+package com.cokroktoupadek.beer_ap.h2_test_db.entity.user;
 
 import com.cokroktoupadek.beer_ap.domain.entity.user.UserEntity;
 import com.cokroktoupadek.beer_ap.repository.user.UserRepository;
@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@TestPropertySource("classpath:application-H2TestDb.properties")
 class UserEntityTest {
 
     @Autowired

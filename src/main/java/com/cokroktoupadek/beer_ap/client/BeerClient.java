@@ -28,14 +28,14 @@ public class BeerClient {
 
     public List<BeerDto> getBeerDto(int beerNo)  {
         URI url=buildUriForSingleBeer(beerNo);
-        BeerDto singleBeer[]= restTemplate.getForObject(url,BeerDto[].class);
+        BeerDto[] singleBeer = restTemplate.getForObject(url,BeerDto[].class);
         return Optional.of(singleBeer).map(Arrays::asList)
                 .orElse(Collections.emptyList());
     }
 
     public List<BeerDto> getBeerDtoList()  {
         URI url=buildUriForAllBeers();
-        BeerDto singleBeer[]= restTemplate.getForObject(url,BeerDto[].class);
+        BeerDto[] singleBeer = restTemplate.getForObject(url,BeerDto[].class);
         return Optional.of(singleBeer).map(Arrays::asList)
                 .orElse(Collections.emptyList());
     }

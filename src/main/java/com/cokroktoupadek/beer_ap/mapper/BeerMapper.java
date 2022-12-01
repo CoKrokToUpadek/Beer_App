@@ -15,20 +15,17 @@ import java.util.stream.Collectors;
 
 @Service
 public class BeerMapper {
-
-    //ModelMapper modelMapper=BeerMapperSingleton.INSTANCE.getModelMapper();
+    
     ModelMapper modelMapper=BeerMapperSingleton.getInstance().modelMapper;
 
 
     public BeerDto mapToBeerDto(BeerEntity beerEntity){
-        BeerDto beerDto=modelMapper.map(beerEntity,BeerDto.class);
-        return beerDto;
+        return modelMapper.map(beerEntity,BeerDto.class);
 
     }
 
     public BeerEntity mapToBeerEntity(BeerDto beerDto){
-        BeerEntity beerEntity=modelMapper.map(beerDto,BeerEntity.class);
-        return beerEntity;
+        return modelMapper.map(beerDto,BeerEntity.class);
     }
 
     public List<BeerDto> mapToBeerDtoList(final List<BeerEntity> beerEntityList) {
@@ -45,13 +42,11 @@ public class BeerMapper {
 
 
     public CreatedUserDto mapToUserDto(UserEntity userEntity){
-        CreatedUserDto createdUserDto=modelMapper.map(userEntity,CreatedUserDto.class);
-        return createdUserDto;
+        return modelMapper.map(userEntity,CreatedUserDto.class);
     }
 
     public UserEntity mapUserEntity(CreatedUserDto createdUserDto){
-        UserEntity userEntity=modelMapper.map(createdUserDto,UserEntity.class);
-        return userEntity;
+        return modelMapper.map(createdUserDto,UserEntity.class);
     }
 
     public UserEntity mapNewUserEntity(CreatedUserDto createdUserDto){

@@ -1,4 +1,4 @@
-package com.cokroktoupadek.beer_ap.entity.beer;
+package com.cokroktoupadek.beer_ap.h2_test_db.entity.beer;
 
 import com.cokroktoupadek.beer_ap.domain.entity.beer.TempEntity;
 import com.cokroktoupadek.beer_ap.repository.beer.TempRepository;
@@ -6,11 +6,14 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.Optional;
 
 
 @SpringBootTest
+@TestPropertySource("classpath:application-H2TestDb.properties")
 class TempEntityTest {
     @Autowired
     TempRepository tempRepository;

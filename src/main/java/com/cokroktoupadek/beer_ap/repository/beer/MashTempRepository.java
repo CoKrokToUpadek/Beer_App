@@ -1,7 +1,9 @@
 package com.cokroktoupadek.beer_ap.repository.beer;
 
 import com.cokroktoupadek.beer_ap.domain.entity.beer.MashTempEntity;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -16,6 +18,9 @@ public interface MashTempRepository extends CrudRepository<MashTempEntity, Long>
 
     @Override
     Optional<MashTempEntity> findById(Long id);
+
+    @Query(nativeQuery = true)
+    List<MashTempEntity> getMashTempDuplicates(@Param("TEMPUNIT") String unit, @Param("TEMPVALUE") Integer value, @Param("MASHTEMPDURATION") Integer duration);
 
     @Override
     MashTempEntity save(MashTempEntity mashTempEntity);
