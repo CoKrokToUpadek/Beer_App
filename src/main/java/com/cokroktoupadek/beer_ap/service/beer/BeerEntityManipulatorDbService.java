@@ -32,7 +32,6 @@ public class BeerEntityManipulatorDbService {
     MethodDbService methodDbService;
     @Autowired
     IngredientsDbService ingredientsDbService;
-
     @Autowired
     BeerDbService beerDbService;
 
@@ -77,18 +76,69 @@ public class BeerEntityManipulatorDbService {
         return beerDbService.findByName(beerEntity.getName()).isPresent();
     }
 
-
-
-
     public void beerEntitySaver(BeerEntity beerEntity){
-        fermentationDbService.save(beerEntity.getMethod().getFermentation());
-        beerEntity.getMethod().getMashTempsList().forEach(mashTempDbService::save);
-        methodDbService.save(beerEntity.getMethod());
-        beerEntity.getIngredients().getHopsList().forEach(hopsDbService::save);
-        beerEntity.getIngredients().getMaltsList().forEach(maltDbService::save);
-        ingredientsDbService.save(beerEntity.getIngredients());
-
         beerDbService.save(beerEntity);
+
+    }
+
+    public void beerEntityDeleter(String name){
+        BeerEntity beerEntity= beerDbService.findByName(name).get();
+        TempEntity tempEntity;
+        List<MashTempEntity> mashTempEntityList;
+        List<HopsEntity> hopsEntityList;
+        List<MaltEntity> maltEntityList;
+
+        //removing relations to entities (I know it's ugly)
+        beerEntity.getVolume().getBeerVolumes().remove(beerEntity);
+        beerEntity.getBoilVolume().getBeerBoilVolumes().remove(beerEntity);
+        beerEntity.setBoilVolume(new BoilVolumeEntity());
+        beerEntity.setVolume(new VolumeEntity());
+        //handle fermentation relations
+        tempEntity=beerEntity.getMethod().getFermentation().getTemp();
+        tempEntity.getFermentationTempList().remove(beerEntity.getMethod().getFermentation());
+        tempDbService.save(tempEntity);
+        beerEntity.getMethod().getFermentation().setTemp(new TempEntity());
+        //handle mashtemp and temp
+        mashTempEntityList=beerEntity.getMethod().getMashTempsList();
+        mashTempEntityList.forEach(e->{
+            TempEntity lambdaTempEntity=e.getTemp();
+            lambdaTempEntity.getMashTempList().remove(e);
+            tempDbService.save(lambdaTempEntity);
+            e.setTemp(new TempEntity());
+        });
+        //handle malts
+       maltEntityList= beerEntity.getIngredients().getMaltsList();
+       maltEntityList.forEach(e->{
+           AmountEntity lambdaAmountEntity=e.getAmount();
+           lambdaAmountEntity.getMaltsList().remove(e);
+           amountDbService.save(lambdaAmountEntity);
+          e.setAmount(new AmountEntity());
+       });
+        //handle hops
+        hopsEntityList= beerEntity.getIngredients().getHopsList();
+        hopsEntityList.forEach(e->{
+            AmountEntity lambdaAmountEntity=e.getAmount();
+            lambdaAmountEntity.getHopsList().remove(e);
+            amountDbService.save(lambdaAmountEntity);
+            e.setAmount(new AmountEntity());
+        });
+
+        beerDbService.deleteById(beerEntity.getId());
+    }
+
+    public void entitiesWithEmptyRelationsCleaner(){
+        List<TempEntity> tempEntityList=tempDbService.findAll();
+        tempEntityList.forEach(e->{
+         if(e.getMashTempList().isEmpty() && e.getFermentationTempList().isEmpty()){
+             tempDbService.deleteById(e.getId());
+         }
+        });
+        List<AmountEntity> amountEntityList=amountDbService.findAll();
+        amountEntityList.forEach(e->{
+            if (e.getHopsList().isEmpty() && e.getMaltsList().isEmpty()){
+                amountDbService.deleteById(e.getId());
+            }
+        });
 
     }
 

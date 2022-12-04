@@ -19,8 +19,8 @@ public class MethodEntity {
     @Column(name="method_id")
     private Long id;
     @NonNull
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//unidirectional
-    @Fetch(value = FetchMode.SUBSELECT)//added for tests
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)//unidirectional
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(
             name = "method_mash_temps",
             joinColumns = {@JoinColumn(name = "mash_temp_id")},
@@ -28,15 +28,12 @@ public class MethodEntity {
     private List<MashTempEntity> mashTempsList;
 
     @NonNull
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//unidirectional
+    @OneToOne(cascade =CascadeType.ALL)//bidirectional
     @JoinColumn(name = "method_fermentation", referencedColumnName = "fermentation_id")
     private FermentationEntity fermentation;
 
     @Column(name="method_twist")
     private String twist;
-
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "method")
-    private List<BeerEntity> methods;
 
     @Override
     public boolean equals(Object o) {

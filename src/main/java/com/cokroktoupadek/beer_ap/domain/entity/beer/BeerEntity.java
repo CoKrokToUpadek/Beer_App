@@ -63,25 +63,24 @@ public class BeerEntity {
     private Double attenuationLevel;
 
     @NonNull
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)//unidirectional
+    @ManyToOne(fetch = FetchType.EAGER)//bidirectional
     @JoinColumn(name = "beer_volume", referencedColumnName = "volume_id")
     private VolumeEntity volume;
 
     @NonNull
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)//unidirectional
+    @ManyToOne(fetch = FetchType.EAGER)//bidirectional
     @JoinColumn(name = "beer_boil_Volume", referencedColumnName = "boil_volume_id")
     private BoilVolumeEntity boilVolume;
 
     @NonNull
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)//bidirectional
+    @OneToOne(cascade =CascadeType.ALL)//unidirectional
     @JoinColumn(name = "beer_method", referencedColumnName = "method_id")
     private MethodEntity method;
 
     @NonNull
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)//bidirectional
+    @OneToOne(cascade =CascadeType.ALL)//unidirectional
     @JoinColumn(name = "beer_ingredients", referencedColumnName = "ingredient_id")
     private IngredientsEntity ingredients;
-
 
     @NonNull
     @ElementCollection
@@ -97,6 +96,6 @@ public class BeerEntity {
     private String contributed_by;
 
     @ManyToMany(fetch = FetchType.EAGER,mappedBy = "favouredBeers")
-    @Fetch(value = FetchMode.SUBSELECT)//added for tests
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<UserEntity> beerFavouredBy;
 }

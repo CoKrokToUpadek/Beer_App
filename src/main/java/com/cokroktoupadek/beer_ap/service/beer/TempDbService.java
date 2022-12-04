@@ -42,4 +42,8 @@ public class TempDbService {
     void deleteAll(){
         tempRepository.deleteAll();
     }
+
+    public List<TempEntity> findAll() {
+        return tempRepository.findAll();
+    }
 }

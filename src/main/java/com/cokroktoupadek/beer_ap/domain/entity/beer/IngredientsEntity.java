@@ -19,8 +19,8 @@ public class IngredientsEntity {
     private Long id;
 
     @NonNull
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//bidirectional
-    @Fetch(value = FetchMode.SUBSELECT)//added for tests
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)//unidirectional
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(
             name = "ingredient_malts",
             joinColumns = {@JoinColumn(name = "ingredient_id")},
@@ -28,8 +28,8 @@ public class IngredientsEntity {
     private List<MaltEntity> maltsList;
 
     @NonNull
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//bidirectional
-    @Fetch(value = FetchMode.SUBSELECT)//added for tests
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)//unidirectional
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(
             name = "ingredient_hops",
             joinColumns = {@JoinColumn(name = "ingredient_id")},
@@ -40,8 +40,6 @@ public class IngredientsEntity {
     @Column(name="ingredient_yeast")
     private String yeast;
 
-    @OneToMany(mappedBy = "ingredients")
-    private List<BeerEntity> beers;
 
     @Override
     public boolean equals(Object o) {

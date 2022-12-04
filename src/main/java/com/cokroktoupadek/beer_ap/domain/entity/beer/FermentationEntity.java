@@ -17,7 +17,7 @@ public class FermentationEntity {
     private Long id;
 
     @NonNull
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)//bidirectional
+    @ManyToOne(fetch = FetchType.EAGER)//bidirectional
     @JoinColumn(name = "fermentation_temp", referencedColumnName = "temp_value_id")
     private TempEntity temp;
 

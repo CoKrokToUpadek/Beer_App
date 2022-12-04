@@ -25,6 +25,12 @@ public class VolumeEntity {
     @Column(name="volume_unit")
     private String unit;
 
+    @OneToMany(mappedBy = "volume")
+
+    private  List<BeerEntity> beerVolumes;
+
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

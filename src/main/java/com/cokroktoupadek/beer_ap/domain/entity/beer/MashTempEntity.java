@@ -4,6 +4,7 @@ package com.cokroktoupadek.beer_ap.domain.entity.beer;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -18,7 +19,7 @@ public class MashTempEntity {
     private Long id;
 
     @NonNull
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)//bidirectional
+    @ManyToOne(fetch = FetchType.EAGER)//bidirectional
     @JoinColumn(name = "mash_temp_temp", referencedColumnName = "temp_value_id")
     private TempEntity temp;
 

@@ -22,12 +22,9 @@ public class MaltEntity {
     private String name;
 
     @NonNull
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)//bidirectional
+    @ManyToOne(fetch = FetchType.EAGER)//bidirectional
     @JoinColumn(name = "malt_amount", referencedColumnName = "amount_value_id")
     private AmountEntity amount;
-
-    @ManyToMany(mappedBy = "maltsList")
-    private List<IngredientsEntity> ingredients;
 
     @Override
     public boolean equals(Object o) {

@@ -43,4 +43,7 @@ public class AmountDbService {
         amountRepository.deleteAll();
     }
 
+    public List<AmountEntity> findAll() {
+        return amountRepository.findAll();
+    }
 }

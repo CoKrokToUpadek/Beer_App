@@ -7,6 +7,7 @@ import com.cokroktoupadek.beer_ap.mapper.BeerMapper;
 import com.cokroktoupadek.beer_ap.mapper.BeerEntityFilterAndSaver;
 import com.cokroktoupadek.beer_ap.service.beer.*;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.spi.StrongTypeConditionalConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -45,6 +46,13 @@ public class AdminFacade {
         List<BeerEntity> beerEntities=beerMapper.mapToBeerEntityList(beerDtoList);
         beerEntities.forEach(beerDbService::save);
         return "beer list updated successfully";
+    }
+
+
+    public String deleteSingleBeer(String name){
+        beerEntityManipulatorDbService.beerEntityDeleter(name);
+        beerEntityManipulatorDbService.entitiesWithEmptyRelationsCleaner();
+        return "beer was deleted successfully";
     }
 
 }

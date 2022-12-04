@@ -3,6 +3,7 @@ package com.cokroktoupadek.beer_ap.domain.entity.beer;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,4 +23,7 @@ public class BoilVolumeEntity {
     @NonNull
     @Column(name="boil_volume_unit")
     private String unit;
+
+    @OneToMany(mappedBy = "boilVolume")
+    private List<BeerEntity> beerBoilVolumes;
 }

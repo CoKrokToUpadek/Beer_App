@@ -21,7 +21,7 @@ public class HopsEntity {
     private String name;
 
     @NonNull
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)//bidirectional
+    @ManyToOne(fetch = FetchType.EAGER)//bidirectional
     @JoinColumn(name = "hop_amount", referencedColumnName = "amount_value_id")
     private AmountEntity amount;
 
@@ -32,9 +32,6 @@ public class HopsEntity {
     @NonNull
     @Column(name="hop_attribute")
     private String attribute;
-
-    @ManyToMany(mappedBy = "hopsList")
-    private List<IngredientsEntity> ingredients;
 
     @Override
     public boolean equals(Object o) {

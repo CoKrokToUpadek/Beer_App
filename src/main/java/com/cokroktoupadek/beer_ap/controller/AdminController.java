@@ -20,8 +20,14 @@ public class AdminController {
 
     @Secured("ROLE_ADMIN")
     @PostMapping("/update_db")
-    public ResponseEntity<String> UpdateLocalBeersDb() {
+    public ResponseEntity<String> updateLocalBeersDb() {
         return ResponseEntity.ok(adminFacade.updateDbFacade());
+    }
+
+    @Secured("ROLE_ADMIN")
+    @DeleteMapping("/delete_beer")
+    public ResponseEntity<String> deleteBeerFromDb(@RequestParam String beerName) {
+        return ResponseEntity.ok(adminFacade.deleteSingleBeer(beerName));
     }
 
     @Secured("ROLE_ADMIN")
