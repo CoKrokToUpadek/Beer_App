@@ -20,7 +20,7 @@ public class BeerEntityFilterAndSaver {
    BeerEntityManipulatorDbService beerEntityManipulatorDbService;
 
 
-   public BeerEntity beerEntityDataOptimize(BeerEntity beerEntity){
+   public BeerEntity beerEntityDataOptimizer(BeerEntity beerEntity){
             beerEntity.setBoilVolume(beerEntityManipulatorDbService.boilVolumeDuplicateVerifier(beerEntity.getBoilVolume()));
             beerEntity.setVolume(beerEntityManipulatorDbService.volumeDuplicateVerifier(beerEntity.getVolume()));
             beerEntity.getIngredients().getMaltsList().forEach(e->e.setAmount(beerEntityManipulatorDbService.amountDuplicateVerifier(e.getAmount())));
@@ -30,9 +30,9 @@ public class BeerEntityFilterAndSaver {
        return beerEntity;
    }
 
-   public void beerEntitySave(BeerEntity beerEntity){
+   public void beerEntitySaver(BeerEntity beerEntity){
        if (!beerEntityManipulatorDbService.beerExistenceInDbVerifier(beerEntity)){
-           beerEntityManipulatorDbService.beerEntitySaver(beerEntityDataOptimize(beerEntity));
+           beerEntityManipulatorDbService.beerEntitySaver(beerEntityDataOptimizer(beerEntity));
 
        }
    }

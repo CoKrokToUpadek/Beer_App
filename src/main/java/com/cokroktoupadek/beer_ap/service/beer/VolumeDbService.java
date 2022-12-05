@@ -43,4 +43,8 @@ public class VolumeDbService {
     void deleteAll(){
         volumeRepository.deleteAll();
     }
+
+    public List<VolumeEntity> findAll() {
+        return  volumeRepository.findAll();
+    }
 }

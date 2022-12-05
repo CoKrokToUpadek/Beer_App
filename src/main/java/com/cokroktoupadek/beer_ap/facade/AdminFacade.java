@@ -3,15 +3,17 @@ package com.cokroktoupadek.beer_ap.facade;
 import com.cokroktoupadek.beer_ap.client.BeerClient;
 import com.cokroktoupadek.beer_ap.domain.dto.beer.BeerDto;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.BeerEntity;
+import com.cokroktoupadek.beer_ap.errorhandlers.BeerDbIsEmptyException;
+import com.cokroktoupadek.beer_ap.errorhandlers.BeerNotFoundException;
 import com.cokroktoupadek.beer_ap.mapper.BeerMapper;
 import com.cokroktoupadek.beer_ap.mapper.BeerEntityFilterAndSaver;
 import com.cokroktoupadek.beer_ap.service.beer.*;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.spi.StrongTypeConditionalConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -36,7 +38,7 @@ public class AdminFacade {
         List<BeerDto> beerDtoList=beerClient.getBeerDtoList();
         List<BeerEntity> beerEntities=beerMapper.mapToBeerEntityList(beerDtoList);
         for (BeerEntity beerEntity:beerEntities){
-            beerEntityFilter.beerEntitySave(beerEntity);
+            beerEntityFilter.beerEntitySaver(beerEntity);
         }
         return "beer list updated successfully";
     }
@@ -48,11 +50,23 @@ public class AdminFacade {
         return "beer list updated successfully";
     }
 
-
-    public String deleteSingleBeer(String name){
+    public String deleteSingleBeer(String name) throws BeerNotFoundException{
+        if (beerDbService.findByName(name).isEmpty()){
+            throw new BeerNotFoundException();
+        }
         beerEntityManipulatorDbService.beerEntityDeleter(name);
         beerEntityManipulatorDbService.entitiesWithEmptyRelationsCleaner();
         return "beer was deleted successfully";
+    }
+
+    public String deleteAllBeers() throws BeerDbIsEmptyException {
+        List<BeerEntity> beerEntityList= beerDbService.findAll();
+        if(beerEntityList.isEmpty()){
+            throw new BeerDbIsEmptyException();
+        }
+        beerEntityManipulatorDbService.allBeerEntitiesDeleter(beerEntityList.stream().map(BeerEntity::getName).collect(Collectors.toList()));
+        beerEntityManipulatorDbService.entitiesWithEmptyRelationsCleaner();
+        return "all beers has been deleted successfully";
     }
 
 }

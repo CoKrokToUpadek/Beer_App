@@ -20,12 +20,16 @@ class MaltEntityTest {
     @Autowired
     MaltRepository maltRepository;
 
+    @Autowired
+    AmountRepository amountRepository;
+
 
 
     @Test
     void addMaltTest(){
         //given
         AmountEntity amountEntity=new AmountEntity(1.0,"testAmount");
+        amountRepository.save(amountEntity);
         MaltEntity maltEntity=new MaltEntity("testMalt",amountEntity);
 
         //when

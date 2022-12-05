@@ -2,6 +2,7 @@ package com.cokroktoupadek.beer_ap.controller;
 
 
 
+import com.cokroktoupadek.beer_ap.errorhandlers.BeerDbIsEmptyException;
 import com.cokroktoupadek.beer_ap.facade.AdminFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,12 @@ public class AdminController {
     @DeleteMapping("/delete_beer")
     public ResponseEntity<String> deleteBeerFromDb(@RequestParam String beerName) {
         return ResponseEntity.ok(adminFacade.deleteSingleBeer(beerName));
+    }
+
+    @Secured("ROLE_ADMIN")
+    @DeleteMapping("/delete_all_beers")
+    public ResponseEntity<String> deleteAllBeersFromDb() throws BeerDbIsEmptyException {
+        return ResponseEntity.ok(adminFacade.deleteAllBeers());
     }
 
     @Secured("ROLE_ADMIN")

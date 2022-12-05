@@ -4,6 +4,7 @@ import com.cokroktoupadek.beer_ap.domain.entity.beer.*;
 import com.cokroktoupadek.beer_ap.repository.beer.FermentationRepository;
 import com.cokroktoupadek.beer_ap.repository.beer.MashTempRepository;
 import com.cokroktoupadek.beer_ap.repository.beer.MethodRepository;
+import com.cokroktoupadek.beer_ap.repository.beer.TempRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +22,18 @@ class MethodEntityTest {
     @Autowired
     MethodRepository methodRepository;
 
+    @Autowired
+    TempRepository tempRepository;
+
 
     @Test
     void addMethodTest(){
         //given
         TempEntity tempEntity=new TempEntity(1,"testTemp");
+        tempRepository.save(tempEntity);
         MashTempEntity mashTempEntity =new MashTempEntity(tempEntity,1);
         List<MashTempEntity> mashTempEntityList=new ArrayList<>(List.of(mashTempEntity));
-        FermentationEntity fermentationEntity=new FermentationEntity(new TempEntity(1,"testTemp"));
+        FermentationEntity fermentationEntity=new FermentationEntity(tempEntity);
         MethodEntity methodEntity =new MethodEntity(mashTempEntityList,fermentationEntity);
         //when
         methodRepository.save(methodEntity);

@@ -19,12 +19,16 @@ public class HopsEntityTest {
     @Autowired
     HopsRepository hopsRepository;
 
+    @Autowired
+    AmountRepository amountRepository;
+
 
 
     @Test
     void addHopsTest(){
         //given
         AmountEntity amountEntity=new AmountEntity(2.0,"testAmount");
+        amountRepository.save(amountEntity);
         HopsEntity hopsEntity =new HopsEntity("testName",amountEntity,"testAdd","testAttribute");
         //when
         hopsRepository.save(hopsEntity);

@@ -43,4 +43,7 @@ public class BoilVolumeDbService {
         boilVolumeRepository.deleteAll();
     }
 
+    public List<BoilVolumeEntity> findAll() {
+        return boilVolumeRepository.findAll();
+    }
 }

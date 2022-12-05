@@ -4,6 +4,7 @@ import com.cokroktoupadek.beer_ap.domain.entity.beer.AmountEntity;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.HopsEntity;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.IngredientsEntity;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.MaltEntity;
+import com.cokroktoupadek.beer_ap.repository.beer.AmountRepository;
 import com.cokroktoupadek.beer_ap.repository.beer.HopsRepository;
 import com.cokroktoupadek.beer_ap.repository.beer.IngredientsRepository;
 import com.cokroktoupadek.beer_ap.repository.beer.MaltRepository;
@@ -24,11 +25,15 @@ class IngredientsEntityTest {
     @Autowired
     IngredientsRepository ingredientsRepository;
 
+    @Autowired
+    AmountRepository amountRepository;
+
     @Test
     void addIngredientsTest(){
         //given
 
         AmountEntity amountEntity=new AmountEntity(1.0,"testAmount");
+        amountRepository.save(amountEntity);
         MaltEntity maltEntity=new MaltEntity("testMalt",amountEntity);
         HopsEntity hopsEntity =new HopsEntity("testName",amountEntity,"testAdd","testAttribute");
         List<MaltEntity> maltEntityList=new ArrayList<>(List.of(maltEntity));

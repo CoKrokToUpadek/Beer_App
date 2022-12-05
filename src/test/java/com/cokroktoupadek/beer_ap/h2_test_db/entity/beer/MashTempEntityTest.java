@@ -19,12 +19,16 @@ class MashTempEntityTest {
     @Autowired
     MashTempRepository mashTempRepository;
 
+    @Autowired
+    TempRepository tempRepository;
+
 
 
     @Test
     void addMashTempTest(){
         //given
         TempEntity tempEntity=new TempEntity(1,"testTemp");
+        tempRepository.save(tempEntity);
         MashTempEntity mashTempEntity =new MashTempEntity(tempEntity,1);
         //when
         mashTempRepository.save(mashTempEntity);

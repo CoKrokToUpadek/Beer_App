@@ -20,12 +20,17 @@ class FermentationEntityTest {
     @Autowired
     FermentationRepository fermentationRepository;
 
+    @Autowired
+    TempRepository tempRepository;
+
 
 
     @Test
     void addFermentationTest(){
         //given
+
         TempEntity tempEntity=new TempEntity(1,"testTemp");
+        tempRepository.save(tempEntity);
         FermentationEntity fermentationEntity =new FermentationEntity(tempEntity);
         //when
         fermentationRepository.save(fermentationEntity);
