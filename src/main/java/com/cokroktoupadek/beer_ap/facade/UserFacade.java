@@ -23,11 +23,11 @@ import java.util.stream.Stream;
 public class UserFacade {
 
 
-    public UserDbService userDbService;
+    private UserDbService userDbService;
 
-    public BeerDbService beerDbService;
+    private BeerDbService beerDbService;
 
-    public BeerMapper beerMapper;
+    private BeerMapper beerMapper;
 
     @Autowired
     public UserFacade(UserDbService userDbService, BeerDbService beerDbService, BeerMapper beerMapper) {

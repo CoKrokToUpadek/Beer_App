@@ -14,8 +14,12 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class BoilVolumeDbService {
+
+    private   BoilVolumeRepository boilVolumeRepository;
     @Autowired
-    BoilVolumeRepository boilVolumeRepository;
+    public BoilVolumeDbService(BoilVolumeRepository boilVolumeRepository) {
+        this.boilVolumeRepository = boilVolumeRepository;
+    }
 
     BoilVolumeEntity save(BoilVolumeEntity boilVolumeEntity){
         return boilVolumeRepository.save(boilVolumeEntity);

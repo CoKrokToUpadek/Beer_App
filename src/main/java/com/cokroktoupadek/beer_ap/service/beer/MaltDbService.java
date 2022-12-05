@@ -13,8 +13,12 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class MaltDbService {
+
+    private MaltRepository maltRepository;
     @Autowired
-    MaltRepository maltRepository;
+    public MaltDbService(MaltRepository maltRepository) {
+        this.maltRepository = maltRepository;
+    }
 
     MaltEntity save(MaltEntity maltEntity){
         return maltRepository.save(maltEntity);

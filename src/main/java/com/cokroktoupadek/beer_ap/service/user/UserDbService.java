@@ -14,9 +14,12 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class UserDbService {
-    @Autowired
-    private final UserRepository userRepository;
 
+    private UserRepository userRepository;
+   @Autowired
+    public UserDbService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public UserEntity save(UserEntity userEntity){
         return userRepository.save(userEntity);

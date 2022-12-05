@@ -13,8 +13,12 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class MethodDbService {
+
+   private MethodRepository methodRepository;
     @Autowired
-    MethodRepository methodRepository;
+    public MethodDbService(MethodRepository methodRepository) {
+        this.methodRepository = methodRepository;
+    }
 
     MethodEntity save(MethodEntity methodEntity){
         return methodRepository.save(methodEntity);

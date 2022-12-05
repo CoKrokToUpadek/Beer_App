@@ -18,7 +18,6 @@ public class BeerMapper {
     
     ModelMapper modelMapper=BeerMapperSingleton.getInstance().modelMapper;
 
-
     public BeerDto mapToBeerDto(BeerEntity beerEntity){
         return modelMapper.map(beerEntity,BeerDto.class);
 

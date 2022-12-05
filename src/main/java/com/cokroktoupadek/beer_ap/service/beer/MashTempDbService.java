@@ -13,8 +13,12 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class MashTempDbService {
-    @Autowired
-    MashTempRepository mashTempRepository;
+
+   private MashTempRepository mashTempRepository;
+
+    public MashTempDbService(MashTempRepository mashTempRepository) {
+        this.mashTempRepository = mashTempRepository;
+    }
 
     MashTempEntity save(MashTempEntity mashTempEntity){
         return mashTempRepository.save(mashTempEntity);

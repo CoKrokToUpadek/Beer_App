@@ -13,8 +13,12 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class IngredientsDbService {
+
+   private IngredientsRepository ingredientsRepository;
     @Autowired
-    IngredientsRepository ingredientsRepository;
+    public IngredientsDbService(IngredientsRepository ingredientsRepository) {
+        this.ingredientsRepository = ingredientsRepository;
+    }
 
     IngredientsEntity save(IngredientsEntity ingredientsEntity){
         return ingredientsRepository.save(ingredientsEntity);

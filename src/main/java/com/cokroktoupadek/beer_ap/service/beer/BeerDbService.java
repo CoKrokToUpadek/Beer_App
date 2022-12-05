@@ -14,8 +14,12 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class BeerDbService {
+
+    private BeerRepository beerRepository;
     @Autowired
-    BeerRepository beerRepository;
+    public BeerDbService(BeerRepository beerRepository) {
+        this.beerRepository = beerRepository;
+    }
 
     public BeerEntity save(BeerEntity beerEntity) {
         return beerRepository.save(beerEntity);

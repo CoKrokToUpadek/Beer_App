@@ -3,6 +3,7 @@ package com.cokroktoupadek.beer_ap.controller;
 
 
 import com.cokroktoupadek.beer_ap.errorhandlers.BeerDbIsEmptyException;
+import com.cokroktoupadek.beer_ap.errorhandlers.BeerNotFoundException;
 import com.cokroktoupadek.beer_ap.facade.AdminFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class AdminController {
 
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/delete_beer")
-    public ResponseEntity<String> deleteBeerFromDb(@RequestParam String beerName) {
+    public ResponseEntity<String> deleteBeerFromDb(@RequestParam String beerName) throws BeerNotFoundException {
         return ResponseEntity.ok(adminFacade.deleteSingleBeer(beerName));
     }
 

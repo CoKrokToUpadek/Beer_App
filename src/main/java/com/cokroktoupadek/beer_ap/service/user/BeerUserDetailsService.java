@@ -19,8 +19,12 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class BeerUserDetailsService implements UserDetailsService {
 
-    @Autowired
+    private
     UserDbService userDbService;
+    @Autowired
+    public BeerUserDetailsService(UserDbService userDbService) {
+        this.userDbService = userDbService;
+    }
 
     @Override
     public BeerUserDetails loadUserByUsername(String username) {

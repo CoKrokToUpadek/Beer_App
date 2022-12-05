@@ -16,11 +16,14 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class BeerEntityFilterAndSaver {
 
-   @Autowired
-   BeerEntityManipulatorDbService beerEntityManipulatorDbService;
 
+    private BeerEntityManipulatorDbService beerEntityManipulatorDbService;
+    @Autowired
+    public BeerEntityFilterAndSaver(BeerEntityManipulatorDbService beerEntityManipulatorDbService) {
+        this.beerEntityManipulatorDbService = beerEntityManipulatorDbService;
+    }
 
-   public BeerEntity beerEntityDataOptimizer(BeerEntity beerEntity){
+    public BeerEntity beerEntityDataOptimizer(BeerEntity beerEntity){
             beerEntity.setBoilVolume(beerEntityManipulatorDbService.boilVolumeDuplicateVerifier(beerEntity.getBoilVolume()));
             beerEntity.setVolume(beerEntityManipulatorDbService.volumeDuplicateVerifier(beerEntity.getVolume()));
             beerEntity.getIngredients().getMaltsList().forEach(e->e.setAmount(beerEntityManipulatorDbService.amountDuplicateVerifier(e.getAmount())));

@@ -14,8 +14,12 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class TempDbService {
+
+   private TempRepository tempRepository;
     @Autowired
-    TempRepository tempRepository;
+    public TempDbService(TempRepository tempRepository) {
+        this.tempRepository = tempRepository;
+    }
 
     TempEntity save(TempEntity tempEntity){
         return tempRepository.save(tempEntity);

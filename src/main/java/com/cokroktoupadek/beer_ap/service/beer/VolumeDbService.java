@@ -14,8 +14,12 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class VolumeDbService {
+
+    private VolumeRepository volumeRepository;
     @Autowired
-    VolumeRepository volumeRepository;
+    public VolumeDbService(VolumeRepository volumeRepository) {
+        this.volumeRepository = volumeRepository;
+    }
 
     VolumeEntity save(VolumeEntity volumeEntity){
         return volumeRepository.save(volumeEntity);

@@ -13,8 +13,12 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class HopsDbService {
+
+   private HopsRepository hopsRepository;
     @Autowired
-    HopsRepository hopsRepository;
+    public HopsDbService(HopsRepository hopsRepository) {
+        this.hopsRepository = hopsRepository;
+    }
 
     HopsEntity save(HopsEntity hopsEntity){
         return hopsRepository.save(hopsEntity);

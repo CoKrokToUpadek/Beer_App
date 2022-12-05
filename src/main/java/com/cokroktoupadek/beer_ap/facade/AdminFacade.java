@@ -20,18 +20,18 @@ import java.util.stream.Collectors;
 public class AdminFacade {
 
 
-    public BeerDbService beerDbService;
-    public BeerMapper beerMapper;
-    public BeerClient beerClient;
-    public BeerEntityFilterAndSaver beerEntityFilter;
+    private BeerDbService beerDbService;
+    private BeerMapper beerMapper;
+    private BeerClient beerClient;
+    private  BeerEntityFilterAndSaver beerEntityFilter;
+    private BeerEntityManipulatorDbService beerEntityManipulatorDbService;
     @Autowired
-    BeerEntityManipulatorDbService beerEntityManipulatorDbService;
-    @Autowired
-    public AdminFacade(BeerDbService beerDbService, BeerMapper beerMapper, BeerClient beerClient, BeerEntityFilterAndSaver beerEntityFilter) {
+    public AdminFacade(BeerDbService beerDbService, BeerMapper beerMapper, BeerClient beerClient, BeerEntityFilterAndSaver beerEntityFilter,BeerEntityManipulatorDbService beerEntityManipulatorDbService) {
         this.beerDbService = beerDbService;
         this.beerMapper = beerMapper;
         this.beerClient = beerClient;
         this.beerEntityFilter = beerEntityFilter;
+        this.beerEntityManipulatorDbService=beerEntityManipulatorDbService;
     }
 
     public String updateDbFacade(){

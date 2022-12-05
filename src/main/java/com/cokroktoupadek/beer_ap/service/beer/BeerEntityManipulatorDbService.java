@@ -14,29 +14,24 @@ import java.util.NoSuchElementException;
 @Transactional
 @RequiredArgsConstructor
 public class BeerEntityManipulatorDbService {
-    @Autowired
-    BoilVolumeDbService boilVolumeDbService;
-    @Autowired
-    VolumeDbService volumeDbService;
-    @Autowired
-    TempDbService tempDbService;
-    @Autowired
-    AmountDbService amountDbService;
-    @Autowired
-    FermentationDbService fermentationDbService;
-    @Autowired
-    MashTempDbService mashTempDbService;
-    @Autowired
-    MaltDbService maltDbService;
-    @Autowired
-    HopsDbService hopsDbService;
-    @Autowired
-    MethodDbService methodDbService;
-    @Autowired
-    IngredientsDbService ingredientsDbService;
-    @Autowired
-    BeerDbService beerDbService;
 
+   private BoilVolumeDbService boilVolumeDbService;
+
+    private VolumeDbService volumeDbService;
+
+    private TempDbService tempDbService;
+
+    private  AmountDbService amountDbService;
+
+    private  BeerDbService beerDbService;
+    @Autowired
+    public BeerEntityManipulatorDbService(BoilVolumeDbService boilVolumeDbService, VolumeDbService volumeDbService, TempDbService tempDbService, AmountDbService amountDbService, BeerDbService beerDbService) {
+        this.boilVolumeDbService = boilVolumeDbService;
+        this.volumeDbService = volumeDbService;
+        this.tempDbService = tempDbService;
+        this.amountDbService = amountDbService;
+        this.beerDbService = beerDbService;
+    }
 
     public AmountEntity amountDuplicateVerifier(AmountEntity amountEntity){
         if(amountDbService.findByValueAndUnit(amountEntity.getValue(),amountEntity.getUnit()).isPresent()){

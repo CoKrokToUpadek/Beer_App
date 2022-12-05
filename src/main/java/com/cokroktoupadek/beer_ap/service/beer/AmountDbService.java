@@ -14,8 +14,12 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class AmountDbService {
+
+    private AmountRepository amountRepository;
     @Autowired
-    AmountRepository amountRepository;
+    public AmountDbService(AmountRepository amountRepository) {
+        this.amountRepository = amountRepository;
+    }
 
     AmountEntity save(AmountEntity amountEntity){
         return amountRepository.save(amountEntity);

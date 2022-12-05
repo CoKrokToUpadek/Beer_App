@@ -13,8 +13,12 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class FermentationDbService {
+
+    private FermentationRepository fermentationRepository;
     @Autowired
-    FermentationRepository fermentationRepository;
+    public FermentationDbService(FermentationRepository fermentationRepository) {
+        this.fermentationRepository = fermentationRepository;
+    }
 
     FermentationEntity save(FermentationEntity fermentationEntity){
         return fermentationRepository.save(fermentationEntity);
