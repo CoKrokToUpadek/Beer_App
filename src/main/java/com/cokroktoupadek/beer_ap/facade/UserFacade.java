@@ -38,24 +38,14 @@ public class UserFacade {
 
     public String createUserFacade(CreatedUserDto userDto) {
 
-        boolean wasLoginTaken=true;
-        boolean wasEmailTaken=true;
         UserEntity entity;
-        try {
-           userDbService.findByLogin(userDto.getLogin());
-        }catch (Exception e){
-            wasLoginTaken=false;
-        }
-        try {
-            userDbService.findByEmail(userDto.getEmail());
-        }catch (Exception e){
-            wasEmailTaken=false;
-        }
-        if (wasLoginTaken){
+        if(userDbService.findByLogin(userDto.getLogin()).isPresent()) {
             return UserCreationException.ERR_LOGIN_TAKEN;
-        }else if(wasEmailTaken){
-            return UserCreationException.ERR_EMAIL_TAKEN;
-        }else if(Stream.of(userDto.getAddress(), userDto.getEmail(), userDto.getLogin(), userDto.getPassword(),
+        }
+       if (userDbService.findByEmail(userDto.getEmail()).isPresent()) {
+           return UserCreationException.ERR_EMAIL_TAKEN;
+        }
+       if(Stream.of(userDto.getAddress(), userDto.getEmail(), userDto.getLogin(), userDto.getPassword(),
                 userDto.getFirstName(),userDto.getLastName()).anyMatch(Objects::isNull)){
            return UserCreationException.ERR_MISSING_INFORMATION;
         }else {

@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 
-public class BeerUserDetails implements UserDetails {
+public class  BeerUserDetails implements UserDetails {
     private final UserEntity userEntity;
 
     public BeerUserDetails(UserEntity userEntity) {
@@ -21,15 +21,14 @@ public class BeerUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(userEntity.getUserRole().equals("admin")){
             return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"),new SimpleGrantedAuthority("ROLE_USER"),new SimpleGrantedAuthority("ROLE_ANONYMOUS"));
-        } else if(userEntity.getUserRole().equals("user")) {
+        } else {
             return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"), new SimpleGrantedAuthority("ROLE_ANONYMOUS"));
-        }else {
-            return Arrays.asList(new SimpleGrantedAuthority("ROLE_ANONYMOUS"));
         }
     }
 
     @Override
-    public String getPassword() {
+    public String getPassword
+        () {
         return userEntity.getPassword();
     }
 

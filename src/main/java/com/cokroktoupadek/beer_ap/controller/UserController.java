@@ -7,6 +7,7 @@ import com.cokroktoupadek.beer_ap.facade.UserFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,26 +21,25 @@ public class UserController {
 
     UserFacade userFacade;
 
-    //  @Secured({"ROLE_ANONYMOUS"})
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @PostMapping("/create_user")//ok
     public ResponseEntity<String> createUser(@RequestBody CreatedUserDto userInputDto) {
         return ResponseEntity.ok(userFacade.createUserFacade(userInputDto));
     }
 
-    @Secured({"ROLE_ADMIN","ROLE_USER"})
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @GetMapping("/get_beers")
     public ResponseEntity<List<BeerDto>> getBeerList() {
-        List<BeerDto> beerDtoList = new ArrayList<>();
         return ResponseEntity.ok(userFacade.getBeerList());
     }
 
-    @Secured({"ROLE_ADMIN","ROLE_USER"})
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @PostMapping("/Add_beer_to_favorite")
     public ResponseEntity<Void> addBeerToFavorite(@RequestParam Integer beerId){
         return ResponseEntity.ok().build();
     }
 
-    @Secured({"ROLE_ADMIN","ROLE_USER"})
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @GetMapping("/Get_my_favorite_beers")
     public ResponseEntity<List<BeerDto>> getMyFavoriteBeers(){
         return ResponseEntity.ok(new ArrayList<>());

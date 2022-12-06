@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -29,12 +30,12 @@ public class UserDbService {
         return userRepository.findById(id).orElseThrow(Exception::new);
     }
 
-   public UserEntity findByLogin(String login) throws Exception {
-        return userRepository.findByLogin(login).orElseThrow(Exception::new);
+   public Optional<UserEntity> findByLogin(String login) {
+        return userRepository.findByLogin(login);
     }
 
-    public UserEntity findByEmail(String email) throws Exception {
-        return userRepository.findByEmail(email).orElseThrow(Exception::new);
+    public  Optional<UserEntity> findByEmail(String email)  {
+        return userRepository.findByEmail(email);
     }
 
 

@@ -19,8 +19,7 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class BeerUserDetailsService implements UserDetailsService {
 
-    private
-    UserDbService userDbService;
+    private UserDbService userDbService;
     @Autowired
     public BeerUserDetailsService(UserDbService userDbService) {
         this.userDbService = userDbService;
@@ -28,13 +27,10 @@ public class BeerUserDetailsService implements UserDetailsService {
 
     @Override
     public BeerUserDetails loadUserByUsername(String username) {
-
-        try {
-            UserEntity user = userDbService.findByLogin(username);
-            return new BeerUserDetails(user);
-        } catch (Exception e) {
+        if (userDbService.findByLogin(username).isPresent()) {
+            return new BeerUserDetails(userDbService.findByLogin(username).get());
+        } else {
             throw new UsernameNotFoundException("User not found");
         }
-
     }
 }
