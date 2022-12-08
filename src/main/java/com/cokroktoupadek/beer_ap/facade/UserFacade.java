@@ -4,6 +4,7 @@ import com.cokroktoupadek.beer_ap.domain.dto.beer.BeerDto;
 import com.cokroktoupadek.beer_ap.domain.dto.user.CreatedUserDto;
 import com.cokroktoupadek.beer_ap.domain.entity.beer.BeerEntity;
 import com.cokroktoupadek.beer_ap.domain.entity.user.UserEntity;
+import com.cokroktoupadek.beer_ap.errorhandlers.BeerDbIsEmptyException;
 import com.cokroktoupadek.beer_ap.errorhandlers.UserCreationException;
 import com.cokroktoupadek.beer_ap.mapper.BeerMapper;
 import com.cokroktoupadek.beer_ap.service.beer.BeerDbService;
@@ -56,9 +57,13 @@ public class UserFacade {
 
     }
 
-    public List<BeerDto> getBeerList(){
+    public List<BeerDto> getBeerList() throws BeerDbIsEmptyException {
       List<BeerEntity> beerEntities= beerDbService.findAll();
-      return beerMapper.mapToBeerDtoList(beerEntities);
+      if (!beerEntities.isEmpty()){
+          return beerMapper.mapToBeerDtoList(beerEntities);
+      }else {
+          throw new BeerDbIsEmptyException();
+      }
     }
 
 

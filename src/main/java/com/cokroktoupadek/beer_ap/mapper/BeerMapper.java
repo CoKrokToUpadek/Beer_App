@@ -7,6 +7,7 @@ import com.cokroktoupadek.beer_ap.domain.entity.beer.BeerEntity;
 
 import com.cokroktoupadek.beer_ap.domain.entity.user.UserEntity;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,7 +17,11 @@ import java.util.stream.Collectors;
 @Service
 public class BeerMapper {
     
-    ModelMapper modelMapper=BeerMapperSingleton.getInstance().modelMapper;
+    ModelMapper modelMapper;
+    @Autowired
+    public BeerMapper(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
 
     public BeerDto mapToBeerDto(BeerEntity beerEntity){
         return modelMapper.map(beerEntity,BeerDto.class);

@@ -3,6 +3,7 @@ package com.cokroktoupadek.beer_ap.service.user;
 import com.cokroktoupadek.beer_ap.domain.entity.user.UserEntity;
 import com.cokroktoupadek.beer_ap.repository.user.UserRepository;
 
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

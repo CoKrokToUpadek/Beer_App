@@ -1,17 +1,16 @@
 package com.cokroktoupadek.beer_ap.h2_test_db.client;
 
 
-import com.cokroktoupadek.beer_ap.client.BeerClient;
+import com.cokroktoupadek.beer_ap.client.BeersAndMealsClient;
 import com.cokroktoupadek.beer_ap.domain.dto.beer.BeerDto;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.cokroktoupadek.beer_ap.domain.dto.meals.MealsInputMainObjectDto;
+import com.cokroktoupadek.beer_ap.domain.dto.meals.SingleMealDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.TestPropertySource;
 
-import java.io.IOException;
 import java.util.List;
 
 
@@ -20,28 +19,40 @@ import java.util.List;
 public class BeerAppClientTests {
 
     @Autowired
-    BeerClient beerClient;
+    BeersAndMealsClient beersAndMealsClient;
 
     @Test
     void singleBeerFetchTest()  {
         //given
         //when
-        List<BeerDto> beerDto= beerClient.getBeerDto(17);
+        List<BeerDto> beerDto= beersAndMealsClient.getBeerDto(17);
         //then
-        System.out.println(beerDto.get(0).toString());
         Assertions.assertEquals(1, beerDto.size());
+        System.out.println(beerDto.get(0).toString());
     }
 
     @Test
     void multipleBeersFetchTest()  {
         //given
         //when
-        List<BeerDto> beerDto= beerClient.getBeerDtoList();
+        List<BeerDto> beerDtoList = beersAndMealsClient.getBeerDtoList();
         //then
-        for (BeerDto dto : beerDto) {
+        Assertions.assertTrue(beerDtoList.size()>10);
+        for (BeerDto dto : beerDtoList) {
             System.out.println(dto.toString());
         }
-        Assertions.assertTrue(beerDto.size()>10);
+    }
+
+    @Test
+    void multipleMealsFetchTest()  {
+        //given
+        //when
+        List<SingleMealDto> mealsInputDtoList= beersAndMealsClient.getMealsDtoList();
+        //then
+        for (SingleMealDto dto : mealsInputDtoList) {
+            System.out.println(dto.toString());
+        }
+        Assertions.assertTrue(mealsInputDtoList.size()>5);
     }
 
 }

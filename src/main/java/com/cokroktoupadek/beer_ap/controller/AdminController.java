@@ -58,7 +58,6 @@ public class AdminController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping("/dummy_for_authorised")
     public ResponseEntity<String> dummy2(@CurrentSecurityContext SecurityContext context){
-
         return ResponseEntity.ok(context.getAuthentication().getName()+ " have access to protected method");
     }
 }

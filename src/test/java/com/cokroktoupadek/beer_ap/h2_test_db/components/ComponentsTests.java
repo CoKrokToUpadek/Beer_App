@@ -23,17 +23,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @TestPropertySource("classpath:application-H2TestDb.properties")
 public class ComponentsTests {
 
-
-
-    BeerUserDetailsService service=new BeerUserDetailsService();
+    @Autowired
+    BeerUserDetailsService service;
 
     @Autowired
     UserRepository userRepository;
     @Test
     void assertNullUserTest(){
-
+        //given
+        //when
+        //then
          assertThrows(UsernameNotFoundException.class, () -> {
-             service.loadUserByUsername("sdadsa");
+             service.loadUserByUsername("sdadsaasdasaas");
          });
 
     }
@@ -41,9 +42,12 @@ public class ComponentsTests {
 
     @Test
     void assertFoundEmailTest(){
+        //given
        UserEntity userEntity=new UserEntity("firstname","lastname","1","testemail","1","1","1", LocalDate.now());
        userRepository.save(userEntity);
+        //when
        Optional<UserEntity> entity= userRepository.findByLogin("1");
+        //then
        assertTrue(entity.isPresent());
     }
 

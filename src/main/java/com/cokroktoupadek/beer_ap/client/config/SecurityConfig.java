@@ -22,7 +22,6 @@ public class SecurityConfig {
 
 
 
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();// do korekty

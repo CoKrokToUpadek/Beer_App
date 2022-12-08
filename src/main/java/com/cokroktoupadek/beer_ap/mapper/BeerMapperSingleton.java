@@ -13,13 +13,14 @@ import javax.annotation.PostConstruct;
 
 
 
-@Configuration
-public class BeerMapperSingleton {
-    public static ModelMapper modelMapper=new ModelMapper();
-    private static BeerMapperSingleton instance=null;
 
-    @PostConstruct
-    static void configuration(){
+public class BeerMapperSingleton {
+
+
+   public ModelMapper configuration(){
+
+         ModelMapper modelMapper=new ModelMapper();
+
 
         Converter<Double,Double> converterDouble=ctx->{
             if (ctx.getSource()==null){
@@ -68,12 +69,8 @@ public class BeerMapperSingleton {
         modelMapper.typeMap(IngredientsDto.class, IngredientsEntity.class).addMappings(mapper -> mapper.map(IngredientsDto::getHopsDtoList,IngredientsEntity::setHopsList));
         modelMapper.typeMap(MaltDto.class, MaltEntity.class).addMappings(mapper -> mapper.map(MaltDto::getAmountDto,MaltEntity::setAmount));
         modelMapper.typeMap(HopsDto.class, HopsEntity.class).addMappings(mapper -> mapper.map(HopsDto::getAmountDto,HopsEntity::setAmount));
+        return modelMapper;
     }
 
-    public static BeerMapperSingleton getInstance() {
-        if (instance==null){
-            instance=new BeerMapperSingleton();
-        }
-        return instance;
-    }
+
 }
