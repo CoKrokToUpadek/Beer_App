@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class IngredientsAndMeasureDto {
+public class IngredientAndMeasureDto {
     private String IngredientName;
     private String IngredientMeasure;
 }

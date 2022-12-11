@@ -17,37 +17,38 @@ import java.util.Optional;
 public class UserDbService {
 
     private UserRepository userRepository;
-   @Autowired
+
+    @Autowired
     public UserDbService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public UserEntity save(UserEntity userEntity){
+    public UserEntity save(UserEntity userEntity) {
         return userRepository.save(userEntity);
     }
 
-  public   UserEntity findById(Long id) throws Exception {
+    public UserEntity findById(Long id) throws Exception {
         return userRepository.findById(id).orElseThrow(Exception::new);
     }
 
-   public Optional<UserEntity> findByLogin(String login) {
+    public Optional<UserEntity> findByLogin(String login) {
         return userRepository.findByLogin(login);
     }
 
-    public  Optional<UserEntity> findByEmail(String email)  {
+    public Optional<UserEntity> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
 
-    List<UserEntity> findById() {
+    List<UserEntity> findAll() {
         return userRepository.findAll();
     }
 
-    void DeleteById(Long id){
+    void DeleteById(Long id) {
         userRepository.deleteById(id);
     }
 
-    void DeleteAll(){
+    void DeleteAll() {
         userRepository.deleteAll();
     }
 

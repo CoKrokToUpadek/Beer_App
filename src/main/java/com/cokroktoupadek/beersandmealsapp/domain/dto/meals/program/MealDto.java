@@ -27,7 +27,7 @@ public class MealDto {
 
     private String youtubeLink;
 
-    List<IngredientsAndMeasureDto> ingredientsAndMeasureDtoList;
+    List<IngredientAndMeasureDto> ingredientsAndMeasureDtoList;
 
     private String source;
 }

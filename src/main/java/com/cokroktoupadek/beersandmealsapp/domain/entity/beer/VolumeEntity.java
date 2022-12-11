@@ -25,7 +25,6 @@ public class VolumeEntity {
     private String unit;
 
     @OneToMany(mappedBy = "volume")
-
     private  List<BeerEntity> beerVolumes;
 
 
