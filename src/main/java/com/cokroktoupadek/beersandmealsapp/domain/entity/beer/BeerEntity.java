@@ -1,5 +1,6 @@
 package com.cokroktoupadek.beersandmealsapp.domain.entity.beer;
 
+
 import com.cokroktoupadek.beersandmealsapp.domain.entity.user.UserEntity;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
@@ -98,4 +99,5 @@ public class BeerEntity {
     @ManyToMany(fetch = FetchType.EAGER,mappedBy = "favouredBeers")
     @Fetch(value = FetchMode.SUBSELECT)
     private List<UserEntity> beerFavouredBy;
+
 }

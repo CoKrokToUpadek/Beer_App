@@ -1,6 +1,7 @@
 package com.cokroktoupadek.beersandmealsapp.domain.entity.user;
 
 import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.BeerEntity;
+import com.cokroktoupadek.beersandmealsapp.domain.entity.meal.MealEntity;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -65,5 +66,13 @@ public class UserEntity {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "beer_id")})
      private List<BeerEntity> favouredBeers;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)//added for tests//bidirectional
+    @JoinTable(
+            name = "user_favorite_meals",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "meal_id")})
+    private List<MealEntity> favouredMeals;
 
 }

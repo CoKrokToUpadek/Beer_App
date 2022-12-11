@@ -2,8 +2,12 @@ package com.cokroktoupadek.beersandmealsapp.h2_test_db.mapper;
 
 import com.cokroktoupadek.beersandmealsapp.domain.dto.beer.BeerDto;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.api_request.SingleMealApiDto;
+
+import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.program.IngredientAndMeasureDto;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.program.MealDto;
 import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.*;
+
+import com.cokroktoupadek.beersandmealsapp.domain.entity.meal.MealEntity;
 import com.cokroktoupadek.beersandmealsapp.mapper.Mapper;
 import com.cokroktoupadek.beersandmealsapp.repository.beer.BeerRepository;
 import org.junit.jupiter.api.Assertions;
@@ -26,34 +30,34 @@ class MapperTest {
 
     @Autowired
     Mapper mapper;
-
     @Autowired
     BeerRepository beerRepository;
 
+
     @Test
     void mapToBeerDto() {
-        List<String> pairingList=new ArrayList<>(List.of("pair1","pair2"));
-        AmountEntity amountEntity=new AmountEntity(1.0,"testAmount");
-        MaltEntity maltEntity=new MaltEntity("testMalt",amountEntity);
-        HopsEntity hopsEntity =new HopsEntity("testName",amountEntity,"testAdd","testAttribute");
-        List<MaltEntity> maltEntityList=new ArrayList<>(List.of(maltEntity));
-        List<HopsEntity> hopsEntityList=new ArrayList<>(List.of(hopsEntity));
-        IngredientsEntity ingredientsEntity=new IngredientsEntity(maltEntityList,hopsEntityList,"testYeast");
-        TempEntity tempEntity=new TempEntity(1,"testTemp");
-        MashTempEntity mashTempEntity =new MashTempEntity(tempEntity,1);
-        MashTempEntity mashTempEntity2 =new MashTempEntity(tempEntity,2);
-        List<MashTempEntity> mashTempEntityList=new ArrayList<>(List.of(mashTempEntity,mashTempEntity2));
-        FermentationEntity fermentationEntity=new FermentationEntity(new TempEntity(1,"testTemp"));
-        MethodEntity methodEntity =new MethodEntity(mashTempEntityList,fermentationEntity);
-        VolumeEntity volumeEntity=new VolumeEntity(1,"testUnit");
-        BoilVolumeEntity boilVolumeEntity=new BoilVolumeEntity(1,"testUnit");
-        BeerEntity beerEntity=new BeerEntity("testDescription","testUrl",1.0,1.0,1,1,1.0,1.0,1.0,1.0,
-                volumeEntity, boilVolumeEntity, methodEntity,ingredientsEntity,pairingList,"test-tip","test author");
+        List<String> pairingList = new ArrayList<>(List.of("pair1", "pair2"));
+        AmountEntity amountEntity = new AmountEntity(1.0, "testAmount");
+        MaltEntity maltEntity = new MaltEntity("testMalt", amountEntity);
+        HopsEntity hopsEntity = new HopsEntity("testName", amountEntity, "testAdd", "testAttribute");
+        List<MaltEntity> maltEntityList = new ArrayList<>(List.of(maltEntity));
+        List<HopsEntity> hopsEntityList = new ArrayList<>(List.of(hopsEntity));
+        IngredientsEntity ingredientsEntity = new IngredientsEntity(maltEntityList, hopsEntityList, "testYeast");
+        TempEntity tempEntity = new TempEntity(1, "testTemp");
+        MashTempEntity mashTempEntity = new MashTempEntity(tempEntity, 1);
+        MashTempEntity mashTempEntity2 = new MashTempEntity(tempEntity, 2);
+        List<MashTempEntity> mashTempEntityList = new ArrayList<>(List.of(mashTempEntity, mashTempEntity2));
+        FermentationEntity fermentationEntity = new FermentationEntity(new TempEntity(1, "testTemp"));
+        MethodEntity methodEntity = new MethodEntity(mashTempEntityList, fermentationEntity);
+        VolumeEntity volumeEntity = new VolumeEntity(1, "testUnit");
+        BoilVolumeEntity boilVolumeEntity = new BoilVolumeEntity(1, "testUnit");
+        BeerEntity beerEntity = new BeerEntity("testDescription", "testUrl", 1.0, 1.0, 1, 1, 1.0, 1.0, 1.0, 1.0,
+                volumeEntity, boilVolumeEntity, methodEntity, ingredientsEntity, pairingList, "test-tip", "test author");
         beerRepository.save(beerEntity);
-        Long id=beerEntity.getId();
+        Long id = beerEntity.getId();
         Optional<BeerEntity> fetchedBeerEntity = beerRepository.findById(id);
         //when
-        BeerDto beerDto= mapper.mapToBeerDto(fetchedBeerEntity.get());
+        BeerDto beerDto = mapper.mapToBeerDto(fetchedBeerEntity.get());
         //then
         assertNotNull(beerDto);
         //dunno what to test here-maybe live app would help
@@ -62,38 +66,64 @@ class MapperTest {
 
     @Test
     void mapToBeerEntity() {
-        List<String> pairingList=new ArrayList<>(List.of("pair1","pair2"));
-        AmountEntity amountEntity=new AmountEntity(1.0,"testAmount");
-        MaltEntity maltEntity=new MaltEntity("testMalt",amountEntity);
-        HopsEntity hopsEntity =new HopsEntity("testName",amountEntity,"testAdd","testAttribute");
-        List<MaltEntity> maltEntityList=new ArrayList<>(List.of(maltEntity));
-        List<HopsEntity> hopsEntityList=new ArrayList<>(List.of(hopsEntity));
-        IngredientsEntity ingredientsEntity=new IngredientsEntity(maltEntityList,hopsEntityList,"testYeast");
-        TempEntity tempEntity=new TempEntity(1,"testTemp");
-        MashTempEntity mashTempEntity =new MashTempEntity(tempEntity,1);
-        MashTempEntity mashTempEntity2 =new MashTempEntity(tempEntity,2);
-        List<MashTempEntity> mashTempEntityList=new ArrayList<>(List.of(mashTempEntity,mashTempEntity2));
-        FermentationEntity fermentationEntity=new FermentationEntity(new TempEntity(1,"testTemp"));
-        MethodEntity methodEntity =new MethodEntity(mashTempEntityList,fermentationEntity);
-        VolumeEntity volumeEntity=new VolumeEntity(1,"testUnit");
-        BoilVolumeEntity boilVolumeEntity=new BoilVolumeEntity(1,"testUnit");
-        BeerEntity beerEntity=new BeerEntity("testDescription","testUrl",1.0,1.0,1,1,1.0,1.0,1.0,1.0,
-                volumeEntity, boilVolumeEntity, methodEntity,ingredientsEntity,pairingList,"test-tip","test author");
+        List<String> pairingList = new ArrayList<>(List.of("pair1", "pair2"));
+        AmountEntity amountEntity = new AmountEntity(1.0, "testAmount");
+        MaltEntity maltEntity = new MaltEntity("testMalt", amountEntity);
+        HopsEntity hopsEntity = new HopsEntity("testName", amountEntity, "testAdd", "testAttribute");
+        List<MaltEntity> maltEntityList = new ArrayList<>(List.of(maltEntity));
+        List<HopsEntity> hopsEntityList = new ArrayList<>(List.of(hopsEntity));
+        IngredientsEntity ingredientsEntity = new IngredientsEntity(maltEntityList, hopsEntityList, "testYeast");
+        TempEntity tempEntity = new TempEntity(1, "testTemp");
+        MashTempEntity mashTempEntity = new MashTempEntity(tempEntity, 1);
+        MashTempEntity mashTempEntity2 = new MashTempEntity(tempEntity, 2);
+        List<MashTempEntity> mashTempEntityList = new ArrayList<>(List.of(mashTempEntity, mashTempEntity2));
+        FermentationEntity fermentationEntity = new FermentationEntity(new TempEntity(1, "testTemp"));
+        MethodEntity methodEntity = new MethodEntity(mashTempEntityList, fermentationEntity);
+        VolumeEntity volumeEntity = new VolumeEntity(1, "testUnit");
+        BoilVolumeEntity boilVolumeEntity = new BoilVolumeEntity(1, "testUnit");
+        BeerEntity beerEntity = new BeerEntity("testDescription", "testUrl", 1.0, 1.0, 1, 1, 1.0, 1.0, 1.0, 1.0,
+                volumeEntity, boilVolumeEntity, methodEntity, ingredientsEntity, pairingList, "test-tip", "test author");
         beerRepository.save(beerEntity);
-        Long id=beerEntity.getId();
+        Long id = beerEntity.getId();
         Optional<BeerEntity> fetchedBeerEntity = beerRepository.findById(id);
-        BeerDto beerDto= mapper.mapToBeerDto(fetchedBeerEntity.get());
+        BeerDto beerDto = mapper.mapToBeerDto(fetchedBeerEntity.get());
         //when
-        BeerEntity convertedBeerEntity= mapper.mapToBeerEntity(beerDto);
+        BeerEntity convertedBeerEntity = mapper.mapToBeerEntity(beerDto);
         //then
         assertNotNull(convertedBeerEntity);
         assertEquals(convertedBeerEntity, beerEntity);
     }
 
     @Test
+    void mapMealDtoToMealEntity() {
+        //given
+        MealDto singleMealDto = new MealDto();
+        singleMealDto.setId(123L);
+        singleMealDto.setId(1L);
+        singleMealDto.setName("test name");
+        singleMealDto.setCategory("test category");
+        singleMealDto.setArea("test area");
+        singleMealDto.setInstruction("test instructions");
+        singleMealDto.setThumbnail("test thumbnail");
+        singleMealDto.setTags("test tags");
+        singleMealDto.setYoutubeLink("test youtube");
+        singleMealDto.setSource("test source");
+        singleMealDto.setIngredientsAndMeasureDtoList(new ArrayList<>());
+        singleMealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto("i1", "m1"));
+        singleMealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto("i2", "m3"));
+        singleMealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto("i2", "m3"));
+        //when
+        MealEntity mealEntity = mapper.mapFromMealDtoMealEntity(singleMealDto);
+        //then
+        Assertions.assertEquals(singleMealDto.getId(), mealEntity.getId());
+        Assertions.assertEquals(singleMealDto.getIngredientsAndMeasureDtoList().size(), mealEntity.getIngredientsAndMeasureEntityList().size());
+        Assertions.assertEquals(singleMealDto.getIngredientsAndMeasureDtoList().get(1).getIngredientName(), mealEntity.getIngredientsAndMeasureEntityList().get(1).getIngredientName());
+    }
+
+    @Test
     void mapToMealApiDtoToDto() {
         //given
-        SingleMealApiDto singleMealApiDto=new SingleMealApiDto();
+        SingleMealApiDto singleMealApiDto = new SingleMealApiDto();
         singleMealApiDto.setId(1L);
         singleMealApiDto.setName("test name");
         singleMealApiDto.setCategory("test category");
@@ -110,10 +140,10 @@ class MapperTest {
         singleMealApiDto.setMeasure2("m2");
         singleMealApiDto.setMeasure3("m3");
         //when
-        MealDto mealDto=mapper.mapFromApiDtoToMealDto(singleMealApiDto);
+        MealDto mealDto = mapper.mapFromApiDtoToMealDto(singleMealApiDto);
         //then
-        Assertions.assertEquals(3,mealDto.getIngredientsAndMeasureDtoList().size());
-        Assertions.assertEquals(singleMealApiDto.getId(),mealDto.getId());
-        Assertions.assertEquals(singleMealApiDto.getIngredient2(),mealDto.getIngredientsAndMeasureDtoList().get(1).getIngredientName());
+        Assertions.assertEquals(3, mealDto.getIngredientsAndMeasureDtoList().size());
+        Assertions.assertEquals(singleMealApiDto.getId(), mealDto.getId());
+        Assertions.assertEquals(singleMealApiDto.getIngredient2(), mealDto.getIngredientsAndMeasureDtoList().get(1).getIngredientName());
     }
 }

@@ -7,6 +7,8 @@ import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.program.MealDto;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.user.CreatedUserDto;
 import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.BeerEntity;
 
+
+import com.cokroktoupadek.beersandmealsapp.domain.entity.meal.MealEntity;
 import com.cokroktoupadek.beersandmealsapp.domain.entity.user.UserEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,15 @@ public class Mapper {
         this.modelMapper = modelMapper;
     }
 
+    public List<MealEntity> mapToMealDtoToEntityList(final List<MealDto> mealEntityList) {
+        return mealEntityList.stream()
+                .map(this::mapFromMealDtoMealEntity)
+                .collect(Collectors.toList());
+    }
+
+    public MealEntity mapFromMealDtoMealEntity(MealDto mealDto){
+        return modelMapper.map(mealDto,MealEntity.class);
+    }
 
     public MealDto mapFromApiDtoToMealDto(SingleMealApiDto singleMealApiDto){
         return modelMapper.map(singleMealApiDto,MealDto.class);

@@ -1,9 +1,12 @@
 package com.cokroktoupadek.beersandmealsapp.mapper;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.beer.*;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.api_request.SingleMealApiDto;
-import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.program.IngredientsAndMeasureDto;
+import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.program.IngredientAndMeasureDto;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.program.MealDto;
 import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.*;
+
+import com.cokroktoupadek.beersandmealsapp.domain.entity.meal.IngredientAndMeasureEntity;
+import com.cokroktoupadek.beersandmealsapp.domain.entity.meal.MealEntity;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.spi.MappingContext;
@@ -12,7 +15,6 @@ import java.util.ArrayList;
 
 
 public class BeerMapperConfigurator {
-
 
    public ModelMapper configuration(){
 
@@ -54,69 +56,95 @@ public class BeerMapperConfigurator {
                mealDto.setIngredientsAndMeasureDtoList(new ArrayList<>());
 
                if (ctx.getSource().getIngredient1()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient1(),ctx.getSource().getMeasure1()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient1(),ctx.getSource().getMeasure1()));
                }
                if (ctx.getSource().getIngredient2()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient2(),ctx.getSource().getMeasure2()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient2(),ctx.getSource().getMeasure2()));
                }
                if (ctx.getSource().getIngredient3()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient3(),ctx.getSource().getMeasure3()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient3(),ctx.getSource().getMeasure3()));
                }
                if (ctx.getSource().getIngredient4()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient4(),ctx.getSource().getMeasure4()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient4(),ctx.getSource().getMeasure4()));
                }
                if (ctx.getSource().getIngredient5()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient5(),ctx.getSource().getMeasure5()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient5(),ctx.getSource().getMeasure5()));
                }
                if (ctx.getSource().getIngredient6()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient6(),ctx.getSource().getMeasure6()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient6(),ctx.getSource().getMeasure6()));
                }
                if (ctx.getSource().getIngredient7()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient7(),ctx.getSource().getMeasure7()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient7(),ctx.getSource().getMeasure7()));
                }
                if (ctx.getSource().getIngredient8()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient8(),ctx.getSource().getMeasure8()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient8(),ctx.getSource().getMeasure8()));
                }
                if (ctx.getSource().getIngredient9()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient9(),ctx.getSource().getMeasure9()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient9(),ctx.getSource().getMeasure9()));
                }
                if (ctx.getSource().getIngredient10()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient10(),ctx.getSource().getMeasure10()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient10(),ctx.getSource().getMeasure10()));
                }
                if (ctx.getSource().getIngredient11()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient11(),ctx.getSource().getMeasure11()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient11(),ctx.getSource().getMeasure11()));
                }
                if (ctx.getSource().getIngredient12()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient12(),ctx.getSource().getMeasure12()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient12(),ctx.getSource().getMeasure12()));
                }
                if (ctx.getSource().getIngredient13()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient13(),ctx.getSource().getMeasure13()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient13(),ctx.getSource().getMeasure13()));
                }
                if (ctx.getSource().getIngredient14()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient14(),ctx.getSource().getMeasure14()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient14(),ctx.getSource().getMeasure14()));
                }
                if (ctx.getSource().getIngredient15()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient15(),ctx.getSource().getMeasure15()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient15(),ctx.getSource().getMeasure15()));
                }
                if (ctx.getSource().getIngredient16()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient16(),ctx.getSource().getMeasure16()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient16(),ctx.getSource().getMeasure16()));
                }
                if (ctx.getSource().getIngredient17()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient17(),ctx.getSource().getMeasure17()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient17(),ctx.getSource().getMeasure17()));
                }
                if (ctx.getSource().getIngredient18()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient18(),ctx.getSource().getMeasure18()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient18(),ctx.getSource().getMeasure18()));
                }
                if (ctx.getSource().getIngredient19()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient19(),ctx.getSource().getMeasure19()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient19(),ctx.getSource().getMeasure19()));
                }
                if (ctx.getSource().getIngredient20()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientsAndMeasureDto(ctx.getSource().getIngredient20(),ctx.getSource().getMeasure20()));
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient20(),ctx.getSource().getMeasure20()));
                }
                return mealDto;
            }
        };
 
+       Converter<MealDto, MealEntity> converterDtoToEntity = new Converter<>() {
+
+           @Override
+           public MealEntity convert(MappingContext<MealDto, MealEntity> ctx) {
+               MealEntity mealEntity=new MealEntity();
+               mealEntity.setId(ctx.getSource().getId());
+               mealEntity.setName(ctx.getSource().getName());
+               mealEntity.setCategory(ctx.getSource().getCategory());
+               mealEntity.setArea(ctx.getSource().getArea());
+               mealEntity.setInstruction(ctx.getSource().getInstruction());
+               mealEntity.setThumbnail(ctx.getSource().getThumbnail());
+               mealEntity.setTags(ctx.getSource().getTags());
+               mealEntity.setYoutubeLink(ctx.getSource().getYoutubeLink());
+               mealEntity.setSource(ctx.getSource().getSource());
+               mealEntity.setIngredientsAndMeasureEntityList(new ArrayList<>());
+               for (IngredientAndMeasureDto dto :ctx.getSource().getIngredientsAndMeasureDtoList()){
+                   mealEntity.getIngredientsAndMeasureEntityList().add(new IngredientAndMeasureEntity(dto.getIngredientName(),dto.getIngredientMeasure()));
+               }
+               return mealEntity;
+           }
+       };
+
+       //dto->entity
+       modelMapper.addConverter(converterDtoToEntity);
+
+       //MealApiDto->mealDto
        modelMapper.addConverter(converterApiDtoToDto);
 
 
