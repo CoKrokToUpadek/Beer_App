@@ -21,29 +21,28 @@ public class BoilVolumeDbService {
         this.boilVolumeRepository = boilVolumeRepository;
     }
 
-    BoilVolumeEntity save(BoilVolumeEntity boilVolumeEntity){
+    public BoilVolumeEntity save(BoilVolumeEntity boilVolumeEntity){
         return boilVolumeRepository.save(boilVolumeEntity);
     }
 
-    BoilVolumeEntity findById(Long id) throws Exception {
-        return boilVolumeRepository.findById(id).orElseThrow(Exception::new);
+    public  Optional<BoilVolumeEntity>  findById(Long id)  {
+        return boilVolumeRepository.findById(id);
     }
 
-   Optional <BoilVolumeEntity> findByUnitAndValue(String unit, Integer value){
+    public  Optional <BoilVolumeEntity> findByUnitAndValue(String unit, Integer value){
         return boilVolumeRepository.findByUnitAndValue(unit,value);
     }
 
 
-
-    List<BoilVolumeEntity> findById() {
+    public   List<BoilVolumeEntity> findById() {
         return boilVolumeRepository.findAll();
     }
 
-    void deleteById(Long id){
+    public  void deleteById(Long id){
         boilVolumeRepository.deleteById(id);
     }
 
-    void deleteAll(){
+    public  void deleteAll(){
         boilVolumeRepository.deleteAll();
     }
 

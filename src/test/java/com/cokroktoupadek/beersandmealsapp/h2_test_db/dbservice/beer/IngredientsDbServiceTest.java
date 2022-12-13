@@ -1,11 +1,11 @@
-package com.cokroktoupadek.beersandmealsapp.h2_test_db.entity.beer;
+package com.cokroktoupadek.beersandmealsapp.h2_test_db.dbservice.beer;
 
 import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.AmountEntity;
 import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.HopsEntity;
 import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.IngredientsEntity;
 import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.MaltEntity;
-import com.cokroktoupadek.beersandmealsapp.repository.beer.AmountRepository;
-import com.cokroktoupadek.beersandmealsapp.repository.beer.IngredientsRepository;
+import com.cokroktoupadek.beersandmealsapp.service.beer.AmountDbService;
+import com.cokroktoupadek.beersandmealsapp.service.beer.IngredientsDbService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,40 +18,37 @@ import java.util.Optional;
 
 @SpringBootTest
 @TestPropertySource("classpath:application-H2TestDb.properties")
-class IngredientsEntityTest {
+class IngredientsDbServiceTest {
     @Autowired
-    IngredientsRepository ingredientsRepository;
+    IngredientsDbService ingredientsDbService;
 
     @Autowired
-    AmountRepository amountRepository;
+    AmountDbService amountDbService;
 
     @Test
     void addIngredientsTest(){
         //given
 
         AmountEntity amountEntity=new AmountEntity(1.0,"testAmount");
-        amountRepository.save(amountEntity);
+        amountDbService.save(amountEntity);
         MaltEntity maltEntity=new MaltEntity("testMalt",amountEntity);
         HopsEntity hopsEntity =new HopsEntity("testName",amountEntity,"testAdd","testAttribute");
         List<MaltEntity> maltEntityList=new ArrayList<>(List.of(maltEntity));
         List<HopsEntity> hopsEntityList=new ArrayList<>(List.of(hopsEntity));
         IngredientsEntity ingredientsEntity=new IngredientsEntity(maltEntityList,hopsEntityList,"testYeast");
         //when
-        ingredientsRepository.save(ingredientsEntity);
+        ingredientsDbService.save(ingredientsEntity);
         //then
         Long id=ingredientsEntity.getId();
-        Optional<IngredientsEntity> fetchedIngredientsEntity = ingredientsRepository.findById(id);
+        Optional<IngredientsEntity> fetchedIngredientsEntity = ingredientsDbService.findById(id);
 
         if (fetchedIngredientsEntity.isEmpty()){
             Assertions.fail("fetched value is empty");
         }else {
-            Assertions.assertEquals(fetchedIngredientsEntity.get().getId(), ingredientsEntity.getId());
-            Assertions.assertEquals(fetchedIngredientsEntity.get().getMaltsList().get(0).getId(), ingredientsEntity.getMaltsList().get(0).getId());
-
-
+            Assertions.assertEquals(ingredientsEntity, fetchedIngredientsEntity.get());
         }
         //cleanup
-        ingredientsRepository.deleteAll();
+        ingredientsDbService.deleteAll();
 
 
     }

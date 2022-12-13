@@ -39,16 +39,16 @@ public class HopsEntity {
 
         HopsEntity that = (HopsEntity) o;
 
+        if (!id.equals(that.id)) return false;
         if (!name.equals(that.name)) return false;
-        if (!amount.equals(that.amount)) return false;
         if (!add.equals(that.add)) return false;
         return attribute.equals(that.attribute);
     }
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + amount.hashCode();
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
         result = 31 * result + add.hashCode();
         result = 31 * result + attribute.hashCode();
         return result;

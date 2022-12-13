@@ -1,8 +1,8 @@
-package com.cokroktoupadek.beersandmealsapp.h2_test_db.entity.beer;
+package com.cokroktoupadek.beersandmealsapp.h2_test_db.dbservice.beer;
 
 import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.*;
-import com.cokroktoupadek.beersandmealsapp.repository.beer.MethodRepository;
-import com.cokroktoupadek.beersandmealsapp.repository.beer.TempRepository;
+import com.cokroktoupadek.beersandmealsapp.service.beer.MethodDbService;
+import com.cokroktoupadek.beersandmealsapp.service.beer.TempDbService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,37 +15,36 @@ import java.util.Optional;
 
 @SpringBootTest
 @TestPropertySource("classpath:application-H2TestDb.properties")
-class MethodEntityTest {
+class MethodDbServiceTest {
     @Autowired
-    MethodRepository methodRepository;
-
+    MethodDbService methodDbService;
     @Autowired
-    TempRepository tempRepository;
+    TempDbService tempDbService;
 
 
     @Test
     void addMethodTest(){
         //given
         TempEntity tempEntity=new TempEntity(1,"testTemp");
-        tempRepository.save(tempEntity);
+        tempDbService.save(tempEntity);
         MashTempEntity mashTempEntity =new MashTempEntity(tempEntity,1);
         List<MashTempEntity> mashTempEntityList=new ArrayList<>(List.of(mashTempEntity));
         FermentationEntity fermentationEntity=new FermentationEntity(tempEntity);
         MethodEntity methodEntity =new MethodEntity(mashTempEntityList,fermentationEntity);
         //when
-        methodRepository.save(methodEntity);
+        methodDbService.save(methodEntity);
         //then
         Long id= methodEntity.getId();
-        Optional<MethodEntity> fetchedMethodEntity = methodRepository.findById(id);
+        Optional<MethodEntity> fetchedMethodEntity = methodDbService.findById(id);
 
         if (fetchedMethodEntity.isEmpty()){
             Assertions.fail("fetched value is empty");
         }else {
-            Assertions.assertEquals(fetchedMethodEntity.get().getId(), methodEntity.getId());
+            Assertions.assertEquals(methodEntity,fetchedMethodEntity.get());
         }
         //cleanup
-        methodRepository.deleteAll();
-
+        methodDbService.deleteAll();
+        tempDbService.deleteAll();
 
     }
 }

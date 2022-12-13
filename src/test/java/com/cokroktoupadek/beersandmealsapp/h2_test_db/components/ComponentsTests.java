@@ -32,7 +32,7 @@ public class ComponentsTests {
         //when
         //then
          assertThrows(UsernameNotFoundException.class, () -> {
-             service.loadUserByUsername("sdadsaasdasaas");
+             service.loadUserByUsername("not found");
          });
 
     }

@@ -41,13 +41,15 @@ public class TempEntity {
 
         TempEntity that = (TempEntity) o;
 
+        if (!id.equals(that.id)) return false;
         if (!value.equals(that.value)) return false;
         return unit.equals(that.unit);
     }
 
     @Override
     public int hashCode() {
-        int result = value;
+        int result = id.hashCode();
+        result = 31 * result + value.hashCode();
         result = 31 * result + unit.hashCode();
         return result;
     }

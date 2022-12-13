@@ -1,7 +1,7 @@
-package com.cokroktoupadek.beersandmealsapp.h2_test_db.entity.beer;
+package com.cokroktoupadek.beersandmealsapp.h2_test_db.dbservice.beer;
 
 import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.VolumeEntity;
-import com.cokroktoupadek.beersandmealsapp.repository.beer.VolumeRepository;
+import com.cokroktoupadek.beersandmealsapp.service.beer.VolumeDbService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,26 +12,25 @@ import java.util.Optional;
 
 @SpringBootTest
 @TestPropertySource("classpath:application-H2TestDb.properties")
-class VolumeEntityTest {
+class VolumeDbServiceTest {
     @Autowired
-    VolumeRepository volumeRepository;
+    VolumeDbService volumeDbService;
 
     @Test
-    void addVolumeTest(){
+    void findByUnitAndValueTest(){
         //given
-        VolumeEntity volumeEntity=new VolumeEntity(1,"testVolume");
+        VolumeEntity volumeEntity=new VolumeEntity(1,"testUnit");
         //when
-        volumeRepository.save(volumeEntity);
+        volumeDbService.save(volumeEntity);
         //then
-        Long id=volumeEntity.getId();
-        Optional<VolumeEntity> fetchedVolumeEntity=volumeRepository.findById(id);
+        Optional<VolumeEntity> fetchedVolumeEntity= volumeDbService.findByUnitAndValue("testUnit",1);
         if (fetchedVolumeEntity.isEmpty()){
             Assertions.fail("fetched value is empty");
         }else {
-            Assertions.assertEquals(fetchedVolumeEntity.get().getId(), volumeEntity.getId());
+            Assertions.assertEquals(volumeEntity,fetchedVolumeEntity.get());
         }
         //cleanup
-        volumeRepository.deleteAll();
+        volumeDbService.deleteAll();
     }
 
 }

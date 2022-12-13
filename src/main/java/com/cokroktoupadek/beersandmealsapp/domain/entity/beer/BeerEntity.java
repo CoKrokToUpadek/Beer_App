@@ -20,6 +20,7 @@ public class BeerEntity {
     @Column(name="beer_id")
     private Long id;
 
+    @NonNull
     @Column(name="beer_name")
     private String name;
 
@@ -99,5 +100,47 @@ public class BeerEntity {
     @ManyToMany(fetch = FetchType.EAGER,mappedBy = "favouredBeers")
     @Fetch(value = FetchMode.SUBSELECT)
     private List<UserEntity> beerFavouredBy;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BeerEntity that = (BeerEntity) o;
+
+        if (!id.equals(that.id)) return false;
+        if (!name.equals(that.name)) return false;
+        if (!description.equals(that.description)) return false;
+        if (!imageUrl.equals(that.imageUrl)) return false;
+        if (!abv.equals(that.abv)) return false;
+        if (!ibu.equals(that.ibu)) return false;
+        if (!targetFg.equals(that.targetFg)) return false;
+        if (!targetOg.equals(that.targetOg)) return false;
+        if (!ebc.equals(that.ebc)) return false;
+        if (!srm.equals(that.srm)) return false;
+        if (!ph.equals(that.ph)) return false;
+        if (!attenuationLevel.equals(that.attenuationLevel)) return false;
+        if (!brewers_tips.equals(that.brewers_tips)) return false;
+        return contributed_by.equals(that.contributed_by);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + description.hashCode();
+        result = 31 * result + imageUrl.hashCode();
+        result = 31 * result + abv.hashCode();
+        result = 31 * result + ibu.hashCode();
+        result = 31 * result + targetFg.hashCode();
+        result = 31 * result + targetOg.hashCode();
+        result = 31 * result + ebc.hashCode();
+        result = 31 * result + srm.hashCode();
+        result = 31 * result + ph.hashCode();
+        result = 31 * result + attenuationLevel.hashCode();
+        result = 31 * result + brewers_tips.hashCode();
+        result = 31 * result + contributed_by.hashCode();
+        return result;
+    }
 
 }

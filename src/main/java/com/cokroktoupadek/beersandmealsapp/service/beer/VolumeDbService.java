@@ -21,30 +21,20 @@ public class VolumeDbService {
         this.volumeRepository = volumeRepository;
     }
 
-    VolumeEntity save(VolumeEntity volumeEntity){
+   public VolumeEntity save(VolumeEntity volumeEntity){
         return volumeRepository.save(volumeEntity);
     }
 
-    VolumeEntity findById(Long id) throws Exception {
-        return volumeRepository.findById(id).orElseThrow(Exception::new);
 
-    }
-
-    Optional<VolumeEntity> findByUnitAndValue(String unit, Integer value){
+   public Optional<VolumeEntity> findByUnitAndValue(String unit, Integer value){
         return volumeRepository.findByUnitAndValue(unit,value);
-    }
-
-
-
-    List<VolumeEntity> findById() {
-        return volumeRepository.findAll();
     }
 
     void deleteById(Long id){
         volumeRepository.deleteById(id);
     }
 
-    void deleteAll(){
+   public void deleteAll(){
         volumeRepository.deleteAll();
     }
 

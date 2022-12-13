@@ -3,10 +3,12 @@ package com.cokroktoupadek.beersandmealsapp.service.beer;
 import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.MashTempEntity;
 import com.cokroktoupadek.beersandmealsapp.repository.beer.MashTempRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -14,28 +16,28 @@ import java.util.List;
 public class MashTempDbService {
 
    private MashTempRepository mashTempRepository;
-
+    @Autowired
     public MashTempDbService(MashTempRepository mashTempRepository) {
         this.mashTempRepository = mashTempRepository;
     }
 
-    MashTempEntity save(MashTempEntity mashTempEntity){
+    public MashTempEntity save(MashTempEntity mashTempEntity){
         return mashTempRepository.save(mashTempEntity);
     }
 
-    MashTempEntity findById(Long id) throws Exception {
-        return mashTempRepository.findById(id).orElseThrow(Exception::new);
+    public Optional<MashTempEntity> findById(Long id)  {
+        return mashTempRepository.findById(id);
     }
 
-    List<MashTempEntity> findById() {
+    public List<MashTempEntity> findAll() {
         return mashTempRepository.findAll();
     }
 
-    void deleteById(Long id){
+    public  void deleteById(Long id){
         mashTempRepository.deleteById(id);
     }
 
-    void deleteAll(){
+    public void deleteAll(){
         mashTempRepository.deleteAll();
     }
 }

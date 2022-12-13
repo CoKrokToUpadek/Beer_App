@@ -8,36 +8,38 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class MethodDbService {
 
-   private MethodRepository methodRepository;
+    private MethodRepository methodRepository;
+
     @Autowired
     public MethodDbService(MethodRepository methodRepository) {
         this.methodRepository = methodRepository;
     }
 
-    MethodEntity save(MethodEntity methodEntity){
+    public MethodEntity save(MethodEntity methodEntity) {
         return methodRepository.save(methodEntity);
     }
 
-    MethodEntity findById(Long id) throws Exception {
-        return methodRepository.findById(id).orElseThrow(Exception::new);
+    public Optional<MethodEntity> findById(Long id)  {
+        return methodRepository.findById(id);
     }
 
-    List<MethodEntity> findById() {
+    public List<MethodEntity> findAll() {
         return methodRepository.findAll();
     }
 
 
-    void deleteById(Long id){
+    public void deleteById(Long id) {
         methodRepository.deleteById(id);
     }
 
-    void deleteAll(){
+    public void deleteAll() {
         methodRepository.deleteAll();
     }
 }
