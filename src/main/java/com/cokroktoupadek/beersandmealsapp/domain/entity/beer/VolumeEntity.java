@@ -27,6 +27,12 @@ public class VolumeEntity {
     private  List<BeerEntity> beerVolumes;
 
 
+    public void addBeer(BeerEntity beer) {
+        if (!beerVolumes.contains(beer)) {
+            beerVolumes.add(beer);
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

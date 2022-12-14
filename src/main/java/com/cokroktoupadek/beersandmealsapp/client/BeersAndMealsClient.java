@@ -21,31 +21,32 @@ public class BeersAndMealsClient {
 
     private final RestTemplate restTemplate;
 
-    public List<BeerDto> getBeerDto(int beerNo)  {
-        URI url=buildUriForSingleBeer(beerNo);
-        BeerDto[] singleBeer = restTemplate.getForObject(url,BeerDto[].class);
+    public List<BeerDto> getBeerDto(int beerNo) {
+        URI url = buildUriForSingleBeer(beerNo);
+        BeerDto[] singleBeer = restTemplate.getForObject(url, BeerDto[].class);
         return Optional.of(singleBeer).map(Arrays::asList)
                 .orElse(Collections.emptyList());
     }
 
-    public List<BeerDto> getBeerDtoList()  {
-        URI url=buildUriForAllBeers();
-        BeerDto[] beersList = restTemplate.getForObject(url,BeerDto[].class);
+    public List<BeerDto> getBeerDtoList() {
+        URI url = buildUriForAllBeers();
+        BeerDto[] beersList = restTemplate.getForObject(url, BeerDto[].class);
         return Optional.of(beersList).map(Arrays::asList)
                 .orElse(Collections.emptyList());
     }
+
     //api does not have GET request for entire db, so I need to do it this way
-    public List<SingleMealApiDto> getMealsDtoList(){
-        List<SingleMealApiDto> outputMeals=new ArrayList<>();
+    public List<SingleMealApiDto> getMealsDtoList() {
+        List<SingleMealApiDto> outputMeals = new ArrayList<>();
         for (char alphabet = 'a'; alphabet <= 'z'; alphabet++) {
-            URI url=buildForSingleMeal(alphabet);
-            MealsApiDto meals=restTemplate.getForObject(url, MealsApiDto.class);
-            if (meals != null){
+            URI url = buildForSingleLetterMeals(alphabet);
+            MealsApiDto meals = restTemplate.getForObject(url, MealsApiDto.class);
+            if (meals != null) {
                 try {
                     outputMeals.addAll(meals.getSingleMealDtoList());
-                }catch (NullPointerException e){
-                   /* json have null list for some chars, and I have no idea how to check for meals.getSingleMealDtoList()
-                   *since invoking getSingleMealDtoList() for null checking throws null*/
+                } catch (NullPointerException e) {
+                    /* json have null list for some chars, and I have no idea how to check for meals.getSingleMealDtoList()
+                     *since invoking getSingleMealDtoList() for null checking throws null*/
                 }
             }
 
@@ -53,8 +54,18 @@ public class BeersAndMealsClient {
         return Optional.of(outputMeals).orElse(Collections.emptyList());
     }
 
+    public SingleMealApiDto getSingleMealDtoById(Long id) {
+        List<SingleMealApiDto> outputMeals = new ArrayList<>();
+        URI url = buildForSingleIdMeals(id);
+        MealsApiDto meals = restTemplate.getForObject(url, MealsApiDto.class);
+        try {
+            return meals.getSingleMealDtoList().get(0);
+        }catch (NullPointerException e){
+            return null;
+        }
+    }
 
-    private URI buildUriForAllBeers(){
+    private URI buildUriForAllBeers() {
         return UriComponentsBuilder.fromHttpUrl(beerConfig.getBeerAppBasicEndpoint())
                 .pathSegment(beerConfig.getAllBeers())
                 .build()
@@ -62,7 +73,7 @@ public class BeersAndMealsClient {
                 .toUri();
     }
 
-    private URI buildUriForSingleBeer(int beerNo){
+    private URI buildUriForSingleBeer(int beerNo) {
         return UriComponentsBuilder.fromHttpUrl(beerConfig.getBeerAppBasicEndpoint())
                 .pathSegment(beerConfig.getAllBeers())
                 .pathSegment(String.valueOf(beerNo))
@@ -71,11 +82,18 @@ public class BeersAndMealsClient {
                 .toUri();
     }
 
-    private URI buildForSingleMeal(Character letter){
-            return UriComponentsBuilder.fromHttpUrl(beerConfig.getMealAppBasicEndpoint()+beerConfig.getMealAppSearchEndpoint()+letter)
-                    .build()
-                    .encode()
-                    .toUri();
+    private URI buildForSingleLetterMeals(Character letter) {
+        return UriComponentsBuilder.fromHttpUrl(beerConfig.getMealAppBasicEndpoint() + beerConfig.getMealAppSearchEndpoint() + letter)
+                .build()
+                .encode()
+                .toUri();
+    }
+
+    private URI buildForSingleIdMeals(Long Id) {
+        return UriComponentsBuilder.fromHttpUrl(beerConfig.getMealAppBasicEndpoint() + beerConfig.getMealAppSearchIdEndpoint() + Id)
+                .build()
+                .encode()
+                .toUri();
     }
 
 

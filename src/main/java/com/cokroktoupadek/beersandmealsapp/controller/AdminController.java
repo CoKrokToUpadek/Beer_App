@@ -20,22 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
 
     AdminFacade adminFacade;
-
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PostMapping("/update_db")
-    public ResponseEntity<String> updateLocalBeersDb() {
-        return ResponseEntity.ok(adminFacade.updateDbFacade());
-    }
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @DeleteMapping("/delete_beer")
-    public ResponseEntity<String> deleteBeerFromDb(@RequestParam String beerName) throws BeerNotFoundException {
-        return ResponseEntity.ok(adminFacade.deleteSingleBeer(beerName));
-    }
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @DeleteMapping("/delete_all_beers")
-    public ResponseEntity<String> deleteAllBeersFromDb() throws BeerDbIsEmptyException {
-        return ResponseEntity.ok(adminFacade.deleteAllBeers());
-    }
+    ///////////////////////////////users////////////////////////////////////////////////
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/ban_user")
     public ResponseEntity<String> blockUserById(@RequestParam Long id){
@@ -47,6 +32,30 @@ public class AdminController {
     public ResponseEntity<String> setUserStatusById(@RequestParam Long id){
         return ResponseEntity.ok("User with requested ID is now admin");
     }
+    ///////////////////////////////meals////////////////////////////////////////////////
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/update_meals_db")
+    public ResponseEntity<String> updateLocalMealsDb() {
+        return ResponseEntity.ok(adminFacade.updateMealDbFacade());
+    }
+
+    ///////////////////////////////beers////////////////////////////////////////////////
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/update_beer_db")
+    public ResponseEntity<String> updateLocalBeersDb() {
+        return ResponseEntity.ok(adminFacade.updateBeerDbFacade());
+    }
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @DeleteMapping("/delete_beer")
+    public ResponseEntity<String> deleteBeerFromDb(@RequestParam String beerName) throws BeerNotFoundException {
+        return ResponseEntity.ok(adminFacade.deleteSingleBeer(beerName));
+    }
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @DeleteMapping("/delete_all_beers")
+    public ResponseEntity<String> deleteAllBeersFromDb() throws BeerDbIsEmptyException {
+        return ResponseEntity.ok(adminFacade.deleteAllBeers());
+    }
+
 
 
 ///////////////////////////////test endpoints////////////////////////////////////////////////
