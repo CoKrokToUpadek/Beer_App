@@ -42,9 +42,10 @@ public class BeerMapperConfigurator {
            @Override
            public MealDto convert(MappingContext<SingleMealApiDto, MealDto> ctx) {
                //dunno if its model mapper thing while trying to use ctx.getDestination mapper throws null pointers while trying to use this converter
+               //also api have some weird mix of fields with nulls and empty fields
                MealDto mealDto=new MealDto();
                mealDto.setId(ctx.getSource().getId());
-               mealDto.setName(ctx.getSource().getName()+"firma jp");
+               mealDto.setName(ctx.getSource().getName());
                mealDto.setCategory(ctx.getSource().getCategory());
                mealDto.setArea(ctx.getSource().getArea());
                mealDto.setInstruction(ctx.getSource().getInstruction());
@@ -56,71 +57,110 @@ public class BeerMapperConfigurator {
                mealDto.setIngredientsAndMeasureDtoList(new ArrayList<>());
 
                if (ctx.getSource().getIngredient1()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient1(),ctx.getSource().getMeasure1()));
+                   if (!ctx.getSource().getIngredient1().isEmpty()){
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient1(),ctx.getSource().getMeasure1()));
+                   }
                }
                if (ctx.getSource().getIngredient2()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient2(),ctx.getSource().getMeasure2()));
+                   if (!ctx.getSource().getIngredient2().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient2(), ctx.getSource().getMeasure2()));
+                   }
                }
                if (ctx.getSource().getIngredient3()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient3(),ctx.getSource().getMeasure3()));
+                   if (!ctx.getSource().getIngredient3().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient3(), ctx.getSource().getMeasure3()));
+                   }
                }
                if (ctx.getSource().getIngredient4()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient4(),ctx.getSource().getMeasure4()));
+                   if (!ctx.getSource().getIngredient4().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient4(), ctx.getSource().getMeasure4()));
+                   }
                }
                if (ctx.getSource().getIngredient5()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient5(),ctx.getSource().getMeasure5()));
+                   if (!ctx.getSource().getIngredient5().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient5(), ctx.getSource().getMeasure5()));
+                   }
                }
                if (ctx.getSource().getIngredient6()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient6(),ctx.getSource().getMeasure6()));
+                   if (!ctx.getSource().getIngredient6().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient6(), ctx.getSource().getMeasure6()));
+                   }
                }
                if (ctx.getSource().getIngredient7()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient7(),ctx.getSource().getMeasure7()));
+                   if (!ctx.getSource().getIngredient7().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient7(), ctx.getSource().getMeasure7()));
+                   }
                }
                if (ctx.getSource().getIngredient8()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient8(),ctx.getSource().getMeasure8()));
+                   if (!ctx.getSource().getIngredient8().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient8(), ctx.getSource().getMeasure8()));
+                   }
                }
                if (ctx.getSource().getIngredient9()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient9(),ctx.getSource().getMeasure9()));
+                   if (!ctx.getSource().getIngredient9().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient9(), ctx.getSource().getMeasure9()));
+                   }
                }
                if (ctx.getSource().getIngredient10()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient10(),ctx.getSource().getMeasure10()));
+                   if (!ctx.getSource().getIngredient10().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient10(), ctx.getSource().getMeasure10()));
+                   }
                }
                if (ctx.getSource().getIngredient11()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient11(),ctx.getSource().getMeasure11()));
+                   if (!ctx.getSource().getIngredient11().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient11(), ctx.getSource().getMeasure11()));
+                   }
                }
                if (ctx.getSource().getIngredient12()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient12(),ctx.getSource().getMeasure12()));
+                   if (!ctx.getSource().getIngredient12().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient12(), ctx.getSource().getMeasure12()));
+                   }
                }
                if (ctx.getSource().getIngredient13()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient13(),ctx.getSource().getMeasure13()));
+                   if (!ctx.getSource().getIngredient13().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient13(), ctx.getSource().getMeasure13()));
+                   }
                }
                if (ctx.getSource().getIngredient14()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient14(),ctx.getSource().getMeasure14()));
+                   if (!ctx.getSource().getIngredient14().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient14(), ctx.getSource().getMeasure14()));
+                   }
                }
                if (ctx.getSource().getIngredient15()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient15(),ctx.getSource().getMeasure15()));
+                   if (!ctx.getSource().getIngredient15().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient15(), ctx.getSource().getMeasure15()));
+                   }
                }
                if (ctx.getSource().getIngredient16()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient16(),ctx.getSource().getMeasure16()));
+                   if (!ctx.getSource().getIngredient16().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient16(), ctx.getSource().getMeasure16()));
+                   }
                }
                if (ctx.getSource().getIngredient17()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient17(),ctx.getSource().getMeasure17()));
+                   if (!ctx.getSource().getIngredient17().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient17(), ctx.getSource().getMeasure17()));
+                   }
                }
                if (ctx.getSource().getIngredient18()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient18(),ctx.getSource().getMeasure18()));
+                   if (!ctx.getSource().getIngredient18().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient18(), ctx.getSource().getMeasure18()));
+                   }
                }
                if (ctx.getSource().getIngredient19()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient19(),ctx.getSource().getMeasure19()));
+                   if (!ctx.getSource().getIngredient19().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient19(), ctx.getSource().getMeasure19()));
+                   }
                }
                if (ctx.getSource().getIngredient20()!=null){
-                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient20(),ctx.getSource().getMeasure20()));
+                   if (!ctx.getSource().getIngredient20().isEmpty()) {
+                       mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(ctx.getSource().getIngredient20(), ctx.getSource().getMeasure20()));
+                   }
                }
                return mealDto;
            }
        };
 
        Converter<MealDto, MealEntity> converterDtoToEntity = new Converter<>() {
-
            @Override
            public MealEntity convert(MappingContext<MealDto, MealEntity> ctx) {
                MealEntity mealEntity=new MealEntity();
@@ -137,13 +177,38 @@ public class BeerMapperConfigurator {
                for (IngredientAndMeasureDto dto :ctx.getSource().getIngredientsAndMeasureDtoList()){
                    mealEntity.getIngredientsAndMeasureEntityList().add(new IngredientAndMeasureEntity(dto.getIngredientName(),dto.getIngredientMeasure()));
                }
+               //list wasn't cooperating with me after being saved to db, so here im making sure that mappings are made manually
+               for(IngredientAndMeasureEntity i: mealEntity.getIngredientsAndMeasureEntityList()){
+                   i.setMealEntity(mealEntity);
+               }
                return mealEntity;
            }
        };
 
+       Converter<MealEntity, MealDto> converterEntityToDto = new Converter<>() {
+           @Override
+           public MealDto convert(MappingContext<MealEntity, MealDto> ctx) {
+               MealDto mealDto=new MealDto();
+               mealDto.setId(ctx.getSource().getId());
+               mealDto.setName(ctx.getSource().getName());
+               mealDto.setCategory(ctx.getSource().getCategory());
+               mealDto.setArea(ctx.getSource().getArea());
+               mealDto.setInstruction(ctx.getSource().getInstruction());
+               mealDto.setThumbnail(ctx.getSource().getThumbnail());
+               mealDto.setTags(ctx.getSource().getTags());
+               mealDto.setYoutubeLink(ctx.getSource().getYoutubeLink());
+               mealDto.setSource(ctx.getSource().getSource());
+               mealDto.setIngredientsAndMeasureDtoList(new ArrayList<>());
+               for (IngredientAndMeasureEntity entity :ctx.getSource().getIngredientsAndMeasureEntityList()){
+                   mealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto(entity.getIngredientName(), entity.getIngredientMeasure()));
+               }
+               return mealDto;
+           }
+       };
+       //entity->dto
+       modelMapper.addConverter(converterEntityToDto);
        //dto->entity
        modelMapper.addConverter(converterDtoToEntity);
-
        //MealApiDto->mealDto
        modelMapper.addConverter(converterApiDtoToDto);
 

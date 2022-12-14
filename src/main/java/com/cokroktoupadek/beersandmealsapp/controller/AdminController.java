@@ -39,6 +39,17 @@ public class AdminController {
         return ResponseEntity.ok(adminFacade.updateMealDbFacade());
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @DeleteMapping("/delete_meal")
+    public ResponseEntity<String> deleteMealFromDb(@RequestParam Long mealId){
+        return ResponseEntity.ok(adminFacade.deleteSingleMealById(mealId));
+    }
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @DeleteMapping("/delete_all_meals")
+    public ResponseEntity<String> deleteAllMealsFromDb() {
+        return ResponseEntity.ok(adminFacade.deleteAllMeals());
+    }
+
     ///////////////////////////////beers////////////////////////////////////////////////
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("/update_beer_db")

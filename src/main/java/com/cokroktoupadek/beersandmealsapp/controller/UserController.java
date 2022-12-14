@@ -2,6 +2,7 @@ package com.cokroktoupadek.beersandmealsapp.controller;
 
 
 import com.cokroktoupadek.beersandmealsapp.domain.dto.beer.BeerDto;
+import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.program.MealDto;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.user.CreatedUserDto;
 import com.cokroktoupadek.beersandmealsapp.errorhandlers.BeerDbIsEmptyException;
 import com.cokroktoupadek.beersandmealsapp.facade.UserFacade;
@@ -31,6 +32,12 @@ public class UserController {
     @GetMapping("/get_beers")
     public ResponseEntity<List<BeerDto>> getBeerList() throws BeerDbIsEmptyException {
         return ResponseEntity.ok(userFacade.getBeerList());
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    @GetMapping("/get_meals")
+    public ResponseEntity<List<MealDto>> getMealList() throws BeerDbIsEmptyException {
+        return ResponseEntity.ok(userFacade.getMealList());
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")

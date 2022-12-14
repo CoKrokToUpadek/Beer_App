@@ -1,4 +1,4 @@
-package com.cokroktoupadek.beersandmealsapp.h2_test_db.client;
+package com.cokroktoupadek.beersandmealsapp.h2_test_db.dbservice.client;
 
 
 import com.cokroktoupadek.beersandmealsapp.client.BeersAndMealsClient;

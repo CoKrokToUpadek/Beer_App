@@ -2,7 +2,6 @@ package com.cokroktoupadek.beersandmealsapp.mapper;
 
 
 import com.cokroktoupadek.beersandmealsapp.domain.dto.beer.BeerDto;
-import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.api_request.MealsApiDto;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.api_request.SingleMealApiDto;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.program.MealDto;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.user.CreatedUserDto;
@@ -28,13 +27,25 @@ public class Mapper {
         this.modelMapper = modelMapper;
     }
 
-    public List<MealEntity> mapToMealDtoToEntityList(final List<MealDto> mealEntityList) {
+
+   public List<MealDto> mapMealEntityToMealDtoList(List<MealEntity> mealEntityList){
         return mealEntityList.stream()
-                .map(this::mapFromMealDtoMealEntity)
+                .map(this::mapMealEntityToMealDto)
                 .collect(Collectors.toList());
     }
 
-    public MealEntity mapFromMealDtoMealEntity(MealDto mealDto){
+    public MealDto mapMealEntityToMealDto(MealEntity mealEntity){
+        return modelMapper.map(mealEntity,MealDto.class);
+
+    }
+
+    public List<MealEntity> mapToMealDtoToEntityList(final List<MealDto> mealEntityList) {
+        return mealEntityList.stream()
+                .map(this::mapFromMealDtoToMealEntity)
+                .collect(Collectors.toList());
+    }
+
+    public MealEntity mapFromMealDtoToMealEntity(MealDto mealDto){
         return modelMapper.map(mealDto,MealEntity.class);
     }
 

@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
-
+@Transactional
 @SpringBootTest
 @TestPropertySource("classpath:application-H2TestDb.properties")
 class VolumeDbServiceTest {

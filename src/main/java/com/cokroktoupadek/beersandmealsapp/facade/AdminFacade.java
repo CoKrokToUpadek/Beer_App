@@ -29,7 +29,7 @@ public class AdminFacade {
     private  BeerEntityFilterAndSaver beerEntityFilter;
     private BeerEntityManipulatorDbService beerEntityManipulatorDbService;
     private MealDbService mealDbService;
-
+    @Autowired
     public AdminFacade(BeerDbService beerDbService, Mapper mapper, BeersAndMealsClient beersAndMealsClient,
                        BeerEntityFilterAndSaver beerEntityFilter, BeerEntityManipulatorDbService beerEntityManipulatorDbService,
                        MealDbService mealDbService) {
@@ -41,7 +41,7 @@ public class AdminFacade {
         this.mealDbService = mealDbService;
     }
 
-    @Autowired
+
 
     ///////////////////////////////meals////////////////////////////////////////////////
     public String updateMealDbFacade(){
@@ -56,7 +56,7 @@ public class AdminFacade {
     public String updateSingleMealFacade(Long id){
         SingleMealApiDto mealApiDto=beersAndMealsClient.getSingleMealDtoById(id);
         MealDto mealDto=mapper.mapFromApiDtoToMealDto(mealApiDto);
-        MealEntity mealEntity= mapper.mapFromMealDtoMealEntity(mealDto);
+        MealEntity mealEntity= mapper.mapFromMealDtoToMealEntity(mealDto);
         mealDbService.save(mealEntity);
         return "meal updated successfully";
     }

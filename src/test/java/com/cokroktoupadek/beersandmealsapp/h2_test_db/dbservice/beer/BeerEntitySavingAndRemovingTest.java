@@ -31,10 +31,8 @@ public class BeerEntitySavingAndRemovingTest {
     AmountDbService amountDbService;
     @Autowired
     BeerDbService beerDbService;
-
     @Autowired
     BeerEntityFilterAndSaver beerEntityFilterAndSaver;
-
 
 
     @Test

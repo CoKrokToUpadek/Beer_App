@@ -33,7 +33,7 @@ public class MealDbService {
         return mealRepository.findByName(name).orElse(null);
     }
 
-    List<MealEntity> findAll() {
+   public List<MealEntity> findAll() {
         return mealRepository.findAll();
     }
 

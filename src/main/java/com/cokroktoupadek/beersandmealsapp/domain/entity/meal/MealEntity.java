@@ -32,14 +32,14 @@ public class MealEntity {
     private String area;
 
     @NonNull
-    @Column(name="meal_instruction",columnDefinition = "VARCHAR(2000)")
+    @Column(name="meal_instruction",columnDefinition = "VARCHAR(5000)")
     private String instruction;
 
     @NonNull
     @Column(name="meal_thumbnail")
     private String thumbnail;
 
-    @NonNull
+//    @NonNull
     @Column(name="meal_tags")
     private String tags;
 

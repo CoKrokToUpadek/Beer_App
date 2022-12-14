@@ -7,6 +7,7 @@ import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.program.IngredientAn
 import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.program.MealDto;
 import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.*;
 
+import com.cokroktoupadek.beersandmealsapp.domain.entity.meal.IngredientAndMeasureEntity;
 import com.cokroktoupadek.beersandmealsapp.domain.entity.meal.MealEntity;
 import com.cokroktoupadek.beersandmealsapp.mapper.Mapper;
 import com.cokroktoupadek.beersandmealsapp.repository.beer.BeerRepository;
@@ -94,6 +95,34 @@ class MapperTest {
         assertEquals(convertedBeerEntity, beerEntity);
     }
 
+
+    @Test
+    void mapMealEnityToMealDto() {
+        //given
+        MealEntity singleMealEntity = new MealEntity();
+        singleMealEntity.setId(123L);
+        singleMealEntity.setId(1L);
+        singleMealEntity.setName("test name");
+        singleMealEntity.setCategory("test category");
+        singleMealEntity.setArea("test area");
+        singleMealEntity.setInstruction("test instructions");
+        singleMealEntity.setThumbnail("test thumbnail");
+        singleMealEntity.setTags("test tags");
+        singleMealEntity.setYoutubeLink("test youtube");
+        singleMealEntity.setSource("test source");
+        singleMealEntity.setIngredientsAndMeasureEntityList(new ArrayList<>());
+        singleMealEntity.getIngredientsAndMeasureEntityList().add(new IngredientAndMeasureEntity("i1", "m1"));
+        singleMealEntity.getIngredientsAndMeasureEntityList().add(new IngredientAndMeasureEntity("i2", "m3"));
+        singleMealEntity.getIngredientsAndMeasureEntityList().add(new IngredientAndMeasureEntity("i2", "m3"));
+        //when
+        MealDto mealEntity = mapper.mapMealEntityToMealDto(singleMealEntity);
+        //then
+        Assertions.assertEquals(singleMealEntity.getId(), mealEntity.getId());
+        Assertions.assertEquals(singleMealEntity.getIngredientsAndMeasureEntityList().size(), mealEntity.getIngredientsAndMeasureDtoList().size());
+        Assertions.assertEquals(singleMealEntity.getIngredientsAndMeasureEntityList().get(1).getIngredientName(), mealEntity.getName());
+    }
+
+
     @Test
     void mapMealDtoToMealEntity() {
         //given
@@ -110,10 +139,10 @@ class MapperTest {
         singleMealDto.setSource("test source");
         singleMealDto.setIngredientsAndMeasureDtoList(new ArrayList<>());
         singleMealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto("i1", "m1"));
-        singleMealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto("i2", "m3"));
-        singleMealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto("i2", "m3"));
+        singleMealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto("i2", "m2"));
+        singleMealDto.getIngredientsAndMeasureDtoList().add(new IngredientAndMeasureDto("i3", "m3"));
         //when
-        MealEntity mealEntity = mapper.mapFromMealDtoMealEntity(singleMealDto);
+        MealEntity mealEntity = mapper.mapFromMealDtoToMealEntity(singleMealDto);
         //then
         Assertions.assertEquals(singleMealDto.getId(), mealEntity.getId());
         Assertions.assertEquals(singleMealDto.getIngredientsAndMeasureDtoList().size(), mealEntity.getIngredientsAndMeasureEntityList().size());
