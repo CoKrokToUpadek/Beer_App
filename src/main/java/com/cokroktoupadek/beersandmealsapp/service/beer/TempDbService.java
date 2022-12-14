@@ -21,29 +21,20 @@ public class TempDbService {
         this.tempRepository = tempRepository;
     }
 
-    TempEntity save(TempEntity tempEntity){
+    public TempEntity save(TempEntity tempEntity){
         return tempRepository.save(tempEntity);
     }
 
-    TempEntity findById(Long id) throws Exception {
-        return tempRepository.findById(id).orElseThrow(Exception::new);
-    }
 
-    List<TempEntity> findById() {
-        return tempRepository.findAll();
-    }
-
-    Optional<TempEntity> findByValueAndUnit(Integer value,String unit){
+    public Optional<TempEntity> findByValueAndUnit(Integer value,String unit){
         return tempRepository.findByValueAndUnit(value,unit);
     }
-
-
 
     void deleteById(Long id){
         tempRepository.deleteById(id);
     }
 
-    void deleteAll(){
+    public void deleteAll(){
         tempRepository.deleteAll();
     }
 

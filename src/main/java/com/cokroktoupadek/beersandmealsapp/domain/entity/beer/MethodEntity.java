@@ -42,15 +42,14 @@ public class MethodEntity {
 
         MethodEntity that = (MethodEntity) o;
 
-        if (!Objects.equals(mashTempsList, that.mashTempsList))
-            return false;
-        return Objects.equals(fermentation, that.fermentation);
+        if (!id.equals(that.id)) return false;
+        return twist != null ? twist.equals(that.twist) : that.twist == null;
     }
 
     @Override
     public int hashCode() {
-        int result = mashTempsList.hashCode();
-        result = 31 * result + fermentation.hashCode();
+        int result = id.hashCode();
+        result = 31 * result + (twist != null ? twist.hashCode() : 0);
         return result;
     }
 }

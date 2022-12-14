@@ -1,9 +1,9 @@
-package com.cokroktoupadek.beersandmealsapp.h2_test_db.entity.beer;
+package com.cokroktoupadek.beersandmealsapp.h2_test_db.dbservice.beer;
 
 import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.FermentationEntity;
 import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.TempEntity;
-import com.cokroktoupadek.beersandmealsapp.repository.beer.FermentationRepository;
-import com.cokroktoupadek.beersandmealsapp.repository.beer.TempRepository;
+import com.cokroktoupadek.beersandmealsapp.service.beer.FermentationDbService;
+import com.cokroktoupadek.beersandmealsapp.service.beer.TempDbService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,35 +14,34 @@ import java.util.Optional;
 
 @SpringBootTest
 @TestPropertySource("classpath:application-H2TestDb.properties")
-class FermentationEntityTest {
+class FermentationDbServiceTest {
 
     @Autowired
-    FermentationRepository fermentationRepository;
-
+    FermentationDbService fermentationDbService;
     @Autowired
-    TempRepository tempRepository;
+    TempDbService tempDbService;
 
 
 
     @Test
     void addFermentationTest(){
         //given
-
         TempEntity tempEntity=new TempEntity(1,"testTemp");
-        tempRepository.save(tempEntity);
+        tempDbService.save(tempEntity);
         FermentationEntity fermentationEntity =new FermentationEntity(tempEntity);
         //when
-        fermentationRepository.save(fermentationEntity);
+        fermentationDbService.save(fermentationEntity);
         //then
         Long id=fermentationEntity.getId();
-        Optional<FermentationEntity> fetchedFermentationEntity =fermentationRepository.findById(id);
+        Optional<FermentationEntity> fetchedFermentationEntity = fermentationDbService.findById(id);
         if (fetchedFermentationEntity.isEmpty()){
             Assertions.fail("fetched value is empty");
         }else {
-            Assertions.assertEquals(fetchedFermentationEntity.get().getId(), fermentationEntity.getId());
+            Assertions.assertEquals(fermentationEntity, fetchedFermentationEntity.get());
         }
         //cleanup
-        fermentationRepository.deleteAll();
+        fermentationDbService.deleteAll();
+        tempDbService.deleteAll();
     }
 
 }

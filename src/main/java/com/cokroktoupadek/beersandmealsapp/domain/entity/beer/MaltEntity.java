@@ -32,14 +32,14 @@ public class MaltEntity {
 
         MaltEntity that = (MaltEntity) o;
 
-        if (!name.equals(that.name)) return false;
-        return amount.equals(that.amount);
+        if (!id.equals(that.id)) return false;
+        return name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + amount.hashCode();
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
         return result;
     }
 }

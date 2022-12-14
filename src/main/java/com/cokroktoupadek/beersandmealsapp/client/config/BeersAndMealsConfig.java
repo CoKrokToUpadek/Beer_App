@@ -20,6 +20,9 @@ public class BeersAndMealsConfig {
     @Value("${meals.api.search_endpoint}")
     private String mealAppSearchEndpoint;
 
+    @Value("${meals.api.id_search_endpoint}")
+    private String mealAppSearchIdEndpoint;
+
 
 
 

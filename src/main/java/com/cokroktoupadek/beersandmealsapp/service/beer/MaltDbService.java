@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -20,23 +21,23 @@ public class MaltDbService {
         this.maltRepository = maltRepository;
     }
 
-    MaltEntity save(MaltEntity maltEntity){
+    public MaltEntity save(MaltEntity maltEntity){
         return maltRepository.save(maltEntity);
     }
 
-    MaltEntity findById(Long id) throws Exception {
-        return maltRepository.findById(id).orElseThrow(Exception::new);
+    public Optional<MaltEntity> findById(Long id)  {
+        return maltRepository.findById(id);
     }
 
-    List<MaltEntity> findById() {
+    public List<MaltEntity> findById() {
         return maltRepository.findAll();
     }
 
-    void deleteById(Long id){
+    public void deleteById(Long id){
         maltRepository.deleteById(id);
     }
 
-    void deleteAll(){
+    public void deleteAll(){
         maltRepository.deleteAll();
     }
 }

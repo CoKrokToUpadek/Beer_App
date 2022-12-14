@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -20,23 +21,23 @@ public class FermentationDbService {
         this.fermentationRepository = fermentationRepository;
     }
 
-    FermentationEntity save(FermentationEntity fermentationEntity){
+    public FermentationEntity save(FermentationEntity fermentationEntity){
         return fermentationRepository.save(fermentationEntity);
     }
 
-    FermentationEntity findById(Long id) throws Exception {
-        return fermentationRepository.findById(id).orElseThrow(Exception::new);
+    public Optional<FermentationEntity> findById(Long id) {
+        return fermentationRepository.findById(id);
     }
 
-    List<FermentationEntity> findById() {
+    public List<FermentationEntity> findById() {
         return fermentationRepository.findAll();
     }
 
-    void deleteById(Long id){
+    public void deleteById(Long id){
         fermentationRepository.deleteById(id);
     }
 
-    void deleteAll(){
+    public void deleteAll(){
         fermentationRepository.deleteAll();
     }
 }

@@ -2,10 +2,8 @@ package com.cokroktoupadek.beersandmealsapp.service.meal;
 
 
 import com.cokroktoupadek.beersandmealsapp.domain.entity.meal.MealEntity;
-import com.cokroktoupadek.beersandmealsapp.domain.entity.user.UserEntity;
 import com.cokroktoupadek.beersandmealsapp.repository.meal.MealRepository;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.lang.annotation.After;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +21,7 @@ public class MealDbService {
         this.mealRepository = mealRepository;
     }
 
-    private MealEntity save(MealEntity mealEntity){
+    public MealEntity save(MealEntity mealEntity){
         return mealRepository.save(mealEntity);
     }
 
@@ -39,11 +37,11 @@ public class MealDbService {
         return mealRepository.findAll();
     }
 
-    void DeleteById(Long id) {
+    public void deleteById(Long id) {
         mealRepository.deleteById(id);
     }
 
-    void DeleteAll() {
+   public void deleteAll() {
         mealRepository.deleteAll();
     }
 

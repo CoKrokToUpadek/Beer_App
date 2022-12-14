@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -20,23 +21,23 @@ public class HopsDbService {
         this.hopsRepository = hopsRepository;
     }
 
-    HopsEntity save(HopsEntity hopsEntity){
+    public HopsEntity save(HopsEntity hopsEntity){
         return hopsRepository.save(hopsEntity);
     }
 
-    HopsEntity findById(Long id) throws Exception {
-        return hopsRepository.findById(id).orElseThrow(Exception::new);
+    public Optional<HopsEntity> findById(Long id) {
+        return hopsRepository.findById(id);
     }
 
-    List<HopsEntity> findById() {
+    public List<HopsEntity> findById() {
         return hopsRepository.findAll();
     }
 
-    void deleteById(Long id){
+    public void deleteById(Long id){
         hopsRepository.deleteById(id);
     }
 
-    void deleteAll(){
+    public void deleteAll(){
         hopsRepository.deleteAll();
     }
 }

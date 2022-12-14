@@ -21,29 +21,23 @@ public class AmountDbService {
         this.amountRepository = amountRepository;
     }
 
-    AmountEntity save(AmountEntity amountEntity){
+   public AmountEntity save(AmountEntity amountEntity){
         return amountRepository.save(amountEntity);
     }
 
-    AmountEntity findById(Long id) throws Exception {
-        return amountRepository.findById(id).orElseThrow(Exception::new);
+   public Optional<AmountEntity> findById(Long id)  {
+        return amountRepository.findById(id);
     }
 
-    Optional<AmountEntity> findByValueAndUnit(Double value, String unit){
+   public  Optional<AmountEntity> findByValueAndUnit(Double value, String unit){
         return amountRepository.findByValueAndUnit(value,unit);
-    }
-
-
-
-    List<AmountEntity> findById() {
-        return amountRepository.findAll();
     }
 
     void deleteById(Long id){
         amountRepository.deleteById(id);
     }
 
-    void deleteAll(){
+   public void deleteAll(){
         amountRepository.deleteAll();
     }
 

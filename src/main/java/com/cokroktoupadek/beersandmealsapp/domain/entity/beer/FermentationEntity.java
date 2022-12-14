@@ -12,8 +12,8 @@ import javax.persistence.*;
 @Entity(name = "fermentations")
 public class FermentationEntity {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="fermentation_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "fermentation_id")
     private Long id;
 
     @NonNull
@@ -28,11 +28,11 @@ public class FermentationEntity {
 
         FermentationEntity that = (FermentationEntity) o;
 
-        return temp.equals(that.temp);
+        return id.equals(that.id);
     }
 
     @Override
     public int hashCode() {
-        return temp.hashCode();
+        return id.hashCode();
     }
 }

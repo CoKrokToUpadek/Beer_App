@@ -40,7 +40,6 @@ public class IngredientsEntity {
     @Column(name="ingredient_yeast")
     private String yeast;
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -48,15 +47,13 @@ public class IngredientsEntity {
 
         IngredientsEntity that = (IngredientsEntity) o;
 
-        if (!maltsList.equals(that.maltsList)) return false;
-        if (!hopsList.equals(that.hopsList)) return false;
+        if (!id.equals(that.id)) return false;
         return yeast.equals(that.yeast);
     }
 
     @Override
     public int hashCode() {
-        int result = maltsList.hashCode();
-        result = 31 * result + hopsList.hashCode();
+        int result = id.hashCode();
         result = 31 * result + yeast.hashCode();
         return result;
     }

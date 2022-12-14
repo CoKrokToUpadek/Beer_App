@@ -33,13 +33,13 @@ public class MashTempEntity {
 
         MashTempEntity that = (MashTempEntity) o;
 
-        if (!temp.equals(that.temp)) return false;
+        if (!id.equals(that.id)) return false;
         return duration.equals(that.duration);
     }
 
     @Override
     public int hashCode() {
-        int result = temp.hashCode();
+        int result = id.hashCode();
         result = 31 * result + duration.hashCode();
         return result;
     }

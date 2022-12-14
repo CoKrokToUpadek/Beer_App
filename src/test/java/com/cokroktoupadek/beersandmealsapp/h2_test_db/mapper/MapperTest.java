@@ -51,7 +51,7 @@ class MapperTest {
         MethodEntity methodEntity = new MethodEntity(mashTempEntityList, fermentationEntity);
         VolumeEntity volumeEntity = new VolumeEntity(1, "testUnit");
         BoilVolumeEntity boilVolumeEntity = new BoilVolumeEntity(1, "testUnit");
-        BeerEntity beerEntity = new BeerEntity("testDescription", "testUrl", 1.0, 1.0, 1, 1, 1.0, 1.0, 1.0, 1.0,
+        BeerEntity beerEntity = new BeerEntity("testname","testDescription", "testUrl", 1.0, 1.0, 1, 1, 1.0, 1.0, 1.0, 1.0,
                 volumeEntity, boilVolumeEntity, methodEntity, ingredientsEntity, pairingList, "test-tip", "test author");
         beerRepository.save(beerEntity);
         Long id = beerEntity.getId();
@@ -81,7 +81,7 @@ class MapperTest {
         MethodEntity methodEntity = new MethodEntity(mashTempEntityList, fermentationEntity);
         VolumeEntity volumeEntity = new VolumeEntity(1, "testUnit");
         BoilVolumeEntity boilVolumeEntity = new BoilVolumeEntity(1, "testUnit");
-        BeerEntity beerEntity = new BeerEntity("testDescription", "testUrl", 1.0, 1.0, 1, 1, 1.0, 1.0, 1.0, 1.0,
+        BeerEntity beerEntity = new BeerEntity("testname","testDescription", "testUrl", 1.0, 1.0, 1, 1, 1.0, 1.0, 1.0, 1.0,
                 volumeEntity, boilVolumeEntity, methodEntity, ingredientsEntity, pairingList, "test-tip", "test author");
         beerRepository.save(beerEntity);
         Long id = beerEntity.getId();

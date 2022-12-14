@@ -25,8 +25,8 @@ public class BeerDbService {
         return beerRepository.save(beerEntity);
     }
 
-    public BeerEntity findById(Long id) throws Exception {
-        return beerRepository.findById(id).orElseThrow(Exception::new);
+    public Optional<BeerEntity> findById(Long id)  {
+        return beerRepository.findById(id);
     }
 
     public List<BeerEntity> findAll() {

@@ -72,6 +72,7 @@ public class BeerEntityManipulatorDbService {
     }
 
     public void beerEntitySaver(BeerEntity beerEntity){
+        //moved here for my own convenience
         beerDbService.save(beerEntity);
 
     }

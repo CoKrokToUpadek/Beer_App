@@ -1,4 +1,4 @@
-package com.cokroktoupadek.beersandmealsapp.h2_test_db.entity.user;
+package com.cokroktoupadek.beersandmealsapp.h2_test_db.dbservice.user;
 
 import com.cokroktoupadek.beersandmealsapp.domain.entity.user.UserEntity;
 import com.cokroktoupadek.beersandmealsapp.repository.user.UserRepository;
