@@ -75,4 +75,23 @@ public class UserEntity {
             inverseJoinColumns = {@JoinColumn(name = "meal_id")})
     private List<MealEntity> favouredMeals;
 
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", userRole='" + userRole + '\'' +
+                ", creationDate=" + creationDate +
+                ", key=" + key +
+                ", status=" + status +
+                ", favouredBeers=" + favouredBeers +
+                ", favouredMeals=" + favouredMeals +
+                '}';
+    }
 }

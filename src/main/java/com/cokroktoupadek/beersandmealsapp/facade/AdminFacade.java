@@ -27,17 +27,17 @@ public class AdminFacade {
     private Mapper mapper;
     private BeersAndMealsClient beersAndMealsClient;
     private  BeerEntityFilterAndSaver beerEntityFilter;
-    private BeerEntityManipulatorDbService beerEntityManipulatorDbService;
+    private BeerAndMealEntityManipulatorDbService beerAndMealEntityManipulatorDbService;
     private MealDbService mealDbService;
     @Autowired
     public AdminFacade(BeerDbService beerDbService, Mapper mapper, BeersAndMealsClient beersAndMealsClient,
-                       BeerEntityFilterAndSaver beerEntityFilter, BeerEntityManipulatorDbService beerEntityManipulatorDbService,
+                       BeerEntityFilterAndSaver beerEntityFilter, BeerAndMealEntityManipulatorDbService beerAndMealEntityManipulatorDbService,
                        MealDbService mealDbService) {
         this.beerDbService = beerDbService;
         this.mapper = mapper;
         this.beersAndMealsClient = beersAndMealsClient;
         this.beerEntityFilter = beerEntityFilter;
-        this.beerEntityManipulatorDbService = beerEntityManipulatorDbService;
+        this.beerAndMealEntityManipulatorDbService = beerAndMealEntityManipulatorDbService;
         this.mealDbService = mealDbService;
     }
 
@@ -49,7 +49,7 @@ public class AdminFacade {
         List<MealDto> mealDtoList=mapper.mapFromMealApiToMealDtoList(mealApiDtoList);
         List<MealEntity> mealEntityList=mapper.mapToMealDtoToEntityList(mealDtoList);
         for (MealEntity meal :mealEntityList){
-            mealDbService.save(meal);
+            mealDbService.mealDuplicateVerifyAndSave(meal);
         }
         return "meal list updated successfully";
     }
@@ -57,18 +57,24 @@ public class AdminFacade {
         SingleMealApiDto mealApiDto=beersAndMealsClient.getSingleMealDtoById(id);
         MealDto mealDto=mapper.mapFromApiDtoToMealDto(mealApiDto);
         MealEntity mealEntity= mapper.mapFromMealDtoToMealEntity(mealDto);
-        mealDbService.save(mealEntity);
+        mealDbService.mealDuplicateVerifyAndSave(mealEntity);
         return "meal updated successfully";
     }
 
-    public String deleteSingleMealById(Long id){
-        mealDbService.deleteById(id);
+    public String deleteSingleMeal(String name){
+        beerAndMealEntityManipulatorDbService.mealEntityDeleter(name);
         return "meal deleted successfully";
     }
 
     public String deleteAllMeals(){
-        mealDbService.deleteAll();
-        return "meal deleted successfully";
+        List<MealEntity> mealEntityList=mealDbService.findAll();
+        if (mealEntityList.isEmpty()){
+            return "meal db is empty";
+        }
+        else {
+            beerAndMealEntityManipulatorDbService.allMealsEntitiesDeleter(mealEntityList.stream().map(MealEntity::getName).collect(Collectors.toList()));
+            return "all meals has been deleted successfully";
+        }
     }
 
     ///////////////////////////////beers////////////////////////////////////////////////
@@ -92,8 +98,8 @@ public class AdminFacade {
         if (beerDbService.findByName(name).isEmpty()){
             throw new BeerNotFoundException();
         }
-        beerEntityManipulatorDbService.beerEntityDeleter(name);
-        beerEntityManipulatorDbService.entitiesWithEmptyRelationsCleaner();
+        beerAndMealEntityManipulatorDbService.beerEntityDeleter(name);
+        beerAndMealEntityManipulatorDbService.entitiesWithEmptyRelationsCleaner();
         return "beer was deleted successfully";
     }
 
@@ -102,8 +108,8 @@ public class AdminFacade {
         if(beerEntityList.isEmpty()){
             return "db is empty";
         }
-        beerEntityManipulatorDbService.allBeerEntitiesDeleter(beerEntityList.stream().map(BeerEntity::getName).collect(Collectors.toList()));
-        beerEntityManipulatorDbService.entitiesWithEmptyRelationsCleaner();
+        beerAndMealEntityManipulatorDbService.allBeerEntitiesDeleter(beerEntityList.stream().map(BeerEntity::getName).collect(Collectors.toList()));
+        beerAndMealEntityManipulatorDbService.entitiesWithEmptyRelationsCleaner();
         return "all beers has been deleted successfully";
     }
 

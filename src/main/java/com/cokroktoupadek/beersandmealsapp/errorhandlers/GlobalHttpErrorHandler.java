@@ -14,7 +14,12 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(BeerDbIsEmptyException.class)
-    public ResponseEntity<Object> handleEmptyDb(BeerDbIsEmptyException exception){
+    public ResponseEntity<Object> handleEmptyBeerDb(BeerDbIsEmptyException exception){
         return new ResponseEntity<>("Beer Db is empty", HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MealDbIsEmptyException.class)
+    public ResponseEntity<Object> handleEmptyMealDb(MealDbIsEmptyException exception){
+        return new ResponseEntity<>("Meal Db is empty", HttpStatus.BAD_REQUEST);
     }
 }

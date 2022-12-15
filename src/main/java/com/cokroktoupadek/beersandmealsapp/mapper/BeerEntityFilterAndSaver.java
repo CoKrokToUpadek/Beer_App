@@ -17,25 +17,25 @@ import javax.transaction.Transactional;
 public class BeerEntityFilterAndSaver {
 
 
-    private BeerEntityManipulatorDbService beerEntityManipulatorDbService;
+    private BeerAndMealEntityManipulatorDbService beerAndMealEntityManipulatorDbService;
     @Autowired
-    public BeerEntityFilterAndSaver(BeerEntityManipulatorDbService beerEntityManipulatorDbService) {
-        this.beerEntityManipulatorDbService = beerEntityManipulatorDbService;
+    public BeerEntityFilterAndSaver(BeerAndMealEntityManipulatorDbService beerAndMealEntityManipulatorDbService) {
+        this.beerAndMealEntityManipulatorDbService = beerAndMealEntityManipulatorDbService;
     }
 
     public BeerEntity beerEntityDataOptimizer(BeerEntity beerEntity){
-            beerEntity.setBoilVolume(beerEntityManipulatorDbService.boilVolumeDuplicateVerifier(beerEntity.getBoilVolume()));
-            beerEntity.setVolume(beerEntityManipulatorDbService.volumeDuplicateVerifier(beerEntity.getVolume()));
-            beerEntity.getIngredients().getMaltsList().forEach(e->e.setAmount(beerEntityManipulatorDbService.amountDuplicateVerifier(e.getAmount())));
-            beerEntity.getIngredients().getHopsList().forEach(e->e.setAmount(beerEntityManipulatorDbService.amountDuplicateVerifier(e.getAmount())));
-            beerEntity.getMethod().getFermentation().setTemp(beerEntityManipulatorDbService.tempDuplicateVerifier(beerEntity.getMethod().getFermentation().getTemp()));
-            beerEntity.getMethod().getMashTempsList().forEach(e->e.setTemp(beerEntityManipulatorDbService.tempDuplicateVerifier(e.getTemp())));
+            beerEntity.setBoilVolume(beerAndMealEntityManipulatorDbService.boilVolumeDuplicateVerifier(beerEntity.getBoilVolume()));
+            beerEntity.setVolume(beerAndMealEntityManipulatorDbService.volumeDuplicateVerifier(beerEntity.getVolume()));
+            beerEntity.getIngredients().getMaltsList().forEach(e->e.setAmount(beerAndMealEntityManipulatorDbService.amountDuplicateVerifier(e.getAmount())));
+            beerEntity.getIngredients().getHopsList().forEach(e->e.setAmount(beerAndMealEntityManipulatorDbService.amountDuplicateVerifier(e.getAmount())));
+            beerEntity.getMethod().getFermentation().setTemp(beerAndMealEntityManipulatorDbService.tempDuplicateVerifier(beerEntity.getMethod().getFermentation().getTemp()));
+            beerEntity.getMethod().getMashTempsList().forEach(e->e.setTemp(beerAndMealEntityManipulatorDbService.tempDuplicateVerifier(e.getTemp())));
        return beerEntity;
    }
 
    public void beerEntitySaver(BeerEntity beerEntity){
-       if (!beerEntityManipulatorDbService.beerExistenceInDbVerifier(beerEntity)){
-           beerEntityManipulatorDbService.beerEntitySaver(beerEntityDataOptimizer(beerEntity));
+       if (!beerAndMealEntityManipulatorDbService.beerExistenceInDbVerifier(beerEntity)){
+           beerAndMealEntityManipulatorDbService.beerEntitySaver(beerEntityDataOptimizer(beerEntity));
 
        }
    }

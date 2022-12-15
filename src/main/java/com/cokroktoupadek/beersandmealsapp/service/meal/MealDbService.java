@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -25,12 +26,18 @@ public class MealDbService {
         return mealRepository.save(mealEntity);
     }
 
+    public void mealDuplicateVerifyAndSave(MealEntity mealEntity){
+        if (mealRepository.findByName(mealEntity.getName()).isEmpty()){
+            save(mealEntity);
+        }
+    }
+
     public MealEntity findById(Long id)  {
         return mealRepository.findById(id).orElse(null);
     }
 
-    public MealEntity findByName(String name){
-        return mealRepository.findByName(name).orElse(null);
+    public Optional<MealEntity> findByName(String name){
+        return mealRepository.findByName(name);
     }
 
    public List<MealEntity> findAll() {

@@ -41,8 +41,8 @@ public class AdminController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping("/delete_meal")
-    public ResponseEntity<String> deleteMealFromDb(@RequestParam Long mealId){
-        return ResponseEntity.ok(adminFacade.deleteSingleMealById(mealId));
+    public ResponseEntity<String> deleteMealFromDb(@RequestParam String name){
+        return ResponseEntity.ok(adminFacade.deleteSingleMeal(name));
     }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping("/delete_all_meals")

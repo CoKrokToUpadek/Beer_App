@@ -3,23 +3,18 @@ import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.*;
 import com.cokroktoupadek.beersandmealsapp.mapper.BeerEntityFilterAndSaver;
 import com.cokroktoupadek.beersandmealsapp.service.beer.*;
 import org.junit.jupiter.api.*;
-import org.mockito.internal.matchers.InstanceOf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Optional;
 
 @SpringBootTest
 @Transactional
 @TestPropertySource("classpath:application-H2TestDb.properties")
 public class BeerEntityManipulatorAndFilterTest {
     @Autowired
-    BeerEntityManipulatorDbService beerEntityManipulatorDbService;
+    BeerAndMealEntityManipulatorDbService beerAndMealEntityManipulatorDbService;
     @Autowired
     VolumeDbService volumeDbService;
     @Autowired
@@ -48,7 +43,7 @@ public class BeerEntityManipulatorAndFilterTest {
         AmountEntity amountEntity=new AmountEntity(1d,"unit");
         amountDbService.save(amountEntity);
         //when
-        AmountEntity fetchedAmount=beerEntityManipulatorDbService.amountDuplicateVerifier(amountEntity);
+        AmountEntity fetchedAmount= beerAndMealEntityManipulatorDbService.amountDuplicateVerifier(amountEntity);
         //then
         Assertions.assertEquals(amountEntity,fetchedAmount);
     }
@@ -58,7 +53,7 @@ public class BeerEntityManipulatorAndFilterTest {
         //given
         AmountEntity amountEntity=new AmountEntity(1d,"unit");
         //when
-        AmountEntity fetchedAmount=beerEntityManipulatorDbService.amountDuplicateVerifier(amountEntity);
+        AmountEntity fetchedAmount= beerAndMealEntityManipulatorDbService.amountDuplicateVerifier(amountEntity);
         //then
         Assertions.assertEquals(fetchedAmount,amountDbService.findByValueAndUnit(1d,"unit").get());
 
@@ -71,7 +66,7 @@ public class BeerEntityManipulatorAndFilterTest {
         BoilVolumeEntity boilVolumeEntity=new BoilVolumeEntity(1,"unit");
         boilVolumeDbService.save(boilVolumeEntity);
         //when
-        BoilVolumeEntity fetchedBoilVolume=beerEntityManipulatorDbService.boilVolumeDuplicateVerifier(boilVolumeEntity);
+        BoilVolumeEntity fetchedBoilVolume= beerAndMealEntityManipulatorDbService.boilVolumeDuplicateVerifier(boilVolumeEntity);
         //then
         Assertions.assertEquals(boilVolumeEntity,fetchedBoilVolume);
     }
@@ -81,7 +76,7 @@ public class BeerEntityManipulatorAndFilterTest {
         //given
         BoilVolumeEntity boilVolumeEntity=new BoilVolumeEntity(1,"unit");
         //when
-        BoilVolumeEntity fetchedBoilVolume=beerEntityManipulatorDbService.boilVolumeDuplicateVerifier(boilVolumeEntity);
+        BoilVolumeEntity fetchedBoilVolume= beerAndMealEntityManipulatorDbService.boilVolumeDuplicateVerifier(boilVolumeEntity);
         //then
         Assertions.assertEquals(fetchedBoilVolume,boilVolumeDbService.findByUnitAndValue("unit",1).get());
     }
@@ -92,7 +87,7 @@ public class BeerEntityManipulatorAndFilterTest {
         TempEntity tempEntity=new TempEntity(1,"unit");
         tempDbService.save(tempEntity);
         //when
-        TempEntity fetchedTempEntity=beerEntityManipulatorDbService.tempDuplicateVerifier(tempEntity);
+        TempEntity fetchedTempEntity= beerAndMealEntityManipulatorDbService.tempDuplicateVerifier(tempEntity);
         //then
         Assertions.assertEquals(tempEntity,fetchedTempEntity);
     }
@@ -102,7 +97,7 @@ public class BeerEntityManipulatorAndFilterTest {
         //given
         TempEntity tempEntity=new TempEntity(1,"unit");
         //when
-        TempEntity fetchedTempEntity=beerEntityManipulatorDbService.tempDuplicateVerifier(tempEntity);
+        TempEntity fetchedTempEntity= beerAndMealEntityManipulatorDbService.tempDuplicateVerifier(tempEntity);
         //then
         Assertions.assertEquals(fetchedTempEntity,tempDbService.findByValueAndUnit(1,"unit").get());
     }
@@ -113,7 +108,7 @@ public class BeerEntityManipulatorAndFilterTest {
         VolumeEntity volumeEntity=new VolumeEntity(1,"unit");
         volumeDbService.save(volumeEntity);
         //when
-        VolumeEntity fetchedVolume=beerEntityManipulatorDbService.volumeDuplicateVerifier(volumeEntity);
+        VolumeEntity fetchedVolume= beerAndMealEntityManipulatorDbService.volumeDuplicateVerifier(volumeEntity);
         //then
         Assertions.assertEquals(volumeEntity,fetchedVolume);
       try{
@@ -128,7 +123,7 @@ public class BeerEntityManipulatorAndFilterTest {
         //given
         VolumeEntity volumeEntity=new VolumeEntity(1,"unit");
         //when
-        VolumeEntity fetchedVolume=beerEntityManipulatorDbService.volumeDuplicateVerifier(volumeEntity);
+        VolumeEntity fetchedVolume= beerAndMealEntityManipulatorDbService.volumeDuplicateVerifier(volumeEntity);
         //then
         Assertions.assertEquals(fetchedVolume,volumeDbService.findByUnitAndValue("unit",1).get());
     }
