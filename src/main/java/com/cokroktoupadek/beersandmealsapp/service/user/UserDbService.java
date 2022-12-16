@@ -40,7 +40,7 @@ public class UserDbService {
     }
 
 
-    List<UserEntity> findAll() {
+    public List<UserEntity> findAll() {
         return userRepository.findAll();
     }
 

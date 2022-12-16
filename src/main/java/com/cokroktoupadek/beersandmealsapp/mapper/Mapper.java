@@ -5,6 +5,7 @@ import com.cokroktoupadek.beersandmealsapp.domain.dto.beer.BeerDto;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.api_request.SingleMealApiDto;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.program.MealDto;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.user.CreatedUserDto;
+import com.cokroktoupadek.beersandmealsapp.domain.dto.user.UserDto;
 import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.BeerEntity;
 
 
@@ -78,8 +79,15 @@ public class Mapper {
                 .collect(Collectors.toList());
     }
 
+    public List<UserDto> mapToUserDtoList(List<UserEntity> userEntityList){
+        return userEntityList.stream().map(this::mapToUserDto).collect(Collectors.toList());
+    }
 
-    public CreatedUserDto mapToUserDto(UserEntity userEntity){
+    public UserDto mapToUserDto(UserEntity userEntity){
+        return modelMapper.map(userEntity,UserDto.class);
+    }
+
+    public CreatedUserDto mapToCreatedUserDto(UserEntity userEntity){
         return modelMapper.map(userEntity,CreatedUserDto.class);
     }
 

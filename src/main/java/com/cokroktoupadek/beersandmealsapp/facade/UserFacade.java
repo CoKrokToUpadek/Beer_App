@@ -15,6 +15,8 @@ import com.cokroktoupadek.beersandmealsapp.service.meal.MealDbService;
 import com.cokroktoupadek.beersandmealsapp.service.user.UserDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -34,12 +36,15 @@ public class UserFacade {
     private MealDbService mealDbService;
 
     private Mapper mapper;
+
+    private PasswordEncoder encoder;
     @Autowired
     public UserFacade(UserDbService userDbService, BeerDbService beerDbService, Mapper mapper,MealDbService mealDbService) {
         this.userDbService = userDbService;
         this.beerDbService = beerDbService;
         this.mapper = mapper;
         this.mealDbService=mealDbService;
+        this.encoder=new BCryptPasswordEncoder();
     }
 
     public String createUser(CreatedUserDto userDto) {
@@ -56,6 +61,7 @@ public class UserFacade {
            return UserCreationException.ERR_MISSING_INFORMATION;
         }else {
              entity= mapper.mapNewUserEntity(userDto);
+             entity.setPassword(encoder.encode(userDto.getPassword()));
              userDbService.save(entity);
              return "user was created successfully";
         }

@@ -55,7 +55,6 @@ public class BeersAndMealsClient {
     }
 
     public SingleMealApiDto getSingleMealDtoById(Long id) {
-        List<SingleMealApiDto> outputMeals = new ArrayList<>();
         URI url = buildForSingleIdMeals(id);
         MealsApiDto meals = restTemplate.getForObject(url, MealsApiDto.class);
         try {

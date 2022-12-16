@@ -4,6 +4,7 @@ import com.cokroktoupadek.beersandmealsapp.client.BeersAndMealsClient;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.beer.BeerDto;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.api_request.SingleMealApiDto;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.program.MealDto;
+import com.cokroktoupadek.beersandmealsapp.domain.dto.user.UserDto;
 import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.BeerEntity;
 import com.cokroktoupadek.beersandmealsapp.domain.entity.meal.MealEntity;
 import com.cokroktoupadek.beersandmealsapp.domain.entity.user.UserEntity;
@@ -15,10 +16,13 @@ import com.cokroktoupadek.beersandmealsapp.service.meal.MealDbService;
 import com.cokroktoupadek.beersandmealsapp.service.user.UserDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Component
@@ -35,18 +39,23 @@ public class AdminFacade {
 
     private UserDbService userDbService;
 
+    private PasswordEncoder encoder;
+
+    Pattern BCRYPT_PATTERN = Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}");
+
     @Autowired
     public AdminFacade(BeerDbService beerDbService, Mapper mapper, BeersAndMealsClient beersAndMealsClient,
                        BeerEntityFilterAndSaver beerEntityFilter, BeerAndMealEntityManipulatorDbService beerAndMealEntityManipulatorDbService,
-                       MealDbService mealDbService) {
+                       MealDbService mealDbService, UserDbService userDbService) {
         this.beerDbService = beerDbService;
         this.mapper = mapper;
         this.beersAndMealsClient = beersAndMealsClient;
         this.beerEntityFilter = beerEntityFilter;
         this.beerAndMealEntityManipulatorDbService = beerAndMealEntityManipulatorDbService;
         this.mealDbService = mealDbService;
+        this.userDbService = userDbService;
+        this.encoder=new BCryptPasswordEncoder();
     }
-
 
     ///////////////////////////////meals////////////////////////////////////////////////
     public String updateMealDbFacade() {
@@ -118,23 +127,23 @@ public class AdminFacade {
         return "all beers has been deleted successfully";
     }
 
-    public String setUserStatus(String login, String status) {
+    public String setUserRole(String login, String role) {
         Optional<UserEntity> userEntity = userDbService.findByLogin(login);
         if (userEntity.isPresent()) {
-            switch (status) {
+            switch (role) {
                 case "admin":
-                    userEntity.get().setUserRole(status);
+                    userEntity.get().setUserRole(role);
                     userDbService.save(userEntity.get());
                     return "User with login:" + userEntity.get().getLogin() + " is now admin";
                 case "user":
-                    userEntity.get().setUserRole(status);
+                    userEntity.get().setUserRole(role);
                     userDbService.save(userEntity.get());
                     return "User with login:" + userEntity.get().getLogin() + " is now user";
                 default:
                     return "specified role does not exist";
             }
         } else {
-            return "user with login: " + userEntity.get().getLogin() + " not found.";
+            return "user with login: " + login + " not found.";
         }
     }
 
@@ -154,7 +163,30 @@ public class AdminFacade {
                     return "status can be either 0 for banned, or 1 for active";
             }
         }else {
-            return "user with login: " + userEntity.get().getLogin() + " not found.";
+            return "user with login: " + login + " not found.";
+        }
+    }
+
+    public  List<UserDto>getUsers() {
+        List<UserEntity> userEntityList=userDbService.findAll();
+        return mapper.mapToUserDtoList(userEntityList);
+    }
+
+    public String encodePassword(String login) {
+        Optional<UserEntity> userEntity = userDbService.findByLogin(login);
+        if (userEntity.isPresent()) {
+            if (!BCRYPT_PATTERN.matcher(userEntity.get().getPassword()).matches()){
+                String tempPass=userEntity.get().getPassword();
+                userEntity.get().setPassword(encoder.encode(tempPass));
+                userDbService.save(userEntity.get());
+                return "password for user"+userEntity.get().getLogin() +" has been encoded successfully";
+            }
+            else {
+                return "user password has already been encoded";
+            }
+
+        }else {
+            return "user with login"+login+" was not found";
         }
     }
 }
