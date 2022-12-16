@@ -22,15 +22,15 @@ public class AdminController {
     AdminFacade adminFacade;
     ///////////////////////////////users////////////////////////////////////////////////
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    @PutMapping("/ban_user")
-    public ResponseEntity<String> blockUserById(@RequestParam Long id){
-        return ResponseEntity.ok("User with requested ID was blocked");
+    @PutMapping("/set_status")
+    public ResponseEntity<String> changeUserStatusByLogin(@RequestParam String login,@RequestParam Integer status){
+        return ResponseEntity.ok(adminFacade.setUserStatus(login,status ));
     }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @Secured("ROLE_ADMIN")
     @PutMapping("/set_user_status_to_admin")
-    public ResponseEntity<String> setUserStatusById(@RequestParam Long id){
-        return ResponseEntity.ok("User with requested ID is now admin");
+    public ResponseEntity<String> setUserStatusByLogin(@RequestParam String login, @RequestParam String status){
+        return ResponseEntity.ok(adminFacade.setUserStatus(login,status));
     }
     ///////////////////////////////meals////////////////////////////////////////////////
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")

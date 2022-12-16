@@ -24,8 +24,6 @@ import java.util.List;
 public class UserController {
 
     UserFacade userFacade;
-
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @PostMapping("/create_user")
     public ResponseEntity<String> createUser(@RequestBody CreatedUserDto userInputDto) {
         return ResponseEntity.ok(userFacade.createUser(userInputDto));
