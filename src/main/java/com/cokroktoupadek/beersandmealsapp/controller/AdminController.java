@@ -85,7 +85,7 @@ public class AdminController {
 ///////////////////////////////test endpoints////////////////////////////////////////////////
 
     @GetMapping("/dummy")
-    public ResponseEntity<String> dummy(@CurrentSecurityContext SecurityContext context){
+    public ResponseEntity<String> dummy1(@CurrentSecurityContext SecurityContext context){
         return ResponseEntity.ok(context.getAuthentication().getName()+ " have access to open method");
     }
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
