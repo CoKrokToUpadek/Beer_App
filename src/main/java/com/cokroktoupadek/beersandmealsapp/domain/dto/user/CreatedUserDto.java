@@ -2,9 +2,11 @@ package com.cokroktoupadek.beersandmealsapp.domain.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class CreatedUserDto {
 
    private String firstName;

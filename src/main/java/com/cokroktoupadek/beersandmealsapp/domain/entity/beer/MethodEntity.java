@@ -43,7 +43,7 @@ public class MethodEntity {
         MethodEntity that = (MethodEntity) o;
 
         if (!id.equals(that.id)) return false;
-        return twist != null ? twist.equals(that.twist) : that.twist == null;
+        return Objects.equals(twist, that.twist);
     }
 
     @Override

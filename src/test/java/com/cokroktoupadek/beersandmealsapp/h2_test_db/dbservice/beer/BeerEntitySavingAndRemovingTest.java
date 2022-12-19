@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class BeerEntitySavingAndRemovingTest {
 //tests in this class are integral with each other
     @Autowired
-    BeerEntityManipulatorDbService beerEntityManipulatorDbService;
+BeerAndMealEntityManipulatorDbService beerAndMealEntityManipulatorDbService;
     @Autowired
     VolumeDbService volumeDbService;
     @Autowired
@@ -98,8 +98,8 @@ public class BeerEntitySavingAndRemovingTest {
     void beerEntityDeleter() {
         //given
         //when
-        beerEntityManipulatorDbService.beerEntityDeleter("testName0");
-        beerEntityManipulatorDbService.entitiesWithEmptyRelationsCleaner();
+        beerAndMealEntityManipulatorDbService.beerEntityDeleter("testName0");
+        beerAndMealEntityManipulatorDbService.entitiesWithEmptyRelationsCleaner();
         //then
         Assertions.assertTrue(beerDbService.findByName("testName0").isEmpty());
         Assertions.assertTrue(tempDbService.findByValueAndUnit(1,"testTemp").isPresent());
@@ -116,8 +116,8 @@ public class BeerEntitySavingAndRemovingTest {
         //given
         //when
         List<String> entities=beerDbService.findAll().stream().map(BeerEntity::getName).collect(Collectors.toList());
-        beerEntityManipulatorDbService.allBeerEntitiesDeleter(entities);
-        beerEntityManipulatorDbService.entitiesWithEmptyRelationsCleaner();
+        beerAndMealEntityManipulatorDbService.allBeerEntitiesDeleter(entities);
+        beerAndMealEntityManipulatorDbService.entitiesWithEmptyRelationsCleaner();
         //then
         Assertions.assertTrue(beerDbService.findAll().isEmpty());
         Assertions.assertTrue(tempDbService.findByValueAndUnit(1,"testTemp").isEmpty());

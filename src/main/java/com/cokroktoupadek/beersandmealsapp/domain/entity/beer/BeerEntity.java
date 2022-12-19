@@ -143,4 +143,21 @@ public class BeerEntity {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "BeerEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", abv=" + abv +
+                ", ibu=" + ibu +
+                ", targetFg=" + targetFg +
+                ", targetOg=" + targetOg +
+                ", ebc=" + ebc +
+                ", srm=" + srm +
+                ", ph=" + ph +
+                ", attenuationLevel=" + attenuationLevel +
+                '}';
+    }
 }

@@ -1,6 +1,8 @@
 package com.cokroktoupadek.beersandmealsapp.service.beer;
 
 import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.*;
+import com.cokroktoupadek.beersandmealsapp.domain.entity.meal.MealEntity;
+import com.cokroktoupadek.beersandmealsapp.service.meal.MealDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +13,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class BeerEntityManipulatorDbService {
+public class BeerAndMealEntityManipulatorDbService {
 
    private BoilVolumeDbService boilVolumeDbService;
 
@@ -22,13 +24,18 @@ public class BeerEntityManipulatorDbService {
     private  AmountDbService amountDbService;
 
     private  BeerDbService beerDbService;
+
+    private MealDbService mealDbService;
+
     @Autowired
-    public BeerEntityManipulatorDbService(BoilVolumeDbService boilVolumeDbService, VolumeDbService volumeDbService, TempDbService tempDbService, AmountDbService amountDbService, BeerDbService beerDbService) {
+    public BeerAndMealEntityManipulatorDbService(BoilVolumeDbService boilVolumeDbService, VolumeDbService volumeDbService,
+                                                 TempDbService tempDbService, AmountDbService amountDbService, BeerDbService beerDbService, MealDbService mealDbService) {
         this.boilVolumeDbService = boilVolumeDbService;
         this.volumeDbService = volumeDbService;
         this.tempDbService = tempDbService;
         this.amountDbService = amountDbService;
         this.beerDbService = beerDbService;
+        this.mealDbService = mealDbService;
     }
 
     public AmountEntity amountDuplicateVerifier(AmountEntity amountEntity){
@@ -108,8 +115,18 @@ public class BeerEntityManipulatorDbService {
             lambdaAmountEntity.getHopsList().remove(e);
             amountDbService.save(lambdaAmountEntity);
         });
-
+        beerEntity.getBeerFavouredBy().forEach(e->e.getFavouredBeers().remove(beerEntity));
         beerDbService.deleteById(beerEntity.getId());
+    }
+
+    public void mealEntityDeleter(String name){
+        MealEntity mealEntity= mealDbService.findByName(name).get();
+        mealEntity.getMealFavouredBy().forEach(e->e.getFavouredMeals().remove(mealEntity));
+        mealDbService.deleteById(mealEntity.getId());
+
+    }
+    public void allMealsEntitiesDeleter(List<String> mealList){
+        mealList.forEach(this::mealEntityDeleter);
     }
 
     public void allBeerEntitiesDeleter(List<String> beerList){

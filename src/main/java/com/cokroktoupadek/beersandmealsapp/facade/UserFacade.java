@@ -7,17 +7,22 @@ import com.cokroktoupadek.beersandmealsapp.domain.entity.beer.BeerEntity;
 import com.cokroktoupadek.beersandmealsapp.domain.entity.meal.MealEntity;
 import com.cokroktoupadek.beersandmealsapp.domain.entity.user.UserEntity;
 import com.cokroktoupadek.beersandmealsapp.errorhandlers.BeerDbIsEmptyException;
+import com.cokroktoupadek.beersandmealsapp.errorhandlers.MealDbIsEmptyException;
 import com.cokroktoupadek.beersandmealsapp.errorhandlers.UserCreationException;
 import com.cokroktoupadek.beersandmealsapp.mapper.Mapper;
 import com.cokroktoupadek.beersandmealsapp.service.beer.BeerDbService;
 import com.cokroktoupadek.beersandmealsapp.service.meal.MealDbService;
 import com.cokroktoupadek.beersandmealsapp.service.user.UserDbService;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Component
@@ -32,18 +37,18 @@ public class UserFacade {
     private MealDbService mealDbService;
 
     private Mapper mapper;
+
+    private PasswordEncoder encoder;
     @Autowired
     public UserFacade(UserDbService userDbService, BeerDbService beerDbService, Mapper mapper,MealDbService mealDbService) {
         this.userDbService = userDbService;
         this.beerDbService = beerDbService;
         this.mapper = mapper;
         this.mealDbService=mealDbService;
+        this.encoder=new BCryptPasswordEncoder();
     }
 
-
-
-
-    public String createUserFacade(CreatedUserDto userDto) {
+    public String createUser(CreatedUserDto userDto) {
 
         UserEntity entity;
         if(userDbService.findByLogin(userDto.getLogin()).isPresent()) {
@@ -57,6 +62,8 @@ public class UserFacade {
            return UserCreationException.ERR_MISSING_INFORMATION;
         }else {
              entity= mapper.mapNewUserEntity(userDto);
+             entity.setPassword(encoder.encode(userDto.getPassword()));
+             entity.setStatus(1);
              userDbService.save(entity);
              return "user was created successfully";
         }
@@ -72,14 +79,86 @@ public class UserFacade {
       }
     }
 
-    public List<MealDto> getMealList() throws BeerDbIsEmptyException {
+    public List<MealDto> getMealList() throws MealDbIsEmptyException {
         List<MealEntity> mealEntityList= mealDbService.findAll();
         if (!mealEntityList.isEmpty()){
             return mapper.mapMealEntityToMealDtoList(mealEntityList);
         }else {
-            throw new BeerDbIsEmptyException();
+            throw new MealDbIsEmptyException();
         }
     }
 
+    public List<BeerDto> getBeerFavoriteList(String login)  {
+        Optional<UserEntity> userEntity= userDbService.findByLogin(login);
+          return mapper.mapToBeerDtoList(userEntity.get().getFavouredBeers());
+    }
 
+    public List<MealDto> getMealFavoriteList(String login) {
+        Optional<UserEntity> userEntity= userDbService.findByLogin(login);
+        return mapper.mapMealEntityToMealDtoList(userEntity.get().getFavouredMeals());
+    }
+    //I don't check for finding user because it requires to be logged in
+    public String addBeerToFavorite(String beerName, String login) {
+        Optional<UserEntity> userEntity= userDbService.findByLogin(login);
+        Optional<BeerEntity> beerEntity= beerDbService.findByName(beerName);
+        if (beerEntity.isPresent()){
+            if (!userEntity.get().getFavouredBeers().contains(beerEntity.get())){
+                userEntity.get().getFavouredBeers().add(beerEntity.get());
+                userDbService.save(userEntity.get());
+                return "beer "+beerEntity.get().getName()+" has been added to your favorite list";
+            }else{
+                return "beer is already on your list";
+            }
+        }else {
+            return "beer not found";
+        }
+    }
+
+    public String addMealToFavorite(String mealName, String login) {
+        Optional<UserEntity> userEntity= userDbService.findByLogin(login);
+        Optional<MealEntity> mealEntity= mealDbService.findByName(mealName);
+        if (mealEntity.isPresent()){
+            if(!userEntity.get().getFavouredMeals().contains(mealEntity.get())){
+                userEntity.get().getFavouredMeals().add(mealEntity.get());
+                userDbService.save(userEntity.get());
+                return "meal "+mealEntity.get().getName()+" has been added to your favorite list";
+            }else {
+                return "meal is already on your list";
+            }
+        }else {
+            return "meal not found";
+        }
+    }
+
+    public String removeMealFromFavorite(String mealName, String login) {
+        Optional<UserEntity> userEntity = userDbService.findByLogin(login);
+        Optional<MealEntity> mealEntity = mealDbService.findByName(mealName);
+        if (mealEntity.isPresent()) {
+            if (userEntity.get().getFavouredMeals().contains(mealEntity.get())) {
+                userEntity.get().getFavouredMeals().remove(mealEntity.get());
+                userDbService.save(userEntity.get());
+                return "meal " + mealEntity.get().getName() + " has been removed from your favorite list";
+            } else {
+                return "Meal not found on your list";
+            }
+        }else{
+            return "Meal not found in db. Check for typos";
+        }
+    }
+
+        public String removeBeerFromFavorite (String beerName, String login) {
+            Optional<UserEntity> userEntity = userDbService.findByLogin(login);
+            Optional<BeerEntity> beerEntity = beerDbService.findByName(beerName);
+            if (beerEntity.isPresent()) {
+                if (userEntity.get().getFavouredBeers().contains(beerEntity.get())) {
+                    userEntity.get().getFavouredBeers().remove(beerEntity.get());
+                    userDbService.save(userEntity.get());
+                    return "beer " + beerEntity.get().getName() + " has been removed from your favorite list";
+                } else {
+                    return "Beer not found on your list";
+                }
+            }else{
+                return "Beer not found in db. Check for typos";
+            }
+        }
 }

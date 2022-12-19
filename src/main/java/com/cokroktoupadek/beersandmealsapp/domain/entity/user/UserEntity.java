@@ -52,15 +52,11 @@ public class UserEntity {
     @NonNull
     @Column(name="user_account_creation_date")
     private LocalDate creationDate;
-
-    @Column(name="user_current_key")
-    private Long key;
-
     @Column(name="user_status")
     private int status;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)//added for tests//bidirectional
+    @Fetch(value = FetchMode.SUBSELECT)//bidirectional
     @JoinTable(
             name = "user_favorite_beers",
             joinColumns = {@JoinColumn(name = "user_id")},
@@ -68,11 +64,29 @@ public class UserEntity {
      private List<BeerEntity> favouredBeers;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)//added for tests//bidirectional
+    @Fetch(value = FetchMode.SUBSELECT)//bidirectional
     @JoinTable(
             name = "user_favorite_meals",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "meal_id")})
     private List<MealEntity> favouredMeals;
 
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", userRole='" + userRole + '\'' +
+                ", creationDate=" + creationDate +
+                ", status=" + status +
+                ", favouredBeers=" + favouredBeers +
+                ", favouredMeals=" + favouredMeals +
+                '}';
+    }
 }
