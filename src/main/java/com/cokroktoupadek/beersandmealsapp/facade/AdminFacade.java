@@ -41,7 +41,7 @@ public class AdminFacade {
 
     private PasswordEncoder encoder;
 
-    Pattern BCRYPT_PATTERN = Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}");
+   private final Pattern BCRYPT_PATTERN = Pattern.compile("\\A\\$2a?\\$\\d\\d\\$[./0-9A-Za-z]{53}");
 
     @Autowired
     public AdminFacade(BeerDbService beerDbService, Mapper mapper, BeersAndMealsClient beersAndMealsClient,
@@ -103,8 +103,8 @@ public class AdminFacade {
 
     public String updateSingleBeerFacade(int beerNo) {
         List<BeerDto> beerDto = beersAndMealsClient.getBeerDto(beerNo);
-        BeerEntity beerEntities = mapper.mapToBeerEntity(beerDto.get(0));
-        beerEntityFilter.beerEntitySaver(beerEntities);
+        BeerEntity beerEntity = mapper.mapToBeerEntity(beerDto.get(0));
+        beerEntityFilter.beerEntitySaver(beerEntity);
         return "beer updated successfully";
     }
 
@@ -126,6 +126,7 @@ public class AdminFacade {
         beerAndMealEntityManipulatorDbService.entitiesWithEmptyRelationsCleaner();
         return "all beers has been deleted successfully";
     }
+    ///////////////////////////////administrative////////////////////////////////////////////////
 
     public String setUserRole(String login, String role) {
         Optional<UserEntity> userEntity = userDbService.findByLogin(login);
@@ -134,11 +135,11 @@ public class AdminFacade {
                 case "admin":
                     userEntity.get().setUserRole(role);
                     userDbService.save(userEntity.get());
-                    return "User with login:" + userEntity.get().getLogin() + " is now admin";
+                    return "User with login: " + userEntity.get().getLogin() + " is now admin";
                 case "user":
                     userEntity.get().setUserRole(role);
                     userDbService.save(userEntity.get());
-                    return "User with login:" + userEntity.get().getLogin() + " is now user";
+                    return "User with login: " + userEntity.get().getLogin() + " is now user";
                 default:
                     return "specified role does not exist";
             }
@@ -154,11 +155,11 @@ public class AdminFacade {
                 case 0:
                     userEntity.get().setStatus(status);
                     userDbService.save(userEntity.get());
-                    return "User with login:" + userEntity.get().getLogin() + " is now inactive";
+                    return "User with login: " + userEntity.get().getLogin() + " is now inactive";
                 case 1:
                     userEntity.get().setStatus(status);
                     userDbService.save(userEntity.get());
-                    return "User with login:" + userEntity.get().getLogin() + " is now active";
+                    return "User with login: " + userEntity.get().getLogin() + " is now active";
                 default:
                     return "status can be either 0 for banned, or 1 for active";
             }
@@ -179,14 +180,14 @@ public class AdminFacade {
                 String tempPass=userEntity.get().getPassword();
                 userEntity.get().setPassword(encoder.encode(tempPass));
                 userDbService.save(userEntity.get());
-                return "password for user"+userEntity.get().getLogin() +" has been encoded successfully";
+                return "password for user with login: "+userEntity.get().getLogin() +" has been encoded successfully";
             }
             else {
                 return "user password has already been encoded";
             }
 
         }else {
-            return "user with login"+login+" was not found";
+            return "user with login: "+login+" not found.";
         }
     }
 }

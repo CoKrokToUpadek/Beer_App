@@ -13,6 +13,7 @@ import com.cokroktoupadek.beersandmealsapp.mapper.Mapper;
 import com.cokroktoupadek.beersandmealsapp.service.beer.BeerDbService;
 import com.cokroktoupadek.beersandmealsapp.service.meal.MealDbService;
 import com.cokroktoupadek.beersandmealsapp.service.user.UserDbService;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -62,6 +63,7 @@ public class UserFacade {
         }else {
              entity= mapper.mapNewUserEntity(userDto);
              entity.setPassword(encoder.encode(userDto.getPassword()));
+             entity.setStatus(1);
              userDbService.save(entity);
              return "user was created successfully";
         }
@@ -95,7 +97,7 @@ public class UserFacade {
         Optional<UserEntity> userEntity= userDbService.findByLogin(login);
         return mapper.mapMealEntityToMealDtoList(userEntity.get().getFavouredMeals());
     }
-
+    //I don't check for finding user because it requires to be logged in
     public String addBeerToFavorite(String beerName, String login) {
         Optional<UserEntity> userEntity= userDbService.findByLogin(login);
         Optional<BeerEntity> beerEntity= beerDbService.findByName(beerName);
@@ -103,10 +105,10 @@ public class UserFacade {
             if (!userEntity.get().getFavouredBeers().contains(beerEntity.get())){
                 userEntity.get().getFavouredBeers().add(beerEntity.get());
                 userDbService.save(userEntity.get());
+                return "beer "+beerEntity.get().getName()+" has been added to your favorite list";
             }else{
                 return "beer is already on your list";
             }
-            return "beer "+beerEntity.get().getName()+" has been added to your favorite list";
         }else {
             return "beer not found";
         }

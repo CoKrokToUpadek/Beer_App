@@ -97,7 +97,7 @@ class MapperTest {
 
 
     @Test
-    void mapMealEnityToMealDto() {
+    void mapMealEntityToMealDto() {
         //given
         MealEntity singleMealEntity = new MealEntity();
         singleMealEntity.setId(123L);
@@ -119,7 +119,7 @@ class MapperTest {
         //then
         Assertions.assertEquals(singleMealEntity.getId(), mealEntity.getId());
         Assertions.assertEquals(singleMealEntity.getIngredientsAndMeasureEntityList().size(), mealEntity.getIngredientsAndMeasureDtoList().size());
-        Assertions.assertEquals(singleMealEntity.getIngredientsAndMeasureEntityList().get(1).getIngredientName(), mealEntity.getName());
+        Assertions.assertEquals(singleMealEntity.getIngredientsAndMeasureEntityList().get(1).getIngredientName(), mealEntity.getIngredientsAndMeasureDtoList().get(1).getIngredientName());
     }
 
 
