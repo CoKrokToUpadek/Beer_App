@@ -69,6 +69,7 @@ public class BeerEntity {
     @JoinColumn(name = "beer_volume", referencedColumnName = "volume_id")
     private VolumeEntity volume;
 
+
     @NonNull
     @ManyToOne(fetch = FetchType.EAGER)//bidirectional
     @JoinColumn(name = "beer_boil_Volume", referencedColumnName = "boil_volume_id")
