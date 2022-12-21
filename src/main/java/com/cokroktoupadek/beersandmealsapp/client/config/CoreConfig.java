@@ -20,4 +20,5 @@ public class CoreConfig {
         return singleton.configuration();
     }
 
+
 }

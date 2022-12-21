@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-    @PostMapping("/Add_beer_to_favorite")
+    @PostMapping("/add_beer_to_favorite")
     public ResponseEntity<String> addBeerToFavorite(@CurrentSecurityContext SecurityContext context,@RequestParam String beerName){
         return ResponseEntity.ok(userFacade.addBeerToFavorite(beerName,context.getAuthentication().getName()));
     }
@@ -52,13 +52,13 @@ public class UserController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-    @GetMapping("/Get_my_favorite_beers")
+    @GetMapping("/get_my_favorite_beers")
     public ResponseEntity<List<BeerDto>> getMyFavoriteBeers(@CurrentSecurityContext SecurityContext context){
         return ResponseEntity.ok(userFacade.getBeerFavoriteList(context.getAuthentication().getName()));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-    @PostMapping("/Add_meal_to_favorite")
+    @PostMapping("/add_meal_to_favorite")
     public ResponseEntity<String> addMealToFavorite(@CurrentSecurityContext SecurityContext context,@RequestParam String mealName){
         return ResponseEntity.ok(userFacade.addMealToFavorite(mealName,context.getAuthentication().getName()));
     }
@@ -70,7 +70,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-    @GetMapping("/Get_my_favorite_meals")
+    @GetMapping("/get_my_favorite_meals")
     public ResponseEntity<List<MealDto>> getMyFavoriteMeals(@CurrentSecurityContext SecurityContext context){
         return ResponseEntity.ok(userFacade.getMealFavoriteList(context.getAuthentication().getName()));
     }
