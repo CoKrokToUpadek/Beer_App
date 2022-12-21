@@ -3,21 +3,19 @@ package com.cokroktoupadek.beersandmealsapp.h2_test_db.controller;
 import com.cokroktoupadek.beersandmealsapp.client.BeersAndMealsClient;
 import com.cokroktoupadek.beersandmealsapp.controller.AdminController;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.user.UserDto;
-import com.cokroktoupadek.beersandmealsapp.domain.entity.user.UserEntity;
+
 import com.cokroktoupadek.beersandmealsapp.facade.AdminFacade;
-import org.apache.tomcat.util.file.Matcher;
+
 import org.hamcrest.Matchers;
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -30,23 +28,20 @@ import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-@WithMockUser(username = "admin", roles = {"ADMIN"})
+@SpringJUnitWebConfig
+@WebMvcTest(AdminController.class)
+@AutoConfigureMockMvc(addFilters = false)
 @TestPropertySource("classpath:application-H2TestDb.properties")
 public class AdminControllerTests {
-    MockMvc mockMvc;
+
     @Autowired
-    private WebApplicationContext webApplicationContext;
-    @Mock
-    AdminFacade adminFacade;
+    MockMvc mockMvc;
     @MockBean
-    private AdminController adminController;
+    AdminFacade adminFacade;
 
     @Test
     void testEncodePassword() throws Exception {
         // Given
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
         requestParams.add("login", "test");
         when(adminFacade.encodePassword("test")).thenReturn("ok");
@@ -63,7 +58,6 @@ public class AdminControllerTests {
     @Test
     void testChangeUserStatusByLogin() throws Exception {
         // Given
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
         requestParams.add("login", "test");
         requestParams.add("status", "1");
@@ -80,7 +74,6 @@ public class AdminControllerTests {
     @Test
     void testSetUserRoleByLogin() throws Exception {
         // Given
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
         requestParams.add("login", "test");
         requestParams.add("role", "user");
@@ -92,12 +85,12 @@ public class AdminControllerTests {
                         .characterEncoding("UTF-8")
                         .params(requestParams))
                 .andExpect(MockMvcResultMatchers.status().is(200));
+
     }
 
     @Test
     void testGetUsersList() throws Exception {
         // Given
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         List<UserDto> userDtoList = new ArrayList<>();
         UserDto userDto = new UserDto();
         userDto.setFirstName("testName");
@@ -109,14 +102,13 @@ public class AdminControllerTests {
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/admin/get_user_list")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().is(200));
-              //  .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)));
+                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)));
     }
 
     @Test
     void testUpdateLocalMealsDb() throws Exception {
         // Given
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         when(adminFacade.updateMealDbFacade()).thenReturn("ok");
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
@@ -128,7 +120,6 @@ public class AdminControllerTests {
     @Test
     void testDeleteMealFromDb() throws Exception {
         // Given
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         when(adminFacade.deleteSingleMeal("test")).thenReturn("ok");
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
         requestParams.add("name", "test");
@@ -143,7 +134,6 @@ public class AdminControllerTests {
     @Test
     void testDeleteAllMealsFromDb() throws Exception {
         // Given
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         when(adminFacade.deleteAllBeers()).thenReturn("ok");
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
@@ -155,7 +145,6 @@ public class AdminControllerTests {
     @Test
     void testUpdateLocalBeersDb() throws Exception {
         // Given
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         when(adminFacade.updateBeerDbFacade()).thenReturn("ok");
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
@@ -167,7 +156,6 @@ public class AdminControllerTests {
     @Test
     void testDeleteBeerFromDb() throws Exception {
         // Given
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         when(adminFacade.deleteSingleBeer("test")).thenReturn("ok");
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
         requestParams.add("beerName", "test");
@@ -182,7 +170,6 @@ public class AdminControllerTests {
     @Test
     void testDeleteAllBeersFromDb() throws Exception {
         // Given
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         when(adminFacade.deleteAllBeers()).thenReturn("ok");
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders

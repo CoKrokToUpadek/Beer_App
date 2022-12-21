@@ -1,53 +1,51 @@
 package com.cokroktoupadek.beersandmealsapp.h2_test_db.controller;
 
 
+import com.cokroktoupadek.beersandmealsapp.controller.AdminController;
 import com.cokroktoupadek.beersandmealsapp.controller.UserController;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.beer.BeerDto;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.meals.program.MealDto;
 import com.cokroktoupadek.beersandmealsapp.domain.dto.user.CreatedUserDto;
 import com.cokroktoupadek.beersandmealsapp.facade.UserFacade;
 import com.google.gson.Gson;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-@WithMockUser(username = "admin", roles = {"ADMIN"})
+@SpringJUnitWebConfig
+@WebMvcTest(UserController.class)
+@AutoConfigureMockMvc(addFilters = false)
 @TestPropertySource("classpath:application-H2TestDb.properties")
+@WithMockUser(username = "admin", roles = {"ADMIN"})
 public class UserControllerTests {
-
-    MockMvc mockMvc;
     @Autowired
-    private WebApplicationContext webApplicationContext;
-    @Mock
-    UserFacade userFacade;
+    MockMvc mockMvc;
     @MockBean
-    private UserController userController;
-
+    UserFacade userFacade;
     @Test
     void testCreateUser() throws Exception {
         // Given
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         CreatedUserDto dto=new CreatedUserDto();
         Gson gson = new Gson();
         String jsonContent = gson.toJson(dto);
@@ -64,7 +62,6 @@ public class UserControllerTests {
     @Test
     void testGetBeerList()  throws Exception {
         // Given
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         List<BeerDto> beerDtoList=new ArrayList<>();
         beerDtoList.add(new BeerDto());
         when(userFacade.getBeerList()).thenReturn(beerDtoList);
@@ -73,13 +70,13 @@ public class UserControllerTests {
                         .get("/user/get_beers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8"))
-                .andExpect(MockMvcResultMatchers.status().is(200));
+                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
     }
 
     @Test
     void testGetMealList()  throws Exception {
         // Given
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         List<MealDto> mealDtoList=new ArrayList<>();
         mealDtoList.add(new MealDto());
         when(userFacade.getMealList()).thenReturn(mealDtoList);
@@ -88,13 +85,13 @@ public class UserControllerTests {
                         .get("/user/get_meals")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8"))
-                .andExpect(MockMvcResultMatchers.status().is(200));
+                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(1)));
     }
 
     @Test
     void testAddBeerToFavorite()  throws Exception {
         // Given
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         when(userFacade.addBeerToFavorite("testBeer","admin")).thenReturn("ok");
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
         requestParams.add("beerName", "testBeer");
@@ -109,7 +106,6 @@ public class UserControllerTests {
     @Test
     void testRemoveBeerFromFavorite()  throws Exception {
         // Given
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         when(userFacade.removeBeerFromFavorite("testBeer","admin")).thenReturn("ok");
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
         requestParams.add("beerName", "testBeer");
@@ -128,7 +124,6 @@ public class UserControllerTests {
         List<BeerDto> beerDtoList=new ArrayList<>();
         beerDtoList.add(new BeerDto());
         beerDtoList.add(new BeerDto());
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         when(userFacade.getBeerFavoriteList("admin")).thenReturn(beerDtoList);
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
@@ -141,7 +136,6 @@ public class UserControllerTests {
     @Test
     void testAddMealToFavorite()  throws Exception {
         // Given
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         when(userFacade.addBeerToFavorite("testMeal","admin")).thenReturn("ok");
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
         requestParams.add("mealName", "testMeal");
@@ -156,7 +150,6 @@ public class UserControllerTests {
     @Test
     void testRemoveMealFromFavorite()  throws Exception {
         // Given
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         when(userFacade.removeMealFromFavorite("testMeal","admin")).thenReturn("ok");
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
         requestParams.add("mealName", "testMeal");
@@ -175,7 +168,6 @@ public class UserControllerTests {
         List<MealDto> mealDtoList =new ArrayList<>();
         mealDtoList.add(new MealDto());
         mealDtoList.add(new MealDto());
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSecurity()).build();
         when(userFacade.getMealFavoriteList("admin")).thenReturn(mealDtoList);
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
