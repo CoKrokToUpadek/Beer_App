@@ -28,13 +28,13 @@ public class UserController {
         return ResponseEntity.ok(userFacade.createUser(userInputDto));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @GetMapping("/get_beers")
     public ResponseEntity<List<BeerDto>> getBeerList() throws BeerDbIsEmptyException {
         return ResponseEntity.ok(userFacade.getBeerList());
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+//    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @GetMapping("/get_meals")
     public ResponseEntity<List<MealDto>> getMealList() throws MealDbIsEmptyException {
         return ResponseEntity.ok(userFacade.getMealList());
