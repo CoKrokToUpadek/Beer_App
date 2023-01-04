@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Getter
 public class Config {
 
-    @Value("${admin.mail}")
+    @Value("${admin.mail.email_address}")
     private String adminMail;
 
     @Value("${beer.api.base_endpoint}")

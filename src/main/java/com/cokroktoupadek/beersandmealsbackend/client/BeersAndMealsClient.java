@@ -21,6 +21,7 @@ public class BeersAndMealsClient {
 
     private final RestTemplate restTemplate;
 
+
     public List<BeerDto> getBeerDto(int beerNo) {
         URI url = buildUriForSingleBeer(beerNo);
         BeerDto[] singleBeer = restTemplate.getForObject(url, BeerDto[].class);
@@ -94,6 +95,5 @@ public class BeersAndMealsClient {
                 .encode()
                 .toUri();
     }
-
 
 }

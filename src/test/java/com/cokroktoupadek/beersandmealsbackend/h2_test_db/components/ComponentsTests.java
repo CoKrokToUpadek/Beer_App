@@ -2,7 +2,7 @@ package com.cokroktoupadek.beersandmealsbackend.h2_test_db.components;
 
 import com.cokroktoupadek.beersandmealsbackend.domain.entity.user.UserEntity;
 import com.cokroktoupadek.beersandmealsbackend.repository.user.UserRepository;
-import com.cokroktoupadek.beersandmealsbackend.service.user.BeerUserDetailsService;
+import com.cokroktoupadek.beersandmealsbackend.service.user.BeersAndMealsUserDetailsService;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ComponentsTests {
 
     @Autowired
-    BeerUserDetailsService service;
+    BeersAndMealsUserDetailsService service;
 
     @Autowired
     UserRepository userRepository;

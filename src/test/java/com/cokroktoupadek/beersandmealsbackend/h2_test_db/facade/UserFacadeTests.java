@@ -14,6 +14,7 @@ import com.cokroktoupadek.beersandmealsbackend.mapper.Mapper;
 import com.cokroktoupadek.beersandmealsbackend.service.beer.BeerDbService;
 import com.cokroktoupadek.beersandmealsbackend.service.meal.MealDbService;
 import com.cokroktoupadek.beersandmealsbackend.service.user.UserDbService;
+import com.google.gson.Gson;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,7 @@ public class UserFacadeTests {
     Mapper mapper;
     PasswordEncoder passwordEncoder;
     UserFacade userFacade;
+    Gson gson;
 
 
     @BeforeEach

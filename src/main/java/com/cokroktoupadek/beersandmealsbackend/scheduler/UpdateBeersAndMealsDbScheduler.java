@@ -30,6 +30,7 @@ public class UpdateBeersAndMealsDbScheduler {
             adminFacade.updateMealDbFacade();
             adminFacade.updateBeerDbFacade();
             msg = "Db updated successfully at:" + LocalTime.now();
+            emailService.send(msg);
         } catch (Exception e) {
             msg = "Something when wrong when updating db at:" + LocalTime.now()+"\n"+"Error msg:"+e.getMessage();
             emailService.send(msg);

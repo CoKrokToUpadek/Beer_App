@@ -21,5 +21,4 @@ public class BeanConfig {
         return singleton.configuration();
     }
 
-
 }

@@ -19,9 +19,10 @@ import java.util.List;
 public class AdminController {
 
     AdminFacade adminFacade;
-    ///////////////////////////////users////////////////////////////////////////////////
+    ///////////////////////////////administrative////////////////////////////////////////////////
 
-    //created for encryption for users created using MySqlWorkBench
+
+    //created for encryption of users created using MySqlWorkBench
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/encode_user_password")
     public ResponseEntity<String> encodeUserPassword(@RequestParam String login){

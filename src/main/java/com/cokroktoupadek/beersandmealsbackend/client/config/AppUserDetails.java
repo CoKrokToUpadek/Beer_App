@@ -27,8 +27,7 @@ public class AppUserDetails implements UserDetails {
     }
 
     @Override
-    public String getPassword
-        () {
+    public String getPassword() {
         return userEntity.getPassword();
     }
 
