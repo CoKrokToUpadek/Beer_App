@@ -11,7 +11,9 @@ just put them as regular variables if you not upload code anywhere) to fill
 in application.properties:
 
 spring.mail.username=${MAIL_USERNAME}
+
 spring.mail.password=${MAIL_PASSWORD}
+
 admin.mail.email_address=${MAIL_ADDRESS}
 
 and also requires to config MySqlDb in application.properties and application-LiveDb.properties.(tests on live db are
