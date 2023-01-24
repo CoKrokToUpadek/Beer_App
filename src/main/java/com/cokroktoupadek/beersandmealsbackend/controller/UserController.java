@@ -30,6 +30,11 @@ public class UserController {
         return ResponseEntity.ok(userFacade.getUserForLogin(login));
     }
 
+    @GetMapping("/login_validator")
+    public ResponseEntity<Boolean> isLoginTaken(@RequestParam String login) {
+        return ResponseEntity.ok(userFacade.checkIfLoginIsTaken(login));
+    }
+
     @PostMapping("/create_user")
     public ResponseEntity<String> createUser(@RequestBody CreatedUserDto userInputDto) {
         return ResponseEntity.ok(userFacade.createUser(userInputDto));
@@ -40,9 +45,6 @@ public class UserController {
     public ResponseEntity<List<BeerDto>> getBeerList() throws BeerDbIsEmptyException {
         return ResponseEntity.ok(userFacade.getBeerList());
     }
-
-
-
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @PostMapping("/add_beer_to_favorite")
     public ResponseEntity<String> addBeerToFavorite(@CurrentSecurityContext SecurityContext context,@RequestParam String beerName){

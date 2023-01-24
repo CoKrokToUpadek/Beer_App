@@ -30,6 +30,8 @@ public class ComponentsTests {
     void assertNullUserTest(){
         //given
         //when
+        int [] arr=new int[1];
+        arr.length
         //then
          assertThrows(UsernameNotFoundException.class, () -> {
              service.loadUserByUsername("not found");
@@ -46,6 +48,8 @@ public class ComponentsTests {
        Optional<UserEntity> entity= userRepository.findByLogin("1");
         //then
        assertTrue(entity.isPresent());
+       String s="das";
+
     }
 
 }

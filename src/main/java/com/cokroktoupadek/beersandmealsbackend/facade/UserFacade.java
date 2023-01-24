@@ -60,12 +60,15 @@ public class UserFacade {
         if (userDbService.findByEmail(userDto.getEmail()).isPresent()) {
             return UserCreationException.ERR_EMAIL_TAKEN;
         }
-        if (Stream.of(userDto.getAddress(), userDto.getEmail(), userDto.getLogin(), userDto.getPassword(),
-                userDto.getFirstName(), userDto.getLastName()).anyMatch(Objects::isNull)) {
+        if (Stream.of(userDto.getAddress(), userDto.getEmail(), userDto.getLogin(), userDto.getPassword()
+               ).anyMatch(Objects::isNull)) {
             return UserCreationException.ERR_MISSING_INFORMATION;
         } else {
             entity = mapper.mapNewUserEntity(userDto);
-            entity.setPassword(encoder.encode(userDto.getPassword()));
+            //verify if password was already encoded via frontend
+            if (!userDto.getPassword().startsWith("$2a$")){
+                entity.setPassword(encoder.encode(userDto.getPassword()));
+            }
             entity.setStatus(1);
             userDbService.save(entity);
             return "user was created successfully";
@@ -164,6 +167,11 @@ public class UserFacade {
         } else {
             return "Beer not found in db. Check for typos";
         }
+    }
+
+    public Boolean checkIfLoginIsTaken(String login){
+        Optional<UserEntity> user = userDbService.findByLogin(login);
+        return user.isPresent();
     }
 
     public UserCredentialsDto getUserForLogin(String login) {
