@@ -1,6 +1,7 @@
 package com.cokroktoupadek.beersandmealsbackend.controller;
 
 
+import com.cokroktoupadek.beersandmealsbackend.client.config.TokenService;
 import com.cokroktoupadek.beersandmealsbackend.domain.dto.beer.BeerDto;
 import com.cokroktoupadek.beersandmealsbackend.domain.dto.meals.program.MealDto;
 import com.cokroktoupadek.beersandmealsbackend.domain.dto.user.CreatedUserDto;
@@ -11,6 +12,7 @@ import com.cokroktoupadek.beersandmealsbackend.facade.UserFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,15 @@ public class UserController {
 
     UserFacade userFacade;
     ///////////////////////////////administrative////////////////////////////////////////////////
+
+    private final TokenService tokenService;
+
+    @PostMapping("/token")
+    public String token(Authentication authentication){
+        String token=tokenService.generateToken(authentication);
+        return token;
+    }
+
     @GetMapping("login")//ok
     public ResponseEntity<UserCredentialsDto> getUserForLogin(@RequestParam String login){
         return ResponseEntity.ok(userFacade.getUserForLogin(login));
