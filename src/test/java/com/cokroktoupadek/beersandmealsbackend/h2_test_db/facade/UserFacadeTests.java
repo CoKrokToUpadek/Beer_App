@@ -1,6 +1,7 @@
 package com.cokroktoupadek.beersandmealsbackend.h2_test_db.facade;
 
 
+import com.cokroktoupadek.beersandmealsbackend.client.config.TokenService;
 import com.cokroktoupadek.beersandmealsbackend.domain.dto.beer.BeerDto;
 import com.cokroktoupadek.beersandmealsbackend.domain.dto.meals.program.MealDto;
 import com.cokroktoupadek.beersandmealsbackend.domain.dto.user.CreatedUserDto;
@@ -40,6 +41,8 @@ public class UserFacadeTests {
     PasswordEncoder passwordEncoder;
     UserFacade userFacade;
 
+    TokenService tokenService;
+
 
 
     @BeforeEach
@@ -49,7 +52,7 @@ public class UserFacadeTests {
         mealDbService=mock(MealDbService.class);
         mapper=mock(Mapper.class);
         passwordEncoder=mock(PasswordEncoder.class);
-        userFacade=new UserFacade(userDbService, beerDbService,  mapper,mealDbService);
+        userFacade=new UserFacade(userDbService, beerDbService,  mapper,mealDbService,tokenService);
     }
 
     @Test

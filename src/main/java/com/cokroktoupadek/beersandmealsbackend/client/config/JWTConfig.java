@@ -54,7 +54,7 @@ public class JWTConfig {
     public SecurityFilterChain authServerSecurityFilteredChain(HttpSecurity http) throws Exception{
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeRequests(req->req.anyRequest().authenticated())
+                .authorizeRequests(req->req.mvcMatchers("/**").permitAll().anyRequest().authenticated())
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .userDetailsService(beerUserDetailsService)

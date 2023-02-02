@@ -30,14 +30,15 @@ public class UserController {
 
     private final TokenService tokenService;
 
-    @PostMapping("/token")
-    public String token(Authentication authentication){
-        String token=tokenService.generateToken(authentication);
-        return token;
-    }
+//    @PostMapping("/token")
+//    public String token(Authentication authentication){
+//        String token=tokenService.generateToken(authentication);
+//        return token;
+//    }
 
-    @GetMapping("login")//ok
-    public ResponseEntity<UserCredentialsDto> getUserForLogin(@RequestParam String login){
+
+    @GetMapping("/login")
+    public ResponseEntity<UserCredentialsDto> getUserForLogin(String login){
         return ResponseEntity.ok(userFacade.getUserForLogin(login));
     }
 

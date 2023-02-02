@@ -1,5 +1,7 @@
 package com.cokroktoupadek.beersandmealsbackend.facade;
 
+import com.cokroktoupadek.beersandmealsbackend.client.config.AppUserDetails;
+import com.cokroktoupadek.beersandmealsbackend.client.config.TokenService;
 import com.cokroktoupadek.beersandmealsbackend.domain.dto.beer.BeerDto;
 import com.cokroktoupadek.beersandmealsbackend.domain.dto.meals.program.MealDto;
 import com.cokroktoupadek.beersandmealsbackend.domain.dto.user.CreatedUserDto;
@@ -17,6 +19,8 @@ import com.cokroktoupadek.beersandmealsbackend.service.user.UserDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -41,14 +45,16 @@ public class UserFacade {
 
     private PasswordEncoder encoder;
 
+    private final TokenService tokenService;
 
     @Autowired
-    public UserFacade(UserDbService userDbService, BeerDbService beerDbService, Mapper mapper, MealDbService mealDbService) {
+    public UserFacade(UserDbService userDbService, BeerDbService beerDbService, Mapper mapper, MealDbService mealDbService, TokenService tokenService) {
         this.userDbService = userDbService;
         this.beerDbService = beerDbService;
         this.mapper = mapper;
         this.mealDbService = mealDbService;
         this.encoder = new BCryptPasswordEncoder();
+        this.tokenService = tokenService;
     }
 
     public String createUser(CreatedUserDto userDto) {
@@ -61,12 +67,12 @@ public class UserFacade {
             return UserCreationException.ERR_EMAIL_TAKEN;
         }
         if (Stream.of(userDto.getAddress(), userDto.getEmail(), userDto.getLogin(), userDto.getPassword()
-               ).anyMatch(Objects::isNull)) {
+        ).anyMatch(Objects::isNull)) {
             return UserCreationException.ERR_MISSING_INFORMATION;
         } else {
             entity = mapper.mapNewUserEntity(userDto);
             //verify if password was already encoded via frontend
-            if (!userDto.getPassword().startsWith("$2a$")){
+            if (!userDto.getPassword().startsWith("$2a$")) {
                 entity.setPassword(encoder.encode(userDto.getPassword()));
             }
             entity.setStatus(1);
@@ -169,7 +175,7 @@ public class UserFacade {
         }
     }
 
-    public Boolean checkIfLoginIsTaken(String login){
+    public Boolean checkIfLoginIsTaken(String login) {
         Optional<UserEntity> user = userDbService.findByLogin(login);
         return user.isPresent();
     }
@@ -179,7 +185,9 @@ public class UserFacade {
         if (user.isEmpty()) {
             throw new BadCredentialsException("Bad Credentials");
         } else {
-            return new UserCredentialsDto(user.get().getLogin(),user.get().getPassword(),user.get().getUserRole());
+            AppUserDetails userDetails=new AppUserDetails(user.get());
+            tokenService.generateToken(userDetails);
+            return new UserCredentialsDto(user.get().getLogin(), user.get().getPassword(), user.get().getUserRole(), tokenService.generateToken(userDetails));
         }
     }
 }
