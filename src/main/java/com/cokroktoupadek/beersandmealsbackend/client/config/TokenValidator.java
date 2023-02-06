@@ -1,25 +1,50 @@
 package com.cokroktoupadek.beersandmealsbackend.client.config;
 
-import org.aspectj.lang.JoinPoint;
+
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.RequestDispatcher;
+
 import javax.servlet.http.HttpServletRequest;
+import java.time.Instant;
 
 @Aspect
 @Component
 public class TokenValidator {
-    @Before("execution(* com.cokroktoupadek.beersandmealsbackend.controller.*.*(..))")
-    public void validateToken() {
-        HttpServletRequest request =
-                ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
-                        .getRequest();
-        if (request.getServletPath()!="/user/login" || request.getServletPath()!="/user/create_user"){
-            //TODO implementacja weryfikatora
-        }
+
+    JwtDecoder jwtDecoder;
+    @Autowired
+    public TokenValidator(JwtDecoder jwtDecoder) {
+        this.jwtDecoder = jwtDecoder;
+    }
+
+    @Around("execution(* com.cokroktoupadek.beersandmealsbackend.controller.*.*(..))")
+    public Object validateToken(ProceedingJoinPoint pjp) throws Throwable {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            String bearerToken = request.getHeader("Authorization");
+            if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+                String jwt = bearerToken.substring(7);
+                Jwt jwtToken=jwtDecoder.decode(jwt);
+                Instant tokenExpireTime= jwtToken.getExpiresAt();
+                long timerNow=Instant.now().getEpochSecond();
+                long timerToken=tokenExpireTime.getEpochSecond();
+                if (timerNow-(timerToken+3600)>=0){
+                    return new ResponseEntity<>("Token expired", HttpStatus.I_AM_A_TEAPOT);
+              }
+            }
+      //  }
+          return  pjp.proceed();
+
     }
 }

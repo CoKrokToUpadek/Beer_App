@@ -22,8 +22,6 @@ public class AdminController {
 
     AdminFacade adminFacade;
 
-    private final TokenService tokenService;
-
     ///////////////////////////////administrative////////////////////////////////////////////////
 
 
