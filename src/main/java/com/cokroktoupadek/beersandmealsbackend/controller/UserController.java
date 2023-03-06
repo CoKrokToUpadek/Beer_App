@@ -28,7 +28,7 @@ public class UserController {
     UserFacade userFacade;
     ///////////////////////////////administrative////////////////////////////////////////////////
 
-    private final TokenService tokenService;
+//  private final TokenService tokenService;
 
 //    @PostMapping("/token")
 //    public String token(Authentication authentication){
@@ -37,63 +37,63 @@ public class UserController {
 //    }
 
 
-    @GetMapping("/login")
+    @GetMapping("/login")//implemented in front
     public ResponseEntity<UserCredentialsDto> getUserForLogin(String login){
         return ResponseEntity.ok(userFacade.getUserForLogin(login));
     }
 
-    @GetMapping("/login_validator")
+    @GetMapping("/login_validator")//implemented in front
     public ResponseEntity<Boolean> isLoginTaken(@RequestParam String login) {
         return ResponseEntity.ok(userFacade.checkIfLoginIsTaken(login));
     }
 
-    @PostMapping("/create_user")
+    @PostMapping("/create_user")//implemented in front
     public ResponseEntity<String> createUser(@RequestBody CreatedUserDto userInputDto) {
         return ResponseEntity.ok(userFacade.createUser(userInputDto));
     }
     ///////////////////////////////beers////////////////////////////////////////////////
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")//ok
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")//implemented in front
     @GetMapping("/get_beers")
-    public ResponseEntity<List<BeerDto>> getBeerList() throws BeerDbIsEmptyException {
+    public ResponseEntity<List<BeerDto>> getBeerList() throws BeerDbIsEmptyException {//implemented in front
         return ResponseEntity.ok(userFacade.getBeerList());
     }
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")//implemented in front
     @PostMapping("/add_beer_to_favorite")
     public ResponseEntity<String> addBeerToFavorite(@CurrentSecurityContext SecurityContext context,@RequestParam String beerName){
         return ResponseEntity.ok(userFacade.addBeerToFavorite(beerName,context.getAuthentication().getName()));
     }
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")//implemented in front
     @DeleteMapping("/remove_beer_from_favorite")
     public ResponseEntity<String> removeBeerFromFavorite(@CurrentSecurityContext SecurityContext context,@RequestParam String beerName){
         return ResponseEntity.ok(userFacade.removeBeerFromFavorite(beerName,context.getAuthentication().getName()));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")//implemented in front
     @GetMapping("/get_my_favorite_beers")
     public ResponseEntity<List<BeerDto>> getMyFavoriteBeers(@CurrentSecurityContext SecurityContext context){
         return ResponseEntity.ok(userFacade.getBeerFavoriteList(context.getAuthentication().getName()));
     }
     ///////////////////////////////meals////////////////////////////////////////////////
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")//ok
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")//implemented in front
     @GetMapping("/get_meals")
     public ResponseEntity<List<MealDto>> getMealList() throws MealDbIsEmptyException {
         return ResponseEntity.ok(userFacade.getMealList());
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")//implemented in front
     @PostMapping("/add_meal_to_favorite")
     public ResponseEntity<String> addMealToFavorite(@CurrentSecurityContext SecurityContext context,@RequestParam String mealName){
         return ResponseEntity.ok(userFacade.addMealToFavorite(mealName,context.getAuthentication().getName()));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")//implemented in front
     @DeleteMapping("/remove_meal_from_favorite")
     public ResponseEntity<String> removeMealFromFavorite(@CurrentSecurityContext SecurityContext context,@RequestParam String mealName){
         return ResponseEntity.ok(userFacade.removeMealFromFavorite(mealName,context.getAuthentication().getName()));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")//implemented in front
     @GetMapping("/get_my_favorite_meals")
     public ResponseEntity<List<MealDto>> getMyFavoriteMeals(@CurrentSecurityContext SecurityContext context){
         return ResponseEntity.ok(userFacade.getMealFavoriteList(context.getAuthentication().getName()));

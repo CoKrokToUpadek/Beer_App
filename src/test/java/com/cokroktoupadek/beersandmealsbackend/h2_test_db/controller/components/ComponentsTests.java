@@ -1,4 +1,4 @@
-package com.cokroktoupadek.beersandmealsbackend.h2_test_db.components;
+package com.cokroktoupadek.beersandmealsbackend.h2_test_db.controller.components;
 
 import com.cokroktoupadek.beersandmealsbackend.domain.entity.user.UserEntity;
 import com.cokroktoupadek.beersandmealsbackend.repository.user.UserRepository;

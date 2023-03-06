@@ -94,7 +94,7 @@ public class UserFacadeTests {
     @Test
     void testCreateUserMissingInformation(){
         //given
-        CreatedUserDto userDto=new CreatedUserDto(null,"test","test","test","test","test");
+        CreatedUserDto userDto=new CreatedUserDto(null,null,"test","test",null,"test");
         when(userDbService.findByLogin(userDto.getLogin())).thenReturn(Optional.empty());
         when(userDbService.findByEmail(userDto.getEmail())).thenReturn(Optional.empty());
         //when
@@ -102,6 +102,21 @@ public class UserFacadeTests {
         //then
         Assertions.assertEquals("Information provided in form was incomplete or invalid.",output);
     }
+
+    @Test
+    void testCreateUserMissingInformationButValid(){
+        //given
+        CreatedUserDto userDto=new CreatedUserDto(null,null,"test","test","test","test");
+        when(userDbService.findByLogin(userDto.getLogin())).thenReturn(Optional.empty());
+        when(userDbService.findByEmail(userDto.getEmail())).thenReturn(Optional.empty());
+        when(mapper.mapNewUserEntity(userDto)).thenReturn(new UserEntity("test","test","test","test","test","test", "test",LocalDate.now()));
+        //when
+        String output= userFacade.createUser(userDto);
+        //then
+        Assertions.assertEquals("user was created successfully",output);
+    }
+
+
 
     @Test
     void testGetBeerListThrowsException()  {

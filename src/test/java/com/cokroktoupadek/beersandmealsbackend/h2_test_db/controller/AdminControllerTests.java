@@ -119,7 +119,7 @@ public class AdminControllerTests {
         // Given
         when(adminFacade.deleteSingleMeal("test")).thenReturn("ok");
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
-        requestParams.add("name", "test");
+        requestParams.add("mealName", "test");
         //When & Then
         mockMvc.perform(MockMvcRequestBuilders
                         .delete("/admin/delete_meal")

@@ -56,7 +56,6 @@ public class UserFacade {
     }
 
     public String createUser(CreatedUserDto userDto) {
-
         UserEntity entity;
         if (userDbService.findByLogin(userDto.getLogin()).isPresent()) {
             return UserCreationException.ERR_LOGIN_TAKEN;
