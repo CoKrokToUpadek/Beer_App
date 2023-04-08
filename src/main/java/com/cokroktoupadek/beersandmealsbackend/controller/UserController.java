@@ -35,7 +35,10 @@ public class UserController {
 //        String token=tokenService.generateToken(authentication);
 //        return token;
 //    }
-
+    @GetMapping("/hello")//test endpoint for communication
+    public ResponseEntity<String> getUserForLogin(){
+    return ResponseEntity.ok("im deployed and working");
+}
 
     @GetMapping("/login")//implemented in front
     public ResponseEntity<UserCredentialsDto> getUserForLogin(String login){
