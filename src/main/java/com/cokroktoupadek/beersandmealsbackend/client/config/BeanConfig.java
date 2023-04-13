@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
+
+
 @EnableScheduling
 @Configuration
 public class BeanConfig {
@@ -20,6 +22,5 @@ public class BeanConfig {
         BeerMapperConfigurator singleton=new BeerMapperConfigurator();
         return singleton.configuration();
     }
-
 
 }

@@ -1,11 +1,28 @@
+
+
 plugins {
     id 'org.springframework.boot' version '2.7.5'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'java'
     id("org.gretty") version "4.0.3"
+    id 'war'
+
 }
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+        vendor = JvmVendorSpec.AMAZON
+    }
+}
+
 group = 'com.cokroktoupadek'
 version = '0.0.1-SNAPSHOT'
+
+//for deployment
+test {
+    enabled = false
+}
 
 configurations {
     compileOnly {
@@ -31,16 +48,35 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     runtimeOnly('com.h2database:h2')
 
-    implementation 'org.springframework.boot:spring-boot-starter-security:2.7.5'
-    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-test
-    testImplementation 'org.springframework.security:spring-security-test:5.7.5'
 
-    // https://mvnrepository.com/artifact/com.google.code.gson/gson
-    implementation 'com.google.code.gson:gson:2.10'
+
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-test
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-jose
+    implementation 'org.springframework.security:spring-security-oauth2-jose'
+
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-resource-server
+    implementation 'org.springframework.security:spring-security-oauth2-resource-server'
+
+    // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
+    compileOnly 'javax.servlet:javax.servlet-api'
+
+
+// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:3.0.2'
+
+// https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation 'com.google.code.gson:gson:2.10.1'
 
 
     // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
     implementation 'org.modelmapper:modelmapper:3.1.0'
+
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
 
 }
@@ -48,3 +84,4 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+

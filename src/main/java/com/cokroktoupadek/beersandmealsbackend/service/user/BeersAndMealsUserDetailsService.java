@@ -16,11 +16,11 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class BeerUserDetailsService implements UserDetailsService {
+public class BeersAndMealsUserDetailsService implements UserDetailsService {
 
     private UserDbService userDbService;
     @Autowired
-    public BeerUserDetailsService(UserDbService userDbService) {
+    public BeersAndMealsUserDetailsService(UserDbService userDbService) {
         this.userDbService = userDbService;
     }
 

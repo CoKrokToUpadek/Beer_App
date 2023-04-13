@@ -1,6 +1,7 @@
 package com.cokroktoupadek.beersandmealsbackend.h2_test_db.facade;
 
 
+import com.cokroktoupadek.beersandmealsbackend.client.config.TokenService;
 import com.cokroktoupadek.beersandmealsbackend.domain.dto.beer.BeerDto;
 import com.cokroktoupadek.beersandmealsbackend.domain.dto.meals.program.MealDto;
 import com.cokroktoupadek.beersandmealsbackend.domain.dto.user.CreatedUserDto;
@@ -40,6 +41,9 @@ public class UserFacadeTests {
     PasswordEncoder passwordEncoder;
     UserFacade userFacade;
 
+    TokenService tokenService;
+
+
 
     @BeforeEach
     void setup() {
@@ -48,7 +52,7 @@ public class UserFacadeTests {
         mealDbService=mock(MealDbService.class);
         mapper=mock(Mapper.class);
         passwordEncoder=mock(PasswordEncoder.class);
-        userFacade=new UserFacade(userDbService, beerDbService,  mapper,mealDbService);
+        userFacade=new UserFacade(userDbService, beerDbService,  mapper,mealDbService,tokenService);
     }
 
     @Test
@@ -90,7 +94,7 @@ public class UserFacadeTests {
     @Test
     void testCreateUserMissingInformation(){
         //given
-        CreatedUserDto userDto=new CreatedUserDto(null,"test","test","test","test","test");
+        CreatedUserDto userDto=new CreatedUserDto(null,null,"test","test",null,"test");
         when(userDbService.findByLogin(userDto.getLogin())).thenReturn(Optional.empty());
         when(userDbService.findByEmail(userDto.getEmail())).thenReturn(Optional.empty());
         //when
@@ -98,6 +102,21 @@ public class UserFacadeTests {
         //then
         Assertions.assertEquals("Information provided in form was incomplete or invalid.",output);
     }
+
+    @Test
+    void testCreateUserMissingInformationButValid(){
+        //given
+        CreatedUserDto userDto=new CreatedUserDto(null,null,"test","test","test","test");
+        when(userDbService.findByLogin(userDto.getLogin())).thenReturn(Optional.empty());
+        when(userDbService.findByEmail(userDto.getEmail())).thenReturn(Optional.empty());
+        when(mapper.mapNewUserEntity(userDto)).thenReturn(new UserEntity("test","test","test","test","test","test", "test",LocalDate.now()));
+        //when
+        String output= userFacade.createUser(userDto);
+        //then
+        Assertions.assertEquals("user was created successfully",output);
+    }
+
+
 
     @Test
     void testGetBeerListThrowsException()  {

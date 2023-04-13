@@ -36,7 +36,7 @@ public class MealEntity {
     @Column(name="meal_instruction",columnDefinition = "VARCHAR(5000)")
     private String instruction;
 
-    @NonNull
+
     @Column(name="meal_thumbnail")
     private String thumbnail;
 
@@ -83,7 +83,6 @@ public class MealEntity {
         result = 31 * result + category.hashCode();
         result = 31 * result + area.hashCode();
         result = 31 * result + instruction.hashCode();
-        result = 31 * result + thumbnail.hashCode();
         result = 31 * result + (tags != null ? tags.hashCode() : 0);
         result = 31 * result + (youtubeLink != null ? youtubeLink.hashCode() : 0);
         result = 31 * result + (source != null ? source.hashCode() : 0);
@@ -98,7 +97,6 @@ public class MealEntity {
                 ", category='" + category + '\'' +
                 ", area='" + area + '\'' +
                 ", instruction='" + instruction + '\'' +
-                ", thumbnail='" + thumbnail + '\'' +
                 ", tags='" + tags + '\'' +
                 ", youtubeLink='" + youtubeLink + '\'' +
                 ", source='" + source + '\'' +
