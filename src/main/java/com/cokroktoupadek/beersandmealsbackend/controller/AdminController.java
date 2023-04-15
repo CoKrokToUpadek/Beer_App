@@ -2,14 +2,12 @@ package com.cokroktoupadek.beersandmealsbackend.controller;
 
 
 
-import com.cokroktoupadek.beersandmealsbackend.client.config.TokenService;
 import com.cokroktoupadek.beersandmealsbackend.domain.dto.user.UserDto;
 import com.cokroktoupadek.beersandmealsbackend.errorhandlers.BeerNotFoundException;
 import com.cokroktoupadek.beersandmealsbackend.facade.AdminFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

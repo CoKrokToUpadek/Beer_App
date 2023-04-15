@@ -4,7 +4,6 @@ plugins {
     id 'org.springframework.boot' version '2.7.5'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'java'
-    id("org.gretty") version "4.0.3"
     id 'war'
 
 }
@@ -76,8 +75,13 @@ dependencies {
 
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+   // providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
+    // https://mvnrepository.com/artifact/org.gretty/gretty-runner-tomcat
+    implementation group: 'org.gretty', name: 'gretty-runner-tomcat', version: '4.0.3'
+
+    // other dependencies
+    implementation 'org.eclipse.jetty:jetty-webapp:11.0.14'
 
 }
 

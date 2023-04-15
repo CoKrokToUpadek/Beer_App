@@ -1,7 +1,6 @@
 package com.cokroktoupadek.beersandmealsbackend.controller;
 
 
-import com.cokroktoupadek.beersandmealsbackend.client.config.TokenService;
 import com.cokroktoupadek.beersandmealsbackend.domain.dto.beer.BeerDto;
 import com.cokroktoupadek.beersandmealsbackend.domain.dto.meals.program.MealDto;
 import com.cokroktoupadek.beersandmealsbackend.domain.dto.user.CreatedUserDto;
@@ -12,7 +11,6 @@ import com.cokroktoupadek.beersandmealsbackend.facade.UserFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.web.bind.annotation.*;
